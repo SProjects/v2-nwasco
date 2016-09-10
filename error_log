@@ -1,0 +1,1 @@
+[17-Jun-2016 12:08:42 Etc/GMT] PHP Fatal error:  Call to undefined method Core::getIndicators() in /home/distaau8/public_html/zazawilhem.com/v2/application/controllers/Dashboard.php on line 136
