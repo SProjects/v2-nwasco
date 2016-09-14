@@ -107,15 +107,7 @@
 
         ?>
 
-<<<<<<< HEAD
                             <li class="col-lg-1 summary">
-=======
-<<<<<<< HEAD
-                            <li class="col-lg-1 summary">
-=======
-                            <li class="col-xs-1 summary">
->>>>>>> origin/master
->>>>>>> origin/master
                               <div class="ibox-content">
                                   <h1 class="no-margins"><?=$utility->abr_utility;?></h1>
                                   <small><?=$name[0];?></small>
@@ -133,12 +125,6 @@
                                   <div class="clearfix"></div>
                                   <span>SRS</span><div class="stat-percent font-bold text-danger"><?=$squery0;?></div>
                                 </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-                                <span class="pull-right label label-danger">VIEW DETAILS</span>
-=======
->>>>>>> origin/master
                                 <span class="pull-right label label-danger"><a href="<?php
 
                  $url = str_replace(' ','-',$utility->utility);
@@ -149,10 +135,6 @@
                echo base_url(); ?>utility/details/<?php echo $utility->cu_id;?>/<?php echo urlencode(strtolower($url));?>">
                               VIEW DETAILS
                </a></span>
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
->>>>>>> origin/master
                               </ul>
                             </li>
                               <li class="dropdown label-warning">
@@ -167,12 +149,6 @@
                                   <div class="clearfix"></div>
                                   <span>SRS</span><div class="stat-percent font-bold text-warning"><?=$squery5;?></div>
                                 </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-                                <span class="pull-right label label-warning">VIEW DETAILS</span>
-=======
->>>>>>> origin/master
                                 <span class="pull-right label label-warning"><a href="<?php
 
                  $url = str_replace(' ','-',$utility->utility);
@@ -183,10 +159,6 @@
                echo base_url(); ?>utility/details/<?php echo $utility->cu_id;?>/<?php echo urlencode(strtolower($url));?>">
                               VIEW DETAILS
                </a></span>
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
->>>>>>> origin/master
                               </ul>
                             </li>
                               <li class="dropdown label-primary">
@@ -201,12 +173,6 @@
                                   <div class="clearfix"></div>
                                   <span>SRS</span><div class="stat-percent font-bold text-navy"><?=$squery6;?></div>
                                 </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-                                <span class="pull-right label label-primary">VIEW DETAILS</span>
-=======
->>>>>>> origin/master
                                 <span class="pull-right label label-primary"><a href="<?php
 
                  $url = str_replace(' ','-',$utility->utility);
@@ -217,10 +183,6 @@
                echo base_url(); ?>utility/details/<?php echo $utility->cu_id;?>/<?php echo urlencode(strtolower($url));?>">
                               VIEW DETAILS
                </a></span>
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
->>>>>>> origin/master
                               </ul>
                             </li>
                             </ul>
@@ -268,11 +230,7 @@ function drawCharts() {
   var barOptions = {
     focusTarget: 'category',
     backgroundColor: 'transparent',
-<<<<<<< HEAD
     colors: ['red', 'yellow', 'green'],
-=======
-    colors: ['#ed5565', '#f8ac59', '#1ab394'],
->>>>>>> origin/master
     fontName: 'Open Sans',
     chartArea: {
       left: 50,
@@ -358,11 +316,7 @@ function drawCharts() {
                         $this->db->where('due_date > now() + interval 6 day and now() - interval 100 day');
                         $this->db->where('tariff_conditions.utility_id', $cu_id);
                         $tquery6 = $this->db->count_all_results('tariff_conditions');
-<<<<<<< HEAD
     echo "['".$utility->abr_utility."', ".$tquery0.", ".$tquery5.", ".$tquery6."],\n";
-=======
-    echo "['".$utility->utility."', ".$tquery0.", ".$tquery5.", ".$tquery6."],\n";
->>>>>>> origin/master
                     ?><?php } $output = ob_get_clean();
 
                 echo rtrim($output, ','); ?>]);
@@ -472,15 +426,7 @@ function drawCharts() {
 				<div class="my-slider">
 				<main><ul>
 						<li><h5>Directives</h5>
-<<<<<<< HEAD
   							<div id="chart_div"></div>
-=======
-<<<<<<< HEAD
-  							<div><canvas id="lineChart" height="140"></canvas></div>
-=======
-  							<div id="chart_div"></div>
->>>>>>> origin/master
->>>>>>> origin/master
   						</li>
 						<li>
 						  <h5>Tariff Conditions</h5>

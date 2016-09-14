@@ -134,30 +134,11 @@ $this->layout->add_js_rawtext($js_text, 'footer');
 	 */
 	public function index()
 	{
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/master
 
 	}
 
     public function details($directive, $id) {
-<<<<<<< HEAD
-=======
 
-=======
->>>>>>> origin/master
-
-	}
->>>>>>> origin/master
-
-    public function details($directive, $id) {
-
-    if (!is_int($id) || empty($id))
-    {
-        redirect('my404');
-    } 
-    else {
         $this->data['current_user_menu'] = '';
         if($this->ion_auth->in_group('admin'))
         {
@@ -188,26 +169,11 @@ $this->layout->add_js_rawtext($js_text, 'footer');
          redirect('auth/login');
        }
     }
-}
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
     public function show_directive() 
     {
 
 
-=======
->>>>>>> origin/master
-    public function show_directive() 
-    {
-
-
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
->>>>>>> origin/master
         $this->data['current_user_menu'] = '';
         if ($this->ion_auth->logged_in())
             {
@@ -218,10 +184,7 @@ $this->layout->add_js_rawtext($js_text, 'footer');
         $data['user'] = $this->ion_auth->user()->row();
         $id = $this->uri->segment(3);
         $data['utilities']  = $this->core->getAllUtilities();
-<<<<<<< HEAD
         $data['schemes']  = $this->core->getSchemes();
-=======
->>>>>>> origin/master
         $data['indicators']  = $this->core->getIndicators();
         $data['directives'] = $this->core->show_directives();
         $data['single_directive'] = $this->core->directive_id($id);
@@ -246,10 +209,7 @@ $this->layout->add_js_rawtext($js_text, 'footer');
         $data['title'] = $this->lang->line('login_heading');
         $data['user'] = $this->ion_auth->user()->row();
         $data['utilities']  = $this->core->getAllUtilities();
-<<<<<<< HEAD
         $data['schemes']  = $this->core->getSchemes();
-=======
->>>>>>> origin/master
         $data['indicators']  = $this->core->getIndicators();
         // load views and send data
         $this->data['current_user_menu'] = $this->load->view('header', $data);
@@ -274,10 +234,7 @@ $this->layout->add_js_rawtext($js_text, 'footer');
         $data['title'] = $this->lang->line('login_heading');
         $data['user'] = $this->ion_auth->user()->row();
         $id = $this->uri->segment(3);
-<<<<<<< HEAD
         $data['schemes']  = $this->core->getSchemes();
-=======
->>>>>>> origin/master
         $data['utilities']  = $this->core->getAllUtilities();
         $data['indicators']  = $this->core->getIndicators();
         $data['directives'] = $this->core->show_directives();

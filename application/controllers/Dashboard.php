@@ -89,11 +89,7 @@ $js_text = <<<EOF
             });
              $('#mycontent').slimScroll({
                   color: '#333',
-<<<<<<< HEAD
                   height: '570px',
-=======
-                  height: '565px',
->>>>>>> origin/master
                   size: '10px',
                   borderRadius: '0px',
                   railBorderRadius: '0px',

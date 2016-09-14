@@ -4,7 +4,13 @@ class My404 extends CI_Controller
     public function __construct() 
     {
         parent::__construct();
-    }
+        $this->load->library('ion_auth');
+        if (!$this->ion_auth->logged_in())
+        {
+          //redirect them to the login page
+          redirect('auth/login', 'refresh');
+        }
+    } 
 
     public function index() 
     {
@@ -16,4 +22,5 @@ class My404 extends CI_Controller
         $this->output->set_status_header('404');
         $this->load->view('404');//loading in my template 
     } 
-}
+} 
+?> 

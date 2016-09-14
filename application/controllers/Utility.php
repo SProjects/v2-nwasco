@@ -32,8 +32,6 @@ class Utility extends CI_Controller {
 	}
 	 public function details($id)//single post page
     {
-
- 
 		 $this->layout->add_custom_meta('meta', array(
             'charset' => 'utf-8'
         ));
@@ -117,12 +115,8 @@ $this->layout->add_js_rawtext($js_text, 'footer');
         $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
         $data['title'] = $this->lang->line('login_heading');
     		$data['user'] = $this->ion_auth->user()->row();
-<<<<<<< HEAD
         $data['utilities']  = $this->core->getAllUtilities();
     		$data['schemes']  = $this->core->getSchemes();
-=======
-    		$data['utilities']  = $this->core->getAllUtilities();
->>>>>>> origin/master
     		$data['indicators']  = $this->core->getIndicators();
         $data['directives'] = $this->core->listDirectives($id);
         $data['projects']   = $this->core->listProjects($id);
@@ -141,6 +135,6 @@ $this->layout->add_js_rawtext($js_text, 'footer');
          //If no session, redirect to login page
          redirect('auth/login');
        }
+    }
 
-}
 }

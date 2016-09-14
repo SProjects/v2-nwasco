@@ -1,25 +1,5 @@
 <?php $in_id = $this->uri->segment(4);?>
-<<<<<<< HEAD
 
-=======
-	<?php
-						$format = "%Y-%m-%d"; $tariff['due_date'] = mdate($format); $date_expire = $tariff['due_date'];
-										$date = new DateTime($date_expire);
-										$now = new DateTime();
-										$tdays_left = $date->diff($now)->format("%d"); 
-						$format1 = "%Y-%m-%d"; $directive['due_date'] = mdate($format1); $date_expire = $directive['due_date'];
-										$date = new DateTime($date_expire);
-										$now = new DateTime();
-										$ddays_left = $date->diff($now)->format("%d"); 
-
-						$format2 = "%Y-%m-%d"; $project['due_date'] = mdate($format2); $date_expire = $project['due_date'];
-										$date = new DateTime($date_expire);
-										$now = new DateTime();
-										$pdays_left = $date->diff($now)->format("%d"); ?>
-
-	            		<?php $in_id = $this->uri->segment(4); ?>
-
->>>>>>> origin/master
 	<div class="wrapper wrapper-content">
 				<div class="row wrapper border-bottom white-bg page-heading crumbs"><?php $query = $this->db->get_where('indicators', array('in_id' => $in_id)); $row = $query->row(); ?>
 				<?php echo $row->fname; ?>  <i class="fa fa-chevron-right"></i>  Overview <div class="pull-right"><a href="<?=base_url();?>indicator/add_directive" class="btn btn-success btn-xs" type="button" role="button"><i class="fa fa-plus"> </i> New Directive</a></div>
@@ -94,21 +74,9 @@
 
 			                                <span class="font-noraml"><?php if($dquery == 0) {echo 'No Inspection Directives';} else { echo '&nbsp;&nbsp;Inspection Directives <span class="label label-success pull-left">'.$dquery;} ?> </span></span>
 			                                <ul class="folder-list" style="padding: 0">
-<<<<<<< HEAD
                                 <li>Active <span class="label label-info pull-right"><?=$drquery6;?></span></li>
                                 <li>Almost Due <span class="label label-warning pull-right"><?=$drquery5;?></span></li>
                                 <li>Over Due <span class="label label-danger pull-right"><?=$drquery0;?></span></li>
-=======
-<<<<<<< HEAD
-                                <li><a href="mailbox.html">Active <span class="label label-info pull-right"><?=$drquery6;?></span> </a></li>
-                                <li><a href="mailbox.html">Almost Due <span class="label label-warning pull-right"><?=$drquery5;?></span> </a></li>
-                                <li><a href="mailbox.html">Over Due <span class="label label-danger pull-right"><?=$drquery0;?></span></a></li>
-=======
-                                <li>Active <span class="label label-info pull-right"><?=$drquery6;?></span></li>
-                                <li>Almost Due <span class="label label-warning pull-right"><?=$drquery5;?></span></li>
-                                <li>Over Due <span class="label label-danger pull-right"><?=$drquery0;?></span></li>
->>>>>>> origin/master
->>>>>>> origin/master
                             </ul>
 										<?php
 										} elseif ($in_id == 2) {
@@ -119,21 +87,9 @@
 
 			                                <span class="font-noraml"><?php if($tquery == 0) {echo 'No Tariff Conditions';} else { echo '&nbsp;&nbsp;Tariff Conditions <span class="label label-success pull-left">'.$tquery;} ?> </span>
 			                                <ul class="folder-list" style="padding: 0">
-<<<<<<< HEAD
                                 <li>Active <span class="label label-info pull-right"><?=$tquery6;?></span></li>
                                 <li>Almost Due <span class="label label-warning pull-right"><?=$tquery5;?></span></li>
                                 <li>Over Due <span class="label label-danger pull-right"><?=$tquery0;?></span></li>
-=======
-<<<<<<< HEAD
-                                <li><a href="mailbox.html">Active <span class="label label-info pull-right"><?=$tquery6;?></span> </a></li>
-                                <li><a href="mailbox.html">Almost Due <span class="label label-warning pull-right"><?=$tquery5;?></span> </a></li>
-                                <li><a href="mailbox.html">Over Due <span class="label label-danger pull-right"><?=$tquery0;?></span></a></li>
-=======
-                                <li>Active <span class="label label-info pull-right"><?=$tquery6;?></span></li>
-                                <li>Almost Due <span class="label label-warning pull-right"><?=$tquery5;?></span></li>
-                                <li>Over Due <span class="label label-danger pull-right"><?=$tquery0;?></span></li>
->>>>>>> origin/master
->>>>>>> origin/master
                             </ul>
 									<?php
 										} elseif ($in_id == 3) {
@@ -143,21 +99,9 @@
 											?>
 			                                <span class="font-noraml"><?php if($tquery == 0) {echo 'No Tariff Conditions';} else { echo '&nbsp;&nbsp;Tariff Conditions <span class="label label-success pull-left">'.$tquery;} ?> </span>
 			                                <ul class="folder-list" style="padding: 0">
-<<<<<<< HEAD
                                 <li>Active <span class="label label-info pull-right"><?=$tquery0;?></span></li>
                                 <li>Almost Due <span class="label label-warning pull-right"><?=$tquery5;?></span></li>
                                 <li>Over Due <span class="label label-danger pull-right"><?=$tquery0;?></span></li>
-=======
-<<<<<<< HEAD
-                                <li><a href="mailbox.html">Active <span class="label label-info pull-right"><?=$tquery0;?></span> </a></li>
-                                <li><a href="mailbox.html">Almost Due <span class="label label-warning pull-right"><?=$tquery5;?></span> </a></li>
-                                <li><a href="mailbox.html">Over Due <span class="label label-danger pull-right"><?=$tquery0;?></span></a></li>
-=======
-                                <li>Active <span class="label label-info pull-right"><?=$tquery0;?></span></li>
-                                <li>Almost Due <span class="label label-warning pull-right"><?=$tquery5;?></span></li>
-                                <li>Over Due <span class="label label-danger pull-right"><?=$tquery0;?></span></li>
->>>>>>> origin/master
->>>>>>> origin/master
                             </ul>
 									<?php
 										}elseif ($in_id == 4) {
