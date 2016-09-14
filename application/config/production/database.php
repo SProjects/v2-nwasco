@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['production'] = array(
     'dsn'	=> '',
-    'hostname' => DBHOSTNAME,
-    'username' => DBUSERNAME,
-    'password' => DBPASSWORD,
-    'database' => DBNAME,
+    'hostname' => getenv('DBHOSTNAME'),
+    'username' => getenv('DBUSERNAME'),
+    'password' => getenv('DBPASSWORD'),
+    'database' => getenv('DBNAME'),
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
