@@ -1,8 +1,7 @@
 <?php 
-class My404 extends CI_Controller 
-{
-    public function __construct() 
-    {
+class My404 extends CI_Controller {
+
+    public function __construct() {
         parent::__construct();
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in())
@@ -12,8 +11,7 @@ class My404 extends CI_Controller
         }
     } 
 
-    public function index() 
-    {
+    public function index() {
         $this->layout->set_body_attr(array('class' => 'gray-bg'));
 
         $this->layout->add_css_files(array('bootstrap.min.css'), base_url().'assets/css/');
@@ -22,5 +20,4 @@ class My404 extends CI_Controller
         $this->output->set_status_header('404');
         $this->load->view('404');//loading in my template 
     } 
-} 
-?> 
+}
