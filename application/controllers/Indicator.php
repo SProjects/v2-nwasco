@@ -1,21 +1,23 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Indicator extends CI_Controller 
-{
+class Indicator extends CI_Controller{
+    public $indicatordao;
 
-
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
+        $this->loadDaos();
+        $this->indicatordao = $this->indicator_dao;
+
         $this->load->library('ion_auth');
 		$this->lang->load('auth');
-	if (!$this->ion_auth->logged_in())
-    {
-      //redirect them to the login page
-      redirect('auth/login', 'refresh');
-    }
-$this->layout->add_custom_meta('meta', array(
+
+        if (!$this->ion_auth->logged_in()) {
+            //redirect them to the login page
+            redirect('auth/login', 'refresh');
+        }
+
+        $this->layout->add_custom_meta('meta', array(
             'charset' => 'utf-8'
         ));
 
@@ -24,67 +26,67 @@ $this->layout->add_custom_meta('meta', array(
             'content' => 'IE=edge'
         ));
 
-$js_text = <<<EOF
-
- $(document).ready(function(){
-
-            $('.summernote').summernote({
-              height: 200,                 // set editor height
-              focus: true,                  // set focus to editable area after initializing summernote
-              toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'italic', 'underline', 'clear']],
-                        ['fontname', ['fontname']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['height', ['height']],
-                        ['help', ['help']]
-                      ]
-            });
-             $('#mycontent').slimScroll({
-                  color: '#333',
-                  height: '540px',
-                  size: '10px',
-                  borderRadius: '0px',
-                  railBorderRadius: '0px',
-                  railVisible: true,
-                  alwaysVisible: true
-              });
-
-            $('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true,
-                format: "yyyy-mm-dd"
-            });
-
-            $('#data_2 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true,
-                format: "yyyy-mm-dd"
-            });
-
-             var config = {
-                '.chosen-select'           : {},
-                '.chosen-select-deselect'  : {allow_single_deselect:true},
-                '.chosen-select-no-single' : {disable_search_threshold:10},
-                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-                '.chosen-select-width'     : {width:"95%"}
-                }
-            for (var selector in config) {
-                $(selector).chosen(config[selector]);
-            }
-
-
-       });
+        $js_text = <<<EOF
+        
+         $(document).ready(function(){
+        
+                    $('.summernote').summernote({
+                      height: 200,                 // set editor height
+                      focus: true,                  // set focus to editable area after initializing summernote
+                      toolbar: [
+                                ['style', ['style']],
+                                ['font', ['bold', 'italic', 'underline', 'clear']],
+                                ['fontname', ['fontname']],
+                                ['color', ['color']],
+                                ['para', ['ul', 'ol', 'paragraph']],
+                                ['height', ['height']],
+                                ['help', ['help']]
+                              ]
+                    });
+                     $('#mycontent').slimScroll({
+                          color: '#333',
+                          height: '540px',
+                          size: '10px',
+                          borderRadius: '0px',
+                          railBorderRadius: '0px',
+                          railVisible: true,
+                          alwaysVisible: true
+                      });
+        
+                    $('#data_1 .input-group.date').datepicker({
+                        todayBtn: "linked",
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        calendarWeeks: true,
+                        autoclose: true,
+                        format: "yyyy-mm-dd"
+                    });
+        
+                    $('#data_2 .input-group.date').datepicker({
+                        todayBtn: "linked",
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        calendarWeeks: true,
+                        autoclose: true,
+                        format: "yyyy-mm-dd"
+                    });
+        
+                     var config = {
+                        '.chosen-select'           : {},
+                        '.chosen-select-deselect'  : {allow_single_deselect:true},
+                        '.chosen-select-no-single' : {disable_search_threshold:10},
+                        '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+                        '.chosen-select-width'     : {width:"95%"}
+                        }
+                    for (var selector in config) {
+                        $(selector).chosen(config[selector]);
+                    }
+        
+        
+               });
 EOF;
 
-$this->layout->add_js_rawtext($js_text, 'footer');
+        $this->layout->add_js_rawtext($js_text, 'footer');
 
         $this->layout->set_body_attr(array('id' => 'home', 'class' => 'fixed-sidebar no-skin-config full-height-layout'));
 
@@ -116,159 +118,226 @@ $this->layout->add_js_rawtext($js_text, 'footer');
         //Main Scripts
     }
 
+    public function loadDaos(){
+        $this->load->model('daos/indicator_dao');
+    }
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
-	public function index()
-	{
+	public function index() {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['indicators']  = $this->core->getIndicators();
+            $data['directives'] = $this->core->show_directives();
 
+            $indicators = $this->indicatordao->get();
+            $data['indicatorObjs'] = $indicators;
+
+            $this->load->view('header', $data);
+            $this->load->view('indicators/index', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
 	}
 
-    public function details($directive, $id) {
+	public function add() {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['indicators']  = $this->core->getIndicators();
 
-        $this->data['current_user_menu'] = '';
-        if($this->ion_auth->in_group('admin'))
-        {
-
-
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities']  = $this->core->getAllUtilities();
-        $data['schemes']  = $this->core->getSchemes();
-        $data['indicators']  = $this->core->getIndicators();
-        $data['directives'] = $this->core->listDirectives($id);
-        $data['projects']   = $this->core->listProjects($id);
-        $data['tariffs']    = $this->core->listTarrifs($id);
-        $data['licence']    = $this->core->listLcondtions($id);
-        $data['srs']    = $this->core->listSRS($id); 
-        // load views and send data
-
-        // load views and send data
-        $this->data['current_user_menu'] = $this->load->view('header', $data);
-        $this->data['current_user_menu'] = $this->load->view('templates/view_indicator', $data);
-        $this->data['current_user_menu'] = $this->load->view('footer_main');
-       }
-       else
-       {
-         //If no session, redirect to login page
-         redirect('auth/login');
-       }
-    }
-
-    public function show_directive() 
-    {
-
-
-        $this->data['current_user_menu'] = '';
-        if ($this->ion_auth->logged_in())
-            {
-
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $id = $this->uri->segment(3);
-        $data['utilities']  = $this->core->getAllUtilities();
-        $data['schemes']  = $this->core->getSchemes();
-        $data['indicators']  = $this->core->getIndicators();
-        $data['directives'] = $this->core->show_directives();
-        $data['single_directive'] = $this->core->directive_id($id);
-
-        // load views and send data
-        $this->data['current_user_menu'] = $this->load->view('header', $data);
-        $this->data['current_user_menu'] = $this->load->view('templates/edit_directive', $data);
-        $this->data['current_user_menu'] = $this->load->view('footer_main');
-       }
-       else
-       {
-         //If no session, redirect to login page
-         redirect('auth/login');
-       }
-    }
-          function add_directive() {
-          $this->data['current_user_menu'] = '';
-        if ($this->ion_auth->logged_in())
-            {
-              $this->layout->set_title('Add Directive :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities']  = $this->core->getAllUtilities();
-        $data['schemes']  = $this->core->getSchemes();
-        $data['indicators']  = $this->core->getIndicators();
-        // load views and send data
-        $this->data['current_user_menu'] = $this->load->view('header', $data);
-        $this->data['current_user_menu'] = $this->load->view('templates/add_directive', $data);
-        $this->data['current_user_menu'] = $this->load->view('footer_main');
+            $this->load->view('header', $data);
+            $this->load->view('indicators/add', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
         }
-       else
-       {
-         //If no session, redirect to login page
-         redirect('auth/login');
-       }
     }
 
-        function edit_directive() {
+    public function create() {
+        $name = $this->input->post('name');
+        $description = $this->input->post('description');
 
+        $new_indicator = new Indicator_model(NULL, $name, $description);
+        if($this->indicatordao->post($new_indicator)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+	public function edit($id) {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['indicators']  = $this->core->getIndicators();
+
+            $indicator = $this->indicatordao->getById($id);
+            $data['indicator'] = $indicator;
+
+            $this->load->view('header', $data);
+            $this->load->view('indicators/edit', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function update() {
+        if ($this->ion_auth->logged_in()) {
+            $id = $this->input->post('id');
+            $name = $this->input->post('name');
+            $description = $this->input->post('description');
+
+            $indicator = $this->indicatordao->getById($id);
+            $indicator->setName($name);
+            $indicator->setDescription($description);
+
+            if($this->indicatordao->update($indicator)) {
+                $this->output->set_status_header(200);
+            } else {
+                $this->output->set_status_header(500);
+            }
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function delete($id) {
+        if ($this->ion_auth->logged_in()) {
+            $this->indicatordao->delete($id);
+            redirect('/indicator/', 'refresh');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    //Methods to handle directives. TODO: Should be moved to a Directives controller
+
+    public function details($id) {
         $this->data['current_user_menu'] = '';
-        if ($this->ion_auth->logged_in())
-            {
+        if($this->ion_auth->in_group('admin')) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['indicators']  = $this->core->getIndicators();
+            $data['directives'] = $this->core->listDirectives($id);
+            $data['projects']   = $this->core->listProjects($id);
+            $data['tariffs']    = $this->core->listTarrifs($id);
+            $data['licence']    = $this->core->listLcondtions($id);
+            $data['srs']    = $this->core->listSRS($id);
+            // load views and send data
 
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $id = $this->uri->segment(3);
-        $data['schemes']  = $this->core->getSchemes();
-        $data['utilities']  = $this->core->getAllUtilities();
-        $data['indicators']  = $this->core->getIndicators();
-        $data['directives'] = $this->core->show_directives();
-        $data['single_directive'] = $this->core->edit_directive($id);
-
-        // load views and send data
-        $this->data['current_user_menu'] = $this->load->view('header', $data);
-        $this->data['current_user_menu'] = $this->load->view('templates/edit_directive', $data);
-        $this->data['current_user_menu'] = $this->load->view('footer_main');
-         }
-       else
-       {
+            // load views and send data
+            $this->data['current_user_menu'] = $this->load->view('header', $data);
+            $this->data['current_user_menu'] = $this->load->view('templates/view_indicator', $data);
+            $this->data['current_user_menu'] = $this->load->view('footer_main');
+        } else {
          //If no session, redirect to login page
          redirect('auth/login');
+        }
+    }
+
+    public function show_directive() {
+        $this->data['current_user_menu'] = '';
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $id = $this->uri->segment(3);
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['indicators']  = $this->core->getIndicators();
+            $data['directives'] = $this->core->show_directives();
+            $data['single_directive'] = $this->core->directive_id($id);
+
+            // load views and send data
+            $this->data['current_user_menu'] = $this->load->view('header', $data);
+            $this->data['current_user_menu'] = $this->load->view('templates/edit_directive', $data);
+            $this->data['current_user_menu'] = $this->load->view('footer_main');
+        } else {
+         //If no session, redirect to login page
+         redirect('auth/login');
+        }
+    }
+
+    public function add_directive() {
+        $this->data['current_user_menu'] = '';
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Add Directive :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['indicators']  = $this->core->getIndicators();
+
+            // load views and send data
+            $this->data['current_user_menu'] = $this->load->view('header', $data);
+            $this->data['current_user_menu'] = $this->load->view('templates/add_directive', $data);
+            $this->data['current_user_menu'] = $this->load->view('footer_main');
+        } else {
+            //If no session, redirect to login page
+            redirect('auth/login');
        }
     }
 
-            function update_directive() {
+    public function edit_directive() {
+        $this->data['current_user_menu'] = '';
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $id = $this->uri->segment(3);
+            $data['schemes']  = $this->core->getSchemes();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['indicators']  = $this->core->getIndicators();
+            $data['directives'] = $this->core->show_directives();
+            $data['single_directive'] = $this->core->edit_directive($id);
 
-                $issue_date = $this->input->post('issue_date');
-                $issue_date = date( 'Y-m-d H:i:s', strtotime( $issue_date ) );
-                $due_date = $this->input->post('due_date');
-                $due_date = date( 'Y-m-d H:i:s', strtotime( $due_date ) );
-                $id= $this->input->post('dir_id');
-                $data = array(
-                'issue_date' => $issue_date,
-                'due_date' => $due_date,
-                'directive' => $this->input->post('directive'),
-                'comments' => $this->input->post('comment')
-                );
-                $this->core->update_directive($id, $data);
-                echo'<div class="alert alert-success">One record inserted Successfully</div>';
-                $this->edit_directive($id);
-                }
+            // load views and send data
+            $this->data['current_user_menu'] = $this->load->view('header', $data);
+            $this->data['current_user_menu'] = $this->load->view('templates/edit_directive', $data);
+            $this->data['current_user_menu'] = $this->load->view('footer_main');
+        } else {
+             //If no session, redirect to login page
+             redirect('auth/login');
+        }
+    }
+
+    public function update_directive() {
+        $issue_date = $this->input->post('issue_date');
+        $issue_date = date( 'Y-m-d H:i:s', strtotime( $issue_date ) );
+        $due_date = $this->input->post('due_date');
+        $due_date = date( 'Y-m-d H:i:s', strtotime( $due_date ) );
+        $id= $this->input->post('dir_id');
+        $data = array(
+        'issue_date' => $issue_date,
+        'due_date' => $due_date,
+        'directive' => $this->input->post('directive'),
+        'comments' => $this->input->post('comment')
+        );
+        $this->core->update_directive($id, $data);
+        echo'<div class="alert alert-success">One record inserted Successfully</div>';
+        $this->edit_directive($id);
+    }
 }
 
 
