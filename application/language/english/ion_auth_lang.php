@@ -50,14 +50,14 @@ $lang['update_unsuccessful']                 = 'Unable to Update Account Informa
 $lang['delete_successful']                   = 'User Deleted';
 $lang['delete_unsuccessful']                 = 'Unable to Delete User';
 
-// Groups
-$lang['group_creation_successful']           = 'Group created Successfully';
-$lang['group_already_exists']                = 'Group name already taken';
-$lang['group_update_successful']             = 'Group details updated';
-$lang['group_delete_successful']             = 'Group deleted';
+// Roles
+$lang['group_creation_successful']           = 'Role created Successfully';
+$lang['group_already_exists']                = 'Role name already taken';
+$lang['group_update_successful']             = 'Role details updated';
+$lang['group_delete_successful']             = 'Role deleted';
 $lang['group_delete_unsuccessful']           = 'Unable to delete group';
 $lang['group_delete_notallowed']             = 'Can\'t delete the administrators\' group';
-$lang['group_name_required']                 = 'Group name is a required field';
+$lang['group_name_required']                 = 'Role name is a required field';
 $lang['group_name_admin_not_alter']          = 'Admin group name can not be changed';
 
 // Activation Email

@@ -815,7 +815,7 @@ EOF;
                 // check to see if we are creating the group
                 // redirect them back to the admin page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect("auth", 'refresh');
+                redirect("auth/view_groups", 'refresh');
             }
         } else {
             // display the create group form
@@ -835,14 +835,45 @@ EOF;
                 'value' => $this->form_validation->set_value('description'),
             );
 
-            $this->layout->set_title('Create Group :: Nwasco Dashboard');
+            $this->layout->set_title('View Users :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
+            $this->data['schemes']  = $this->core->getSchemes();
             // render
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
             $this->_render_page('auth/create_group', $this->data);
+            $this->_render_page('user_foot', $this->data);
+            $this->_render_page('footer_main', $this->data);
+        }
+    }
+
+    function view_groups() {
+        if (!$this->ion_auth->logged_in()) {
+
+            // redirect them to the login page
+            redirect('auth/login', 'refresh');
+        } elseif (!$this->ion_auth->is_admin()) // remove this elseif if you want to enable this for non-admins
+        {
+            // redirect them to the home page because they must be an administrator to view this
+            return show_error('You must be an administrator to view this page.');
+        } else {
+            // set the flash data error message if there is one
+            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+            //list the roles
+            $this->data['roles'] = $this->ion_auth->groups()->result();
+
+            $this->layout->set_title('View Users :: Nwasco Dashboard');
+            $this->data['user'] = $this->ion_auth->user()->row();
+            $this->data['utilities'] = $this->core->getAllUtilities();
+            $this->data['indicators'] = $this->core->getIndicators();
+            $this->data['schemes']  = $this->core->getSchemes();
+
+            $this->_render_page('header', $this->data);
+            $this->_render_page('user_nav', $this->data);
+            $this->_render_page('auth/view_groups', $this->data);
             $this->_render_page('user_foot', $this->data);
             $this->_render_page('footer_main', $this->data);
         }
@@ -875,7 +906,7 @@ EOF;
                 } else {
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
                 }
-                redirect("auth", 'refresh');
+                redirect("auth/view_groups", 'refresh');
             }
         }
 

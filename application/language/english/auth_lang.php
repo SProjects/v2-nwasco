@@ -39,7 +39,7 @@ $lang['index_subheading']        = 'Below is a list of the users.';
 $lang['index_fname_th']          = 'First Name';
 $lang['index_lname_th']          = 'Last Name';
 $lang['index_email_th']          = 'Email';
-$lang['index_groups_th']         = 'Groups';
+$lang['index_groups_th']         = 'Roles';
 $lang['index_status_th']         = 'Status';
 $lang['index_phone_th']         = 'Phone';
 $lang['index_action_th']         = 'Action';
@@ -47,7 +47,7 @@ $lang['index_active_link']       = 'Active';
 $lang['index_inactive_link']     = 'Inactive';
 $lang['index_view_user_link']    = 'User List';
 $lang['index_create_user_link']  = 'Create a new user';
-$lang['index_create_group_link'] = 'Create a new group';
+$lang['index_create_group_link'] = 'Create a new role';
 
 
 // Deactivate User
@@ -90,37 +90,44 @@ $lang['edit_user_email_label']                       = 'Email:';
 $lang['edit_user_phone_label']                       = 'Phone:';
 $lang['edit_user_password_label']                    = 'Password: (if changing password)';
 $lang['edit_user_password_confirm_label']            = 'Confirm Password: (if changing password)';
-$lang['edit_user_groups_heading']                    = 'Member of groups';
+$lang['edit_user_groups_heading']                    = 'Role of user';
 $lang['edit_user_submit_btn']                        = 'Save User';
 $lang['edit_user_validation_fname_label']            = 'First Name';
 $lang['edit_user_validation_lname_label']            = 'Last Name';
 $lang['edit_user_validation_email_label']            = 'Email Address';
 $lang['edit_user_validation_phone_label']            = 'Phone';
 $lang['edit_user_validation_company_label']          = 'Company Name';
-$lang['edit_user_validation_groups_label']           = 'Groups';
+$lang['edit_user_validation_groups_label']           = 'Roles';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
 
-// Create Group
-$lang['create_group_title']                  = 'Create Group';
-$lang['create_group_heading']                = 'Create Group';
-$lang['create_group_subheading']             = 'Please enter the group information below.';
-$lang['create_group_name_label']             = 'Group Name:';
+// Create Role
+$lang['create_group_title']                  = 'Create Role';
+$lang['create_group_heading']                = 'Create Role';
+$lang['create_group_subheading']             = 'Please enter the role information below.';
+$lang['create_group_name_label']             = 'Role Name:';
 $lang['create_group_desc_label']             = 'Description:';
-$lang['create_group_submit_btn']             = 'Create Group';
-$lang['create_group_validation_name_label']  = 'Group Name';
+$lang['create_group_submit_btn']             = 'Create Role';
+$lang['create_group_validation_name_label']  = 'Role Name';
 $lang['create_group_validation_desc_label']  = 'Description';
 
-// Edit Group
-$lang['edit_group_title']                  = 'Edit Group';
-$lang['edit_group_saved']                  = 'Group Saved';
-$lang['edit_group_heading']                = 'Edit Group';
-$lang['edit_group_subheading']             = 'Please enter the group information below.';
-$lang['edit_group_name_label']             = 'Group Name:';
+// Edit Role
+$lang['edit_group_title']                  = 'Edit Role';
+$lang['edit_group_saved']                  = 'Role Saved';
+$lang['edit_group_heading']                = 'Edit Role';
+$lang['edit_group_subheading']             = 'Please enter the role information below.';
+$lang['edit_group_name_label']             = 'Role Name:';
 $lang['edit_group_desc_label']             = 'Description:';
-$lang['edit_group_submit_btn']             = 'Save Group';
-$lang['edit_group_validation_name_label']  = 'Group Name';
+$lang['edit_group_submit_btn']             = 'Save Role';
+$lang['edit_group_validation_name_label']  = 'Role Name';
 $lang['edit_group_validation_desc_label']  = 'Description';
+
+// View Role
+$lang['group_heading']           = 'Roles';
+$lang['group_subheading']        = 'Below is a list of the roles.';
+$lang['index_view_group_link']  = 'Role List';
+$lang['view_group_name_th']  = 'Name';
+$lang['view_group_description_th']  = 'Description';
 
 // Change Password
 $lang['change_password_heading']                               = 'Change Password';

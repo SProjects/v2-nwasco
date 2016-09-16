@@ -1,7 +1,9 @@
-<h2><i class="fa fa-users"></i> <?php echo lang('index_heading');?></h2>
-<p><?php echo lang('index_subheading');?></p>
+<h2><i class="fa fa-user"></i> <?php echo lang('index_heading');?></h2>
+<p class="font-bold"><?php echo lang('index_subheading');?></p>
 
-<div id="infoMessage"><?php echo $message;?></div>
+<?php if(isset($_SESSION['message'])): ?>
+	<div class="alert alert-info" id="infoMessage"><?php echo $message;?></div>
+<?php endif; ?>
 
 <div class="full-height-scroll">
        <div class="table-responsive users-list">
