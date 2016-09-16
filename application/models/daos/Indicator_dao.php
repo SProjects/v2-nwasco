@@ -1,5 +1,5 @@
 <?php
-require './application/models/indicator_model.php';
+require APPPATH.'models/indicator_model.php';
 
 class Indicator_dao extends CI_Model {
     const TABLE_NAME = 'indicators';
