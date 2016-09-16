@@ -633,6 +633,7 @@ EOF;
             $this->data['user'] = $this->ion_auth->user()->row();
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
+            $this->data['schemes']  = $this->core->getSchemes();
 
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
