@@ -2,37 +2,20 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Utility extends CI_Controller {
+    public $utilitydao;
 
-	function Utilities() {
+    public function __construct() {
+        parent::__construct();
+        $this->loadDaos();
+        $this->utilitydao = $this->utility_dao;
 
-	// load controller parent
+        $this->load->library('ion_auth');
 
-	parent::Controller();
-	    $this->load->library('ion_auth');
-    if (!$this->ion_auth->logged_in())
-    {
-      //redirect them to the login page
-      redirect('auth/login', 'refresh');
-    }
-       
-    }
+        if (!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
 
-	function index() {
-
-	//$data['utilities']=$this->core->getUsersWhere(‘id <‘,5);
-
-	//$data['utilities']=$this->core->getNumUtilities();
-
-	//$data['title'] = 'Utilities';
-
-	// load ‘users_view’ view
-
-	//$this->load->view('utility_view',$data);
-
-	}
-	 public function details($id)//single post page
-    {
-		 $this->layout->add_custom_meta('meta', array(
+        $this->layout->add_custom_meta('meta', array(
             'charset' => 'utf-8'
         ));
 
@@ -41,7 +24,7 @@ class Utility extends CI_Controller {
             'content' => 'IE=edge'
         ));
 
-$js_text = <<<EOF
+        $js_text = <<<EOF
 
     jQuery(document).ready(function($) {
                 $("#dxs").tooltip();
@@ -73,18 +56,20 @@ $js_text = <<<EOF
           });
 EOF;
 
-$this->layout->add_js_rawtext($js_text, 'footer');
+        $this->layout->add_js_rawtext($js_text, 'footer');
 
         $this->layout->set_body_attr(array('id' => 'home', 'class' => 'fixed-sidebar no-skin-config full-height-layout'));
 
-		$this->layout->add_css_file('//fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-        $this->layout->add_css_files(array('font-awesome.css'), base_url().'assets/font-awesome/css/');
-        $this->layout->add_css_files(array('toastr.min.css'), base_url().'assets/css/plugins/toastr/');
-        $this->layout->add_css_files(array('jquery.gritter.css'), base_url().'assets/js/plugins/gritter/');
-        $this->layout->add_css_files(array('slick.css'), base_url().'assets/css/plugins/slick/');
-        $this->layout->add_css_files(array('slick-theme.css'), base_url().'assets/css/plugins/slick/');
-        $this->layout->add_css_files(array('dataTables.bootstrap.css','dataTables.responsive.css','dataTables.tableTools.min.css'), base_url().'assets/css/plugins/dataTables/');
-        $this->layout->add_css_files(array('bootstrap.min.css','animate.css','style.css','unslider.css'), base_url().'assets/css/');
+        $this->layout->add_css_file('//fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+        $this->layout->add_css_files(array('font-awesome.css'), base_url() . 'assets/font-awesome/css/');
+        $this->layout->add_css_files(array('toastr.min.css'), base_url() . 'assets/css/plugins/toastr/');
+        $this->layout->add_css_files(array('jquery.gritter.css'), base_url() . 'assets/js/plugins/gritter/');
+        $this->layout->add_css_files(array('slick.css'), base_url() . 'assets/css/plugins/slick/');
+        $this->layout->add_css_files(array('slick-theme.css'), base_url() . 'assets/css/plugins/slick/');
+        $this->layout->add_css_files(array('dataTables.bootstrap.css', 'dataTables.responsive.css', 'dataTables.tableTools.min.css'), base_url() . 'assets/css/plugins/dataTables/');
+        $this->layout->add_css_files(array('bootstrap.min.css', 'animate.css', 'style.css', 'unslider.css'), base_url() . 'assets/css/');
+
+        $this->layout->add_js_file('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js');
 
         //Main Scripts
         $this->layout->add_js_files(array('jquery-2.1.1.js'), base_url('assets/js/'), 'footer');
@@ -100,41 +85,155 @@ $this->layout->add_js_rawtext($js_text, 'footer');
         $this->layout->add_js_files(array('slick.min.js'), base_url('assets/js/plugins/slick/'), 'footer');
 
         //Data Tables -->
-        $this->layout->add_js_files(array('jquery.dataTables.js','dataTables.bootstrap.js','dataTables.responsive.js','dataTables.tableTools.min.js'), base_url('assets/js/plugins/dataTables/'), 'footer');
+        $this->layout->add_js_files(array('jquery.dataTables.js', 'dataTables.bootstrap.js', 'dataTables.responsive.js', 'dataTables.tableTools.min.js'), base_url('assets/js/plugins/dataTables/'), 'footer');
 
-        $this->layout->add_js_files(array('inspinia.js','bootstrap.min.js'), base_url('assets/js/'), 'footer');
+        $this->layout->add_js_files(array('inspinia.js', 'bootstrap.min.js'), base_url('assets/js/'), 'footer');
 
         // Pace
         $this->layout->add_js_files(array('pace.min.js'), base_url('assets/js/plugins/pace/'), 'footer');
-		
-    	$this->data['current_user_menu'] = '';
-	   if ($this->ion_auth->logged_in())
-            {
 
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-    		$data['user'] = $this->ion_auth->user()->row();
-        $data['utilities']  = $this->core->getAllUtilities();
-    		$data['schemes']  = $this->core->getSchemes();
-    		$data['indicators']  = $this->core->getIndicators();
-        $data['directives'] = $this->core->listDirectives($id);
-        $data['projects']   = $this->core->listProjects($id);
-        $data['tariffs']    = $this->core->listTarrifs($id);
-        $data['licence']    = $this->core->listLcondtions($id);
-        $data['srs']    = $this->core->listSRS($id); 
-        // load views and send data
-         
-        // load views and send data
-        $this->data['current_user_menu'] = $this->load->view('header', $data);
-    		$this->data['current_user_menu'] = $this->load->view('templates/view_utility', $data);
-    		$this->data['current_user_menu'] = $this->load->view('footer_main', $data);
-       }
-       else
-       {
-         //If no session, redirect to login page
-         redirect('auth/login');
-       }
+
+    }
+
+    public function loadDaos() {
+        $this->load->model('daos/utility_dao');
+    }
+
+    public function index() {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+
+            $utilities = $this->utilitydao->get(); //Using the UtilityDao class
+            $data['utilityObjs'] = $utilities;
+
+            $this->load->view('header', $data);
+            $this->load->view('utilities/index', $data);
+            $this->load->view('footer_main', $data);
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function add() {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+            $data['inspectors'] = $this->ion_auth->users()->result();
+
+            $this->load->view('header', $data);
+            $this->load->view('utilities/add', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function create() {
+        $name = $this->input->post('name');
+        $abbreviation = $this->input->post('abbreviation');
+        $inspector_id = $this->input->post('inspector');
+
+        $inspector = NULL;
+        if($inspector_id != -1) {
+            $inspector = $this->ion_auth->user($inspector_id)->row();
+        }
+
+        $new_utility = new Utility_model(NULL, $name, $abbreviation, $inspector);
+        if($this->utilitydao->post($new_utility)) {
+            $this->output->set_status_header(200);
+            return true;
+        } else {
+            $this->output->set_status_header(500);
+            return false;
+        }
+    }
+
+    public function edit($id) {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+            $data['inspectors'] = $this->ion_auth->users()->result();
+
+            $utility = $this->utilitydao->getById($id);
+            $data['utility'] = $utility;
+
+            $this->load->view('header', $data);
+            $this->load->view('utilities/edit', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function update() {
+        if ($this->ion_auth->logged_in()) {
+            $id = $this->input->post('id');
+            $name = $this->input->post('name');
+            $abbreviation = $this->input->post('abbreviation');
+            $inspector_id = $this->input->post('inspector');
+
+            //TODO: Improve this by adding it to a save() in the Utility model
+            $utility = $this->utilitydao->getById($id);
+            $utility->setName($name);
+            $utility->setAbbreviation($abbreviation);
+            if ($inspector_id == -1) {
+                $utility->setInspector(NULL);
+            } elseif ($inspector_id != $utility->getInspectorId()) {
+                $inspector = $this->ion_auth->user($inspector_id)->row();
+                $utility->setInspector($inspector);
+            }
+
+            if($this->utilitydao->update($utility)) {
+                $this->output->set_status_header(200);
+            } else {
+                $this->output->set_status_header(500);
+            }
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function details($id) {
+        $this->data['current_user_menu'] = '';
+        if ($this->ion_auth->logged_in()) {
+
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+            $data['directives'] = $this->core->listDirectives($id);
+            $data['projects'] = $this->core->listProjects($id);
+            $data['tariffs'] = $this->core->listTarrifs($id);
+            $data['licence'] = $this->core->listLcondtions($id);
+            $data['srs'] = $this->core->listSRS($id);
+            // load views and send data
+
+            // load views and send data
+            $this->data['current_user_menu'] = $this->load->view('header', $data);
+            $this->data['current_user_menu'] = $this->load->view('templates/view_utility', $data);
+            $this->data['current_user_menu'] = $this->load->view('footer_main', $data);
+        } else {
+            redirect('auth/login');
+        }
     }
 
 }

@@ -22,6 +22,9 @@
                     <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Commercial Utilities</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
+                        <li class="<?= ($this->uri->segment(1) === 'utility' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
+                            <a href="<?php echo base_url() . "utility"; ?>">Manage Utilities</a>
+                        </li>
                         <?php //if there is comments then print the comments
                         if (count($utilities) > 0)
                             foreach ($utilities as $utility) {
