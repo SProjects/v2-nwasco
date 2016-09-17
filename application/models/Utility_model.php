@@ -42,7 +42,7 @@ class Utility_model extends CI_Model {
         return $this->inspector;
     }
 
-    public function getInspectorString() {
+    public function getInspectorName() {
         $inspector = $this->inspector;
         return $inspector != NULL ? $inspector->last_name .' '. $inspector->first_name : NULL;
     }
