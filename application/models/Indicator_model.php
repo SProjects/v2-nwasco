@@ -1,4 +1,5 @@
 <?php
+require_once APPPATH.'models/daos/Indicator_property_dao.php';
 
 class Indicator_model extends CI_Model {
     private $id;
@@ -34,5 +35,10 @@ class Indicator_model extends CI_Model {
 
     public function setDescription($description) {
         $this->description = $description;
+    }
+
+    public function getIndicatorProperties($obj) {
+        $indicator_property_dao = new Indicator_property_dao();
+        return $indicator_property_dao->getByIndicator($obj);
     }
 }

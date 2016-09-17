@@ -16,6 +16,7 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Properties(#)</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -26,6 +27,13 @@
                         <td><?php echo $x; ?></td>
                         <td><?php echo $indicator->getName(); ?></td>
                         <td><?php echo $indicator->getDescription(); ?></td>
+                        <td>
+                            <?= sizeof($indicator->getIndicatorProperties($indicator)).' '; ?>
+                            <a href="<?= base_url().'indicator_properties/show/'.$indicator->getId(); ?>"
+                               type="button" title="Add property" class="btn btn-xs btn-white">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </td>
                         <td>
                             <div class="btn-group">
                                 <a href="<?php echo base_url()."indicator/details/directives/".$indicator->getId(); ?>"
