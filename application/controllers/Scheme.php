@@ -1,26 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Scheme extends CI_Controller
-{
+class Scheme extends CI_Controller {
+    public $schemedao;
 
-    public function Schemes() {
+    public function __construct() {
+        parent::__construct();
+        $this->loadDaos();
+        $this->schemedao = $this->scheme_dao;
 
-        // load controller parent
-
-        parent::Controller();
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
 
-    }
-
-    public function index() {
-
-    }
-
-    public function details($id) {
         $this->layout->add_custom_meta('meta', array(
             'charset' => 'utf-8'
         ));
@@ -75,6 +68,8 @@ EOF;
         $this->layout->add_css_files(array('dataTables.bootstrap.css', 'dataTables.responsive.css', 'dataTables.tableTools.min.css'), base_url() . 'assets/css/plugins/dataTables/');
         $this->layout->add_css_files(array('bootstrap.min.css', 'animate.css', 'style.css', 'unslider.css'), base_url() . 'assets/css/');
 
+        $this->layout->add_js_file('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js');
+
         //Main Scripts
         $this->layout->add_js_files(array('jquery-2.1.1.js'), base_url('assets/js/'), 'footer');
 
@@ -95,10 +90,124 @@ EOF;
 
         // Pace
         $this->layout->add_js_files(array('pace.min.js'), base_url('assets/js/plugins/pace/'), 'footer');
+    }
 
+    public function loadDaos(){
+        $this->load->model('daos/scheme_dao');
+    }
+
+    public function index() {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+            $data['sindicators'] = $this->core->getSchemeIndicators();
+
+            $scheme = $this->schemedao->get();
+            $data['schemeObjs'] = $scheme;
+
+            $this->load->view('header', $data);
+            $this->load->view('schemes/index', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function add() {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+            $data['sindicators'] = $this->core->getSchemeIndicators();
+            $data['inspectors'] = $this->ion_auth->users()->result();
+
+            $this->load->view('header', $data);
+            $this->load->view('schemes/add', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function create() {
+        $name = $this->input->post('name');
+        $inspector_id = $this->input->post('inspector');
+
+        $inspector = NULL;
+        if($inspector_id != -1) {
+            $inspector = $this->ion_auth->user($inspector_id)->row();
+        }
+
+        $new_scheme = new Scheme_model(NULL, $name, $inspector);
+        if($this->schemedao->post($new_scheme)) {
+            $this->output->set_status_header(200);
+            return true;
+        } else {
+            $this->output->set_status_header(500);
+            return false;
+        }
+    }
+
+    public function edit($id) {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+            $data['inspectors'] = $this->ion_auth->users()->result();
+
+            $scheme = $this->schemedao->getById($id);
+            $data['scheme'] = $scheme;
+
+            $this->load->view('header', $data);
+            $this->load->view('schemes/edit', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function update() {
+        if ($this->ion_auth->logged_in()) {
+            $id = $this->input->post('id');
+            $name = $this->input->post('name');
+            $inspector_id = $this->input->post('inspector');
+
+            //TODO: Improve this by adding it to a save() in the Scheme model
+            $scheme = $this->schemedao->getById($id);
+            $scheme->setName($name);
+            if ($inspector_id == -1) {
+                $scheme->setInspector(NULL);
+            } elseif ($inspector_id != $scheme->getInspectorId()) {
+                $inspector = $this->ion_auth->user($inspector_id)->row();
+                $scheme->setInspector($inspector);
+            }
+
+            if($this->schemedao->update($scheme)) {
+                $this->output->set_status_header(200);
+            } else {
+                $this->output->set_status_header(500);
+            }
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function details($id) {
         $this->data['current_user_menu'] = '';
         if ($this->ion_auth->logged_in()) {
-
             $this->layout->set_title('Welcome to :: Nwasco Dashboard');
             $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
             $data['title'] = $this->lang->line('login_heading');
@@ -110,14 +219,12 @@ EOF;
             $data['sdirectives'] = $this->core->listSchemeDirectives($id);
             $data['tariffs'] = $this->core->listTarrifs($id);
             $data['srs'] = $this->core->listSRS($id);
-            // load views and send data
 
             // load views and send data
             $this->data['current_user_menu'] = $this->load->view('header', $data);
             $this->data['current_user_menu'] = $this->load->view('templates/view_scheme', $data);
             $this->data['current_user_menu'] = $this->load->view('footer_main', $data);
         } else {
-            //If no session, redirect to login page
             redirect('auth/login');
         }
     }

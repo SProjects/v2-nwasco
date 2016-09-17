@@ -82,6 +82,9 @@
                     <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Private Schemes</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
+                        <li class="<?= ($this->uri->segment(1) === 'scheme' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
+                            <a href="<?php echo base_url() . "scheme"; ?>">Manage Schemes</a>
+                        </li>
                         <?php //if there is comments then print the comments
                         if (count($schemes) > 0)
                             foreach ($schemes as $scheme) {
@@ -95,7 +98,7 @@
                                     $url = str_replace("'", '', $url);
                                     $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
 
-                                    echo base_url(); ?>scheme/details/<?php echo urlencode(strtolower($url)); ?>/<?php echo $scheme->ps_id; ?>">
+                                    echo base_url(); ?>scheme/details/<?php echo $scheme->ps_id; ?>/<?php echo urlencode(strtolower($url)); ?>">
                                         <?= $scheme->scheme; ?>
                                     </a></li>
                                 <?php

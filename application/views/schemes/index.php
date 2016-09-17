@@ -1,11 +1,11 @@
 <div class="wrapper wrapper-content">
-    <div class="row wrapper border-bottom white-bg page-heading crumbs">Commercial Utilities</div>
+    <div class="row wrapper border-bottom white-bg page-heading crumbs">Private Schemes</div>
     <div>
         <div class="col-lg-12 jss">
             <div class="pull-right">
                 <div class="btn-group">
-                    <a href="<?php echo base_url().'utility/add'; ?>" type="button" class="btn btn-xs btn-success">
-                        Add New Commercial Utility
+                    <a href="<?php echo base_url().'scheme/add'; ?>" type="button" class="btn btn-xs btn-success">
+                        Add New Private Scheme
                     </a>
                 </div>
                 <h3></h3>
@@ -15,26 +15,24 @@
                 <tr role="row">
                     <th>#</th>
                     <th>Name</th>
-                    <th>Abbreviation</th>
                     <th>Inspector</th>
                     <th></th>
                 </tr>
                 </thead>
                 <?php $x = 1;
-                foreach ($utilityObjs as $utility) { ?>
+                foreach ($schemeObjs as $scheme) { ?>
                     <tbody>
                     <tr>
                         <td><?php echo $x; ?></td>
-                        <td><?php echo $utility->getName(); ?></td>
-                        <td><?php echo $utility->getAbbreviation(); ?></td>
-                        <td><?php echo $utility->getInspectorName(); ?></td>
+                        <td><?php echo $scheme->getName(); ?></td>
+                        <td><?php echo $scheme->getInspectorName(); ?></td>
                         <td>
                             <div class="btn-group">
-                                <a href="<?php echo base_url()."utility/details/".$utility->getId(); ?>"
+                                <a href="<?php echo base_url()."scheme/details/".$scheme->getId(); ?>"
                                    type="button" title="View" class="btn btn-xs btn-white">
                                     <i class="fa fa-external-link"></i>
                                 </a>
-                                <a href="<?php echo base_url()."utility/edit/".$utility->getId(); ?>"
+                                <a href="<?php echo base_url()."scheme/edit/".$scheme->getId(); ?>"
                                    type="button" title="Edit" class="btn btn-xs btn-white">
                                     <i class="fa fa-edit"></i>
                                 </a>
