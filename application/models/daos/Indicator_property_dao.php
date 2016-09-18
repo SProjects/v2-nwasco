@@ -19,7 +19,7 @@ class Indicator_property_dao extends CI_Model {
     }
 
     public function getByIndicator($indicator) {
-        return $this->get(array(self::INDICATOR_FIELD, $indicator->getId()));
+        return $this->get(array(self::INDICATOR_FIELD => $indicator->getId()));
     }
 
     public function get($where_fields = array()) {
