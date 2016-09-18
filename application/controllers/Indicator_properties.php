@@ -142,10 +142,13 @@ EOF;
         $description = $this->input->post('description');
         $datatype = $this->input->post('datatype');
         $indicator_id = $this->input->post('indicator_id');
+        $unique_token = Indicator_property_model::generateUniqueToken();
 
         $indicator = $this->indicatordao->getById($indicator_id);
 
-        $new_indicator_property = new Indicator_property_model(NULL, $name, $description, $datatype, $indicator);
+        $new_indicator_property = new Indicator_property_model(NULL, $name, $description,
+            $datatype, $unique_token, $indicator);
+
         if($this->indicatorpropertydao->post($new_indicator_property)) {
             $this->output->set_status_header(200);
             return true;

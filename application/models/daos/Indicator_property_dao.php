@@ -1,5 +1,5 @@
 <?php
-require APPPATH.'models/Indicator_property_model.php';
+require_once APPPATH.'models/Indicator_property_model.php';
 
 class Indicator_property_dao extends CI_Model {
     const TABLE_NAME = 'indicator_properties';
@@ -7,6 +7,7 @@ class Indicator_property_dao extends CI_Model {
     const NAME_FIELD = 'name';
     const DESCRIPTION_FIELD = 'description';
     const DATATYPE_FIELD = 'datatype';
+    const TOKEN_FIELD = 'token';
     const INDICATOR_FIELD = 'indicator_id';
 
     public function __construct() {
@@ -57,6 +58,7 @@ class Indicator_property_dao extends CI_Model {
             $indicator_property_object->setName($indicator_property[self::NAME_FIELD]);
             $indicator_property_object->setDescription($indicator_property[self::DESCRIPTION_FIELD]);
             $indicator_property_object->setDatatype($indicator_property[self::DATATYPE_FIELD]);
+            $indicator_property_object->setToken($indicator_property[self::TOKEN_FIELD]);
 
             $indicator_id = $indicator_property[self::INDICATOR_FIELD];
             if($indicator_id != NULL) {
@@ -73,6 +75,7 @@ class Indicator_property_dao extends CI_Model {
             self::NAME_FIELD => $indicator_property->getName(),
             self::DESCRIPTION_FIELD => $indicator_property->getDescription(),
             self::DATATYPE_FIELD => $indicator_property->getDatatype(),
+            self::TOKEN_FIELD => $indicator_property->getToken(),
             self::INDICATOR_FIELD => $indicator_property->getIndicator()->getId()
         );
     }

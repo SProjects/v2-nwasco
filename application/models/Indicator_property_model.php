@@ -1,18 +1,22 @@
 <?php
+require_once APPPATH.'models/daos/Indicator_property_dao.php';
 
 class Indicator_property_model extends CI_Model {
     private $id;
     private $name;
     private $description;
     private $datatype;
+    private $token;
     private $indicator;
 
-    public function __construct($id=NULL, $name=NULL, $description=NULL, $datatype=NULL, $indicator=NULL) {
+    public function __construct($id=NULL, $name=NULL, $description=NULL,
+                                $datatype=NULL, $token=NULL, $indicator=NULL) {
         parent::__construct();
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->datatype = $datatype;
+        $this->token = $token;
         $this->indicator = $indicator;
     }
 
@@ -56,6 +60,14 @@ class Indicator_property_model extends CI_Model {
         $this->indicator = $indicator;
     }
 
+    public function getToken() {
+        return $this->token;
+    }
+
+    public function setToken($token) {
+        $this->token = $token;
+    }
+
     public static function getAllDataTypes() {
         return array(
             "TEXT" => "TEXT",
@@ -65,5 +77,21 @@ class Indicator_property_model extends CI_Model {
             "FROM_DATE" => "DATE RANGE(FROM)",
             "TO_DATE" => "DATE RANGE(TO)",
         );
+    }
+
+    public static function generateUniqueToken() {
+        while(TRUE) {
+            $token = random_string('alnum', 10);
+            if(Indicator_property_model::isTokenUnique($token)) {
+                return $token;
+            }
+        }
+    }
+
+    private static function isTokenUnique($generated_token) {
+        $indicator_property_dao = new Indicator_property_dao();
+        $where_field = array(Indicator_property_dao::TOKEN_FIELD => $generated_token);
+        $indicator_property = $indicator_property_dao->get($where_field);
+        return (sizeof($indicator_property) > 0) ? FALSE : TRUE;
     }
 }
