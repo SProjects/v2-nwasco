@@ -60,8 +60,10 @@ class Indicator_property_model extends CI_Model {
         return array(
             "TEXT" => "TEXT",
             "LONG_TEXT" => "LONG TEXT",
-            "INT" => "INTEGER",
-            "DATE" => "DATE"
+            "INTEGER" => "INTEGER",
+            "DATE" => "DATE",
+            "FROM_DATE" => "DATE RANGE(FROM)",
+            "TO_DATE" => "DATE RANGE(TO)",
         );
     }
 }
