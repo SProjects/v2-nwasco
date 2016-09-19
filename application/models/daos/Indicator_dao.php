@@ -6,6 +6,7 @@ class Indicator_dao extends CI_Model {
     const ID_FIELD = 'in_id';
     const NAME_FIELD = 'sname';
     const DESCRIPTION_FIELD = 'fname';
+    const KIND_FIELD = 'kind';
 
     public function __construct() {
         parent::__construct();
@@ -51,6 +52,7 @@ class Indicator_dao extends CI_Model {
                 $indicatorObject->setId($indicator[self::ID_FIELD]);
                 $indicatorObject->setName($indicator[self::NAME_FIELD]);
                 $indicatorObject->setDescription($indicator[self::DESCRIPTION_FIELD]);
+                $indicatorObject->setKind($indicator[self::KIND_FIELD]);
                 array_push($indicatorObjects, $indicatorObject);
             }
         }
@@ -60,7 +62,8 @@ class Indicator_dao extends CI_Model {
     private function fromObject($indicator) {
         return array(
             self::NAME_FIELD => $indicator->getName(),
-            self::DESCRIPTION_FIELD => $indicator->getDescription()
+            self::DESCRIPTION_FIELD => $indicator->getDescription(),
+            self::KIND_FIELD => $indicator->getKind()
         );
     }
 

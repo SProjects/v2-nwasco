@@ -15,6 +15,18 @@
                                 <textarea name="description" class="form-control"
                                           placeholder="Enter description"></textarea>
 
+                                <label class="">Type of facility</label>
+                                <select name="kind" class="select2_demo_1 form-control">
+                                    <option value="-1">None</option>
+                                    <?php foreach ($kinds as $key => $value) :?>
+                                        <option value="<?=$key;?>">
+                                            <?= $value; ?>
+                                        </option>
+                                    <?php endforeach;?>
+                                </select>
+
+                                <h3></h3>
+
                                 <a href="<?php echo base_url().'indicator'?>" type="button"
                                    class="btn btn-sm btn-info pull-left col-sm-2">
                                     <i class="fa fa-caret-left"></i> Go Back

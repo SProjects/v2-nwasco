@@ -133,8 +133,13 @@ EOF;
             $data['indicators']  = $this->core->getIndicators();
             $data['directives'] = $this->core->show_directives();
 
-            $indicators = $this->indicatordao->get();
-            $data['indicatorObjs'] = $indicators;
+            $utility_where_field = array(Indicator_dao::KIND_FIELD => Indicator_model::getUtilityKind());
+            $indicators = $this->indicatordao->get($utility_where_field);
+            $data['utilityIndicatorObjs'] = $indicators;
+
+            $scheme_where_field = array(Indicator_dao::KIND_FIELD => Indicator_model::getSchemeKind());
+            $indicators = $this->indicatordao->get($scheme_where_field);
+            $data['schemeIndicatorObjs'] = $indicators;
 
             $this->load->view('header', $data);
             $this->load->view('indicators/index', $data);
@@ -154,6 +159,8 @@ EOF;
             $data['utilities']  = $this->core->getAllUtilities();
             $data['indicators']  = $this->core->getIndicators();
 
+            $data['kinds'] = Indicator_model::getAllKinds();
+
             $this->load->view('header', $data);
             $this->load->view('indicators/add', $data);
             $this->load->view('footer_main');
@@ -165,8 +172,9 @@ EOF;
     public function create() {
         $name = $this->input->post('name');
         $description = $this->input->post('description');
+        $kind = $this->input->post('kind');
 
-        $new_indicator = new Indicator_model(NULL, $name, $description);
+        $new_indicator = new Indicator_model(NULL, $name, $description, $kind);
         if($this->indicatordao->post($new_indicator)) {
             return true;
         } else {
@@ -184,6 +192,8 @@ EOF;
             $data['utilities']  = $this->core->getAllUtilities();
             $data['indicators']  = $this->core->getIndicators();
 
+            $data['kinds'] = Indicator_model::getAllKinds();
+
             $indicator = $this->indicatordao->getById($id);
             $data['indicator'] = $indicator;
 
@@ -200,10 +210,12 @@ EOF;
             $id = $this->input->post('id');
             $name = $this->input->post('name');
             $description = $this->input->post('description');
+            $kind = $this->input->post('kind');
 
             $indicator = $this->indicatordao->getById($id);
             $indicator->setName($name);
             $indicator->setDescription($description);
+            $indicator->setKind($kind);
 
             if($this->indicatordao->update($indicator)) {
                 $this->output->set_status_header(200);
