@@ -3,11 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Utility extends CI_Controller {
     public $utilitydao;
+    public $indicatordao;
+    public $indicatorpropertydao;
+    public $indicatorinstructiondao;
 
     public function __construct() {
         parent::__construct();
         $this->loadDaos();
         $this->utilitydao = $this->utility_dao;
+        $this->indicatorpropertydao = $this->indicator_property_dao;
+        $this->indicatorinstructiondao = $this->indicator_instruction_dao;
+        $this->indicatordao = $this->indicator_dao;
 
         $this->load->library('ion_auth');
 
@@ -97,6 +103,9 @@ EOF;
 
     public function loadDaos() {
         $this->load->model('daos/utility_dao');
+        $this->load->model('daos/indicator_dao');
+        $this->load->model('daos/indicator_instruction_dao');
+        $this->load->model('daos/indicator_property_dao');
     }
 
     public function index() {
@@ -209,31 +218,27 @@ EOF;
         }
     }
 
-    public function details($id) {
-        $this->data['current_user_menu'] = '';
-        if ($this->ion_auth->logged_in()) {
+    public function show($id) {
+        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+        $data['title'] = $this->lang->line('login_heading');
+        $data['user'] = $this->ion_auth->user()->row();
+        $data['utilities'] = $this->core->getAllUtilities();
+        $data['schemes'] = $this->core->getSchemes();
+        $data['indicators'] = $this->core->getIndicators();
+        $data['directives'] = $this->core->listDirectives($id);
+        $data['projects'] = $this->core->listProjects($id);
+        $data['tariffs'] = $this->core->listTarrifs($id);
+        $data['licence'] = $this->core->listLcondtions($id);
+        $data['srs'] = $this->core->listSRS($id);
 
-            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-            $data['title'] = $this->lang->line('login_heading');
-            $data['user'] = $this->ion_auth->user()->row();
-            $data['utilities'] = $this->core->getAllUtilities();
-            $data['schemes'] = $this->core->getSchemes();
-            $data['indicators'] = $this->core->getIndicators();
-            $data['directives'] = $this->core->listDirectives($id);
-            $data['projects'] = $this->core->listProjects($id);
-            $data['tariffs'] = $this->core->listTarrifs($id);
-            $data['licence'] = $this->core->listLcondtions($id);
-            $data['srs'] = $this->core->listSRS($id);
-            // load views and send data
+        $utility = $this->utilitydao->getById($id);
+        $data['utility'] = $utility;
+        $data['instructions'] = Utility_model::getIndicatorInstructions($utility);
 
-            // load views and send data
-            $this->data['current_user_menu'] = $this->load->view('header', $data);
-            $this->data['current_user_menu'] = $this->load->view('templates/view_utility', $data);
-            $this->data['current_user_menu'] = $this->load->view('footer_main', $data);
-        } else {
-            redirect('auth/login');
-        }
+        $this->load->view('header', $data);
+        $this->load->view('utilities/instructions/show', $data);
+        $this->load->view('footer_main', $data);
     }
 
 }

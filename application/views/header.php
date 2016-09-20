@@ -38,7 +38,7 @@
                                     $url = str_replace("'", '', $url);
                                     $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
 
-                                    echo base_url(); ?>utility/details/<?php echo $utility->cu_id; ?>/<?php echo urlencode(strtolower($url)); ?>">
+                                    echo base_url(); ?>utility/show/<?php echo $utility->cu_id; ?>">
                                         <?= $utility->utility; ?>
                                     </a></li>
                                 <?php
