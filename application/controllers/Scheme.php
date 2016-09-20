@@ -205,28 +205,26 @@ EOF;
         }
     }
 
-    public function details($id) {
-        $this->data['current_user_menu'] = '';
-        if ($this->ion_auth->logged_in()) {
-            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-            $data['title'] = $this->lang->line('login_heading');
-            $data['user'] = $this->ion_auth->user()->row();
-            $data['utilities'] = $this->core->getAllUtilities();
-            $data['schemes'] = $this->core->getSchemes();
-            $data['indicators'] = $this->core->getIndicators();
-            $data['sindicators'] = $this->core->getSchemeIndicators();
-            $data['sdirectives'] = $this->core->listSchemeDirectives($id);
-            $data['tariffs'] = $this->core->listTarrifs($id);
-            $data['srs'] = $this->core->listSRS($id);
+    public function show($id) {
+        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+        $data['title'] = $this->lang->line('login_heading');
+        $data['title'] = $this->lang->line('login_heading');
+        $data['user'] = $this->ion_auth->user()->row();
+        $data['utilities'] = $this->core->getAllUtilities();
+        $data['schemes'] = $this->core->getSchemes();
+        $data['indicators'] = $this->core->getIndicators();
+        $data['sindicators'] = $this->core->getSchemeIndicators();
+        $data['sdirectives'] = $this->core->listSchemeDirectives($id);
+        $data['tariffs'] = $this->core->listTarrifs($id);
+        $data['srs'] = $this->core->listSRS($id);
 
-            // load views and send data
-            $this->data['current_user_menu'] = $this->load->view('header', $data);
-            $this->data['current_user_menu'] = $this->load->view('templates/view_scheme', $data);
-            $this->data['current_user_menu'] = $this->load->view('footer_main', $data);
-        } else {
-            redirect('auth/login');
-        }
+        $scheme = $this->schemedao->getById($id);
+        $data['scheme'] = $scheme;
+        $data['instructions'] = Scheme_model::getIndicatorInstructions($scheme);
+
+        $this->load->view('header', $data);
+        $this->load->view('schemes/instructions/show', $data);
+        $this->load->view('footer_main', $data);
     }
-
 }

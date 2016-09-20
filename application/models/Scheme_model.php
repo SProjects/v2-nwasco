@@ -1,4 +1,6 @@
 <?php
+require_once APPPATH.'models/daos/Indicator_dao.php';
+require_once APPPATH.'models/daos/Indicator_instruction_dao.php';
 
 class Scheme_model extends CI_Model {
     private $id;
@@ -44,5 +46,42 @@ class Scheme_model extends CI_Model {
 
     public function setInspector($inspector) {
         $this->inspector = $inspector;
+    }
+
+    public static function getIndicatorInstructions($scheme) {
+        $indicatordao = new Indicator_dao();
+        $indicatorinstructiondao = new Indicator_instruction_dao();
+
+        $instructions = NULL;
+        $indicator_properties = NULL;
+        $indicators = $indicatordao->get(array(Indicator_dao::KIND_FIELD => Indicator_model::getSchemeKind()));
+
+        foreach ($indicators as $indicator) {
+            $instructions[$indicator->getName()] = array();
+        }
+
+        foreach($indicators as $indicator) {
+            $instruction_objects = $indicatorinstructiondao->get(array(
+                    Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId(),
+                    Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
+                    Indicator_instruction_dao::DELETED_AT_FIELD => NULL
+                )
+            );
+
+            if(count($instruction_objects) > 0) {
+                foreach ($instruction_objects as $instruction_object) {
+                    $instructions[$indicator->getName()][$instruction_object->getUnionToken()] = array();
+                }
+
+                foreach ($instruction_objects as $instruction_object) {
+                    array_push(
+                        $instructions[$indicator->getName()][$instruction_object->getUnionToken()],
+                        $instruction_object
+                    );
+                }
+            }
+        }
+
+        return $instructions;
     }
 }

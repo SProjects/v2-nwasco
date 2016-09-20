@@ -98,7 +98,7 @@
                                     $url = str_replace("'", '', $url);
                                     $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
 
-                                    echo base_url(); ?>scheme/details/<?php echo $scheme->ps_id; ?>/<?php echo urlencode(strtolower($url)); ?>">
+                                    echo base_url(); ?>scheme/show/<?php echo $scheme->ps_id; ?>">
                                         <?= $scheme->scheme; ?>
                                     </a></li>
                                 <?php
