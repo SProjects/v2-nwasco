@@ -64,6 +64,9 @@ class Utility_model extends CI_Model {
         $indicator_properties = NULL;
         $indicators = $indicatordao->get(array(Indicator_dao::KIND_FIELD => Indicator_model::getUtilityKind()));
 
+        if(sizeof($indicators) == 0)
+            return array();
+
         foreach ($indicators as $indicator) {
             $instructions[$indicator->getName()] = array();
         }
