@@ -66,7 +66,7 @@
                                     <?php case 'LONG_TEXT': ?>
                                         <div class="col-lg-12">
                                             <div class='row'>
-                                                <div class='col-md-6'>
+                                                <div class='col-md-12'>
                                                     <div class="form-group">
                                                         <div class="ibox-content no-padding">
                                                             <label
@@ -146,7 +146,7 @@
             $("#response").fadeOut("slow");
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url() ?>indicator_instructions/update/',
+                url: '<?php echo base_url() ?>utility_indicator_instructions/update/',
                 dataType: 'text',
                 data: $("#update_instruction").serialize(),
                 timeout: 5000,

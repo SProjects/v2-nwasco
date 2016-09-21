@@ -89,7 +89,7 @@
                                                         Indicator_dao::KIND_FIELD => Indicator_model::getUtilityKind()
                                                     ));
                                                 ?>
-                                                <a href="<?= base_url().'indicator_instructions/add/'.$utility->getId().'/'.$indicator[0]->getId(); ?>"
+                                                <a href="<?= base_url().'utility_indicator_instructions/add/'.$utility->getId().'/'.$indicator[0]->getId(); ?>"
                                                    class="btn btn-xs btn-success">Add New</a>
                                             </div>
                                         </div>
@@ -125,11 +125,11 @@
                                                     <td>
                                                         <?php if ($this->ion_auth->is_admin()) { ?>
                                                             <div class="btn-group">
-                                                                <a href="<?= base_url().'indicator_instructions/edit/'.$utility->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
+                                                                <a href="<?= base_url().'utility_indicator_instructions/edit/'.$utility->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
                                                                    type="button" title="Edit"
                                                                    class="btn btn-xs btn-white"><i
                                                                         class="fa fa-edit"></i></a>
-                                                                <a href="<?= base_url().'indicator_instructions/archive/'.$utility->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
+                                                                <a href="<?= base_url().'utility_indicator_instructions/archive/'.$utility->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
                                                                    type="button" title="Archive"
                                                                    class="btn btn-xs btn-white"><i
                                                                         class="fa fa-archive"></i></a>

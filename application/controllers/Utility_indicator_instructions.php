@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Indicator_instructions extends CI_Controller {
+class Utility_indicator_instructions extends CI_Controller {
     public $indicatordao;
     public $indicatorpropertydao;
     public $utilitydao;
@@ -125,7 +125,7 @@ EOF;
         $data['indicator_properties'] = $indicator->getIndicatorProperties($indicator);
 
         $this->load->view('header', $data);
-        $this->load->view('indicator_instructions/add', $data);
+        $this->load->view('utility_indicator_instructions/add', $data);
         $this->load->view('footer_main');
     }
 
@@ -183,7 +183,7 @@ EOF;
         $data['existing_instructions'] = $existing_instructions;
 
         $this->load->view('header', $data);
-        $this->load->view('indicator_instructions/edit', $data);
+        $this->load->view('utility_indicator_instructions/edit', $data);
         $this->load->view('footer_main');
     }
 

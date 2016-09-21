@@ -61,7 +61,7 @@
                                         <?php case 'LONG_TEXT': ?>
                                             <div class="col-lg-12">
                                                 <div class='row'>
-                                                    <div class='col-md-6'>
+                                                    <div class='col-md-12'>
                                                         <div class="form-group">
                                                             <div class="ibox-content no-padding">
                                                                 <label class="font-noraml"><?= $indicator_property->getName(); ?></label>
@@ -135,7 +135,7 @@
             $("#response").fadeOut("slow");
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url() ?>indicator_instructions/create/',
+                url: '<?php echo base_url() ?>utility_indicator_instructions/create/',
                 dataType: 'text',
                 data: $("#add_new_instruction").serialize(),
                 timeout: 5000,
