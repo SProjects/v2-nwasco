@@ -82,7 +82,15 @@
                                         <h5 class="center"><?= $key; ?></h5>
                                         <div class="pull-right">
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-xs btn-success">Add New</button>
+                                                <?php
+                                                    $indicatordao = new Indicator_dao();
+                                                    $indicator = $indicatordao->get(array(
+                                                        Indicator_dao::NAME_FIELD => $key,
+                                                        Indicator_dao::KIND_FIELD => Indicator_model::getUtilityKind()
+                                                    ));
+                                                ?>
+                                                <a href="<?= base_url().'indicator_instructions/add/'.$utility->getId().'/'.$indicator[0]->getId(); ?>"
+                                                   class="btn btn-xs btn-success">Add New</a>
                                             </div>
                                         </div>
                                     </div>
@@ -117,19 +125,14 @@
                                                     <td>
                                                         <?php if ($this->ion_auth->is_admin()) { ?>
                                                             <div class="btn-group">
-                                                                <a type="button" href="" data-toggle="tooltip"
-                                                                   data-placement="bottom" title="View"
-                                                                   data-toggle="modal" data-target="#myModal"
-                                                                   class="btn btn-xs btn-white"><i
-                                                                        class="fa fa-external-link"></i></a>
-                                                                <a href="#"
+                                                                <a href="<?= base_url().'indicator_instructions/edit/'.$utility->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
                                                                    type="button" title="Edit"
                                                                    class="btn btn-xs btn-white"><i
                                                                         class="fa fa-edit"></i></a>
-                                                                <button type="button" data-toggle="tooltip"
-                                                                        data-placement="bottom" title="Archive"
-                                                                        class="btn btn-xs btn-white"><i
-                                                                        class="fa fa-archive"></i></button>
+                                                                <a href="<?= base_url().'indicator_instructions/archive/'.$utility->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
+                                                                   type="button" title="Archive"
+                                                                   class="btn btn-xs btn-white"><i
+                                                                        class="fa fa-archive"></i></a>
                                                             </div>
                                                         <?php } else { ?>
 

@@ -28,6 +28,22 @@ class Indicator_instruction_dao extends CI_Model {
         return $this->fromArray($query->result_array());
     }
 
+    public function post($indicator_instruction) {
+        $data = $this->fromObject($indicator_instruction);
+        return $this->db->insert(self::TABLE_NAME, $data);
+    }
+
+    public function update($indicator_instruction) {
+        $data = $this->fromObject($indicator_instruction);
+
+        $this->db->where(array(self::ID_FIELD => $indicator_instruction->getId()));
+        return $this->db->update(self::TABLE_NAME, $data);
+    }
+
+    public function delete($id) {
+        //TODO: Create a transaction to delete the Scheme object and attached Instruction objects
+    }
+
     private function fromArray($indicator_instructions = array()) {
         $indicator_instruction_objects = array();
         foreach ($indicator_instructions as $indicator_instruction) {

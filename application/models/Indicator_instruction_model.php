@@ -1,5 +1,6 @@
 <?php
 require_once APPPATH.'models/daos/Indicator_instruction_dao.php';
+require_once APPPATH.'models/daos/Indicator_property_dao.php';
 
 class Indicator_instruction_model extends CI_Model {
     private $id;
@@ -94,6 +95,39 @@ class Indicator_instruction_model extends CI_Model {
 
     public function isScheme() {
         return ($this->scheme == NULL) ? FALSE : TRUE;
+    }
+
+    public function getInstructionsFromPostData($indicators, $utility, $indicator, $union_token=NULL) {
+        $instruction_objects = array();
+        $indicator_property_dao = new Indicator_property_dao();
+        $union_token = ($union_token==NULL) ? self::generateUniqueToken() : $union_token;
+
+        foreach ($indicators as $property_token => $instruction_value) {
+            $indicator_property = $indicator_property_dao->get(array(
+                Indicator_property_dao::TOKEN_FIELD => $property_token
+            ))[0];
+
+            $instruction = new Indicator_instruction_model(
+                NULL, $instruction_value, $union_token, $indicator_property, $indicator, $utility, NULL, NULL);
+            array_push($instruction_objects, $instruction);
+        }
+
+        return $instruction_objects;
+    }
+
+    public function updateExistingInstructions($existing_instructions, $new_instructions){
+        $updated_instructions = array();
+        foreach ($existing_instructions as $existing_instruction) {
+            foreach ($new_instructions as $new_instruction) {
+                $existing_instruction_property_id = $existing_instruction->getIndicatorProperty()->getId();
+                $new_instruction_property_id = $new_instruction->getIndicatorProperty()->getId();
+                if ($existing_instruction_property_id == $new_instruction_property_id) {
+                    $existing_instruction->setValue($new_instruction->getValue());
+                    array_push($updated_instructions, $existing_instruction);
+                }
+            }
+        }
+        return $updated_instructions;
     }
 
     public static function generateUniqueToken() {

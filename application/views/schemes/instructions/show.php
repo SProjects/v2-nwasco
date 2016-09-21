@@ -114,11 +114,6 @@
                                                     <td>
                                                         <?php if ($this->ion_auth->is_admin()) { ?>
                                                             <div class="btn-group">
-                                                                <a type="button" href="" data-toggle="tooltip"
-                                                                   data-placement="bottom" title="View"
-                                                                   data-toggle="modal" data-target="#myModal"
-                                                                   class="btn btn-xs btn-white"><i
-                                                                        class="fa fa-external-link"></i></a>
                                                                 <a href="#"
                                                                    type="button" title="Edit"
                                                                    class="btn btn-xs btn-white"><i
