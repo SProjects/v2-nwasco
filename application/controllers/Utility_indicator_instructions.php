@@ -210,7 +210,7 @@ EOF;
         }
 
         //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
-        $new_instructions = $this->indicatorinstructionmodel->getInstructionsFromPostData(
+        $new_instructions = $this->indicatorinstructionmodel->getUtilityInstructionsFromPostData(
             $updated_indicator_instructions, $utility, $indicator, $union_token);
 
         //Use new instruction data to update the value fields on the exisiting instructions
