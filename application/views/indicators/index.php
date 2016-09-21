@@ -19,13 +19,16 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Properties(#)</th>
+                    <th title="Send alert when days to expiry date are less than those in this field">
+                        Days to Expire(#)
+                    </th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php if(sizeof($utilityIndicatorObjs) == 0): ?>
                     <tr>
-                        <td colspan="5">No indicators</td>
+                        <td colspan="6">No indicators</td>
                     </tr>
                 <?php endif; ?>
 
@@ -41,6 +44,9 @@
                                type="button" title="Add property" class="btn btn-xs btn-white">
                                 <i class="fa fa-plus"></i>
                             </a>
+                        </td>
+                        <td>
+                            <?php echo ($indicator->getDaysToExpire() == NULL) ? "Not set" : $indicator->getDaysToExpire(); ?>
                         </td>
                         <td>
                             <div class="btn-group">
@@ -72,13 +78,16 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Properties(#)</th>
+                    <th title="Send alert when days to expiry date are less than those in this field">
+                        Days to Expire(#)
+                    </th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php if(sizeof($schemeIndicatorObjs) == 0): ?>
                     <tr>
-                        <td colspan="5">No indicators</td>
+                        <td colspan="6">No indicators</td>
                     </tr>
                 <?php endif; ?>
 
@@ -95,6 +104,9 @@
                                type="button" title="Add property" class="btn btn-xs btn-white">
                                 <i class="fa fa-plus"></i>
                             </a>
+                        </td>
+                        <td>
+                            <?php echo ($indicator->getDaysToExpire() == NULL) ? "Not set" : $indicator->getDaysToExpire(); ?>
                         </td>
                         <td>
                             <div class="btn-group">

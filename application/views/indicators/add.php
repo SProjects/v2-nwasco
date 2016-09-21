@@ -9,7 +9,7 @@
                             <div class="form-group">
 
                                 <label class="">Name</label>
-                                <input name="name" class="form-control" placeholder="Enter name"/>
+                                <input type="text" name="name" class="form-control" placeholder="Enter name"/>
 
                                 <label class="">Description</label>
                                 <textarea name="description" class="form-control"
@@ -24,7 +24,10 @@
                                         </option>
                                     <?php endforeach;?>
                                 </select>
+                                <h3></h3>
 
+                                <label class="">Send alert when days to indicator expiry date are</label>
+                                <input type="number" name="days_to_expire" class="form-control" placeholder="No. of days"/>
                                 <h3></h3>
 
                                 <a href="<?php echo base_url().'indicator'?>" type="button"

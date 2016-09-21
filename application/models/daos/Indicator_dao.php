@@ -7,6 +7,7 @@ class Indicator_dao extends CI_Model {
     const NAME_FIELD = 'sname';
     const DESCRIPTION_FIELD = 'fname';
     const KIND_FIELD = 'kind';
+    const DAYS_TO_EXPIRE_FIELD = 'days_to_expire';
 
     public function __construct() {
         parent::__construct();
@@ -53,6 +54,7 @@ class Indicator_dao extends CI_Model {
                 $indicatorObject->setName($indicator[self::NAME_FIELD]);
                 $indicatorObject->setDescription($indicator[self::DESCRIPTION_FIELD]);
                 $indicatorObject->setKind($indicator[self::KIND_FIELD]);
+                $indicatorObject->setDaysToExpire($indicator[self::DAYS_TO_EXPIRE_FIELD]);
                 array_push($indicatorObjects, $indicatorObject);
             }
         }
@@ -63,7 +65,8 @@ class Indicator_dao extends CI_Model {
         return array(
             self::NAME_FIELD => $indicator->getName(),
             self::DESCRIPTION_FIELD => $indicator->getDescription(),
-            self::KIND_FIELD => $indicator->getKind()
+            self::KIND_FIELD => $indicator->getKind(),
+            self::DAYS_TO_EXPIRE_FIELD => $indicator->getDaysToExpire()
         );
     }
 

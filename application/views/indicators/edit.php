@@ -10,8 +10,9 @@
                                 <input type="hidden" name="id" value="<?php echo $indicator->getId(); ?>"/>
 
                                 <label class="">Name</label>
-                                <input name="name" class="form-control" placeholder="Enter name"
+                                <input type="text" name="name" class="form-control" placeholder="Enter name"
                                        value="<?php echo $indicator->getName(); ?>"/>
+                                <h3></h3>
 
                                 <label class="">Description</label>
                                 <textarea name="description" class="form-control"
@@ -33,7 +34,11 @@
                                         <?php endif; ?>
                                     <?php endforeach;?>
                                 </select>
+                                <h3></h3>
 
+                                <label class="">Alert me when days to indicator expiry date are</label>
+                                <input type="number" name="days_to_expire" class="form-control" placeholder="No. of days"
+                                       value="<?php echo $indicator->getDaysToExpire(); ?>"/>
                                 <h3></h3>
 
                                 <a href="<?php echo base_url().'indicator'?>" type="button"

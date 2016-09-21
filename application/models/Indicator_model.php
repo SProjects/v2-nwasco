@@ -6,13 +6,15 @@ class Indicator_model extends CI_Model {
     private $name;
     private $description;
     private $kind;
+    private $days_to_expire;
 
-    public function __construct($id=NULL, $name=NULL, $description=NULL, $kind=NULL) {
+    public function __construct($id=NULL, $name=NULL, $description=NULL, $kind=NULL, $days_to_expire=NULL) {
         parent::__construct();
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->kind = $kind;
+        $this->days_to_expire = $days_to_expire;
     }
 
     public function getId() {
@@ -50,6 +52,14 @@ class Indicator_model extends CI_Model {
 
     public function setKind($kind) {
         $this->kind = $kind;
+    }
+
+    public function getDaysToExpire() {
+        return $this->days_to_expire;
+    }
+
+    public function setDaysToExpire($days_to_expire) {
+        $this->days_to_expire = $days_to_expire;
     }
 
     public static function getAllKinds() {

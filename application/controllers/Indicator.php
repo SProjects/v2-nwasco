@@ -173,8 +173,9 @@ EOF;
         $name = $this->input->post('name');
         $description = $this->input->post('description');
         $kind = $this->input->post('kind');
+        $days_to_expire = $this->input->post('days_to_expire');
 
-        $new_indicator = new Indicator_model(NULL, $name, $description, $kind);
+        $new_indicator = new Indicator_model(NULL, $name, $description, $kind, $days_to_expire);
         if($this->indicatordao->post($new_indicator)) {
             return true;
         } else {
@@ -211,11 +212,13 @@ EOF;
             $name = $this->input->post('name');
             $description = $this->input->post('description');
             $kind = $this->input->post('kind');
+            $days_to_expire = $this->input->post('days_to_expire');
 
             $indicator = $this->indicatordao->getById($id);
             $indicator->setName($name);
             $indicator->setDescription($description);
             $indicator->setKind($kind);
+            $indicator->setDaysToExpire($days_to_expire);
 
             if($this->indicatordao->update($indicator)) {
                 $this->output->set_status_header(200);
