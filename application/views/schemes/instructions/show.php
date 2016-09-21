@@ -27,7 +27,17 @@
             <div class="col-lg-12 no-gutter">
                 <h3 class="head">Indicators</h3>
                 <?php $i = 0;
-                foreach ($instructions as $key => $instruction_groups): ?>
+                foreach ($instructions as $key => $instruction_groups):
+
+                    $indicatordao = new Indicator_dao();
+                    $indicator = $indicatordao->get(array(
+                        Indicator_dao::NAME_FIELD => $key,
+                        Indicator_dao::KIND_FIELD => Indicator_model::getSchemeKind()
+                    ))[0];
+
+                    $indicator_instruction = new Indicator_instruction_model();
+                    $statuses = $indicator_instruction->getSchemeInstructionsStatusSummary($scheme, $indicator);
+                    ?>
                     <div class="col-lg-2">
                         <div class="ibox float-e-margins">
                             <div class="ibox-content">
@@ -37,10 +47,10 @@
                                     <small>
                                         <div class="indicators">
                                             <ul class="folder-list" style="padding: 0">
-                                                <li>Active <span class="label label-info pull-right">0</span></li>
-                                                <li>Almost Due <span class="label label-warning pull-right">0</span>
+                                                <li>Active <span class="label label-info pull-right"><?= $statuses['ACTIVE']; ?></span></li>
+                                                <li>Almost Due <span class="label label-warning pull-right"><?= $statuses['ALMOST']; ?></span>
                                                 </li>
-                                                <li>Over Due <span class="label label-danger pull-right">1</span></a>
+                                                <li>Over Due <span class="label label-danger pull-right"><?= $statuses['OVERDUE']; ?></span></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -49,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php $i++; endforeach; ?>
+                <?php $i++; endforeach; ?>
             </div>
         </div>
         <!--End of summery info-->

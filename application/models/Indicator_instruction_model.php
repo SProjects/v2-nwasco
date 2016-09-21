@@ -173,6 +173,62 @@ class Indicator_instruction_model extends CI_Model {
         }
     }
 
+    public function getUtilityInstructionsStatusSummary($utility, $indicator){
+        $instruction_groups = Utility_model::getIndicatorInstructions($utility);
+
+        $active_count = 0;
+        $almost_count = 0;
+        $overdue_count = 0;
+
+        foreach ($instruction_groups[$indicator->getName()] as $instructions) {
+            switch ($this->getStatus($instructions)) {
+                case 'ACTIVE':
+                    $active_count += 1;
+                    break;
+                case 'ALMOST':
+                    $almost_count += 1;
+                    break;
+                case 'OVERDUE':
+                    $overdue_count += 1;
+                    break;
+            }
+        }
+
+        $summary['ACTIVE'] = $active_count;
+        $summary['ALMOST'] = $almost_count;
+        $summary['OVERDUE'] = $overdue_count;
+
+        return $summary;
+    }
+
+    public function getSchemeInstructionsStatusSummary($scheme, $indicator){
+        $instruction_groups = Scheme_model::getIndicatorInstructions($scheme);
+
+        $active_count = 0;
+        $almost_count = 0;
+        $overdue_count = 0;
+
+        foreach ($instruction_groups[$indicator->getName()] as $instructions) {
+            switch ($this->getStatus($instructions)) {
+                case 'ACTIVE':
+                    $active_count += 1;
+                    break;
+                case 'ALMOST':
+                    $almost_count += 1;
+                    break;
+                case 'OVERDUE':
+                    $overdue_count += 1;
+                    break;
+            }
+        }
+
+        $summary['ACTIVE'] = $active_count;
+        $summary['ALMOST'] = $almost_count;
+        $summary['OVERDUE'] = $overdue_count;
+
+        return $summary;
+    }
+
     public static function generateUniqueToken() {
         while(TRUE) {
             $token = random_string('alnum', 10);
