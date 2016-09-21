@@ -146,7 +146,7 @@ EOF;
         }
 
         //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
-        $new_instructions = $this->indicatorinstructionmodel->getInstructionsFromPostData(
+        $new_instructions = $this->indicatorinstructionmodel->getUtilityInstructionsFromPostData(
             $new_indicator_instructions, $utility, $indicator, NULL);
 
         foreach ($new_instructions as $new_instruction) {
