@@ -118,7 +118,25 @@
                                                     <?php for ($x = 0; $x < sizeof($instructions); $x++): ?>
                                                         <td><?= $instructions[$x]->getValue(); ?></td>
                                                     <?php endfor; ?>
-                                                    <td></td>
+                                                    <td>
+                                                        <?php
+                                                        $indicator_instruction = new Indicator_instruction_model();
+                                                        switch($indicator_instruction->getStatus($instructions)) {
+                                                            case 'ACTIVE':
+                                                                echo '<span class="label label-primary right">Active</span>';
+                                                                break;
+                                                            case 'ALMOST':
+                                                                echo '<span class="label label-warning right">Almost due</span>';
+                                                                break;
+                                                            case 'OVERDUE':
+                                                                echo '<span class="label label-danger right">Over due</span>';
+                                                                break;
+                                                            case 'MISSING':
+                                                                echo '<span class="label label-info right">Missing date</span>';
+                                                                break;
+                                                        }
+                                                        ?>
+                                                    </td>
                                                     <td>
                                                         <?php if ($this->ion_auth->is_admin()) { ?>
                                                             <div class="btn-group">

@@ -148,6 +148,31 @@ class Indicator_instruction_model extends CI_Model {
         return $updated_instructions;
     }
 
+    public function getStatus($instructions) {
+        foreach ($instructions as $instruction) {
+            if($instruction->getIndicatorProperty()->getDatatype() == 'DATE') {
+                $due_date = strtotime($instruction->getValue());
+                if($due_date == NULL)
+                    return 'MISSING';
+
+                $days_to_expire = $instruction->getIndicator()->getDaysToExpire();
+
+                $now = time();
+                $date_difference = $due_date - $now;
+                $days_difference = floor($date_difference/(60 * 60 * 24));
+
+                if ($days_difference < 0 || $days_difference == 0)
+                    return 'OVERDUE';
+
+                if(($days_difference > $days_to_expire) && ($days_difference != $days_to_expire))
+                    return 'ACTIVE';
+
+                if (1<$days_difference && $days_difference<$days_to_expire)
+                    return 'ALMOST';
+            }
+        }
+    }
+
     public static function generateUniqueToken() {
         while(TRUE) {
             $token = random_string('alnum', 10);
