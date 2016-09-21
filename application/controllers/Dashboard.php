@@ -1,41 +1,22 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller 
-{
+class Dashboard extends CI_Controller {
 
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->load->library('ion_auth');
-		$this->lang->load('auth');
-	if (!$this->ion_auth->logged_in())
-    {
-      //redirect them to the login page
-      redirect('auth/login', 'refresh');
-    }
-       
+        $this->lang->load('auth');
+        if (!$this->ion_auth->logged_in()) {
+            redirect('auth/login', 'refresh');
+        }
+
+        $this->load->model('request_model');
     }
 
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
-	public function index()
-	{  $this->layout->add_custom_meta('meta', array(
+    public function index() {
+        $this->layout->add_custom_meta('meta', array(
             'charset' => 'utf-8'
         ));
 
@@ -43,7 +24,8 @@ class Dashboard extends CI_Controller
             'http-equiv' => 'X-UA-Compatible',
             'content' => 'IE=edge'
         ));
-$js_text2 = <<<EOF
+
+        $js_text2 = <<<EOF
 $(function() {
 
             $("#slideshow > div:gt(0)").hide();
@@ -61,7 +43,7 @@ $(function() {
 
 EOF;
 
-$js_text = <<<EOF
+        $js_text = <<<EOF
  $(document).ready(function () {
                 setTimeout(function () {
                     toastr.options = {
@@ -116,26 +98,26 @@ $js_text = <<<EOF
             });
     });
 EOF;
-$this->layout->add_js_rawtext($js_text2, 'header');
-$this->layout->add_js_rawtext($js_text, 'footer');
+        $this->layout->add_js_rawtext($js_text2, 'header');
+        $this->layout->add_js_rawtext($js_text, 'footer');
 
         $this->layout->set_body_attr(array('id' => 'home', 'class' => 'fixed-sidebar no-skin-config full-height-layout'));
 
         $this->layout->add_css_file('https://fonts.googleapis.com/css?family=Roboto:400,700|Ubuntu');
-        $this->layout->add_css_files(array('bootstrap.min.css'), base_url().'assets/css/');
-        $this->layout->add_css_files(array('font-awesome.css'), base_url().'assets/font-awesome/css/');
-        $this->layout->add_css_files(array('toastr.min.css'), base_url().'assets/css/plugins/toastr/');
-        $this->layout->add_css_files(array('select2.min.css'), base_url().'assets/css/plugins/select2/');
-        $this->layout->add_css_files(array('jquery.gritter.css'), base_url().'assets/js/plugins/gritter/');
-        $this->layout->add_css_files(array('slick.css'), base_url().'assets/css/plugins/slick/');
-        $this->layout->add_css_files(array('slick-theme.css'), base_url().'assets/css/plugins/slick/');
+        $this->layout->add_css_files(array('bootstrap.min.css'), base_url() . 'assets/css/');
+        $this->layout->add_css_files(array('font-awesome.css'), base_url() . 'assets/font-awesome/css/');
+        $this->layout->add_css_files(array('toastr.min.css'), base_url() . 'assets/css/plugins/toastr/');
+        $this->layout->add_css_files(array('select2.min.css'), base_url() . 'assets/css/plugins/select2/');
+        $this->layout->add_css_files(array('jquery.gritter.css'), base_url() . 'assets/js/plugins/gritter/');
+        $this->layout->add_css_files(array('slick.css'), base_url() . 'assets/css/plugins/slick/');
+        $this->layout->add_css_files(array('slick-theme.css'), base_url() . 'assets/css/plugins/slick/');
 
         //Main Stylesheet
-        $this->layout->add_css_files(array('unslider.css','animate.css','style.css','slider.css'), base_url().'assets/css/');
+        $this->layout->add_css_files(array('unslider.css', 'animate.css', 'style.css', 'slider.css'), base_url() . 'assets/css/');
         // Google
         $this->layout->add_js_file('//ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js');
         //Main Scripts
-        $this->layout->add_js_files(array('bootstrap.min.js','inspinia.js','unslider-min.js'), base_url('assets/js/'), 'footer');
+        $this->layout->add_js_files(array('bootstrap.min.js', 'inspinia.js', 'unslider-min.js'), base_url('assets/js/'), 'footer');
         $this->layout->add_js_files(array('jquery.metisMenu.js'), base_url('assets/js/plugins/metisMenu/'), 'footer');
         $this->layout->add_js_files(array('jquery.slimscroll.min.js'), base_url('assets/js/plugins/slimscroll/'), 'footer');
         // Google
@@ -156,32 +138,34 @@ $this->layout->add_js_rawtext($js_text, 'footer');
         $this->layout->add_js_files(array('select2.full.min.js'), base_url('assets/js/plugins/select2/'), 'footer');
 
         //Data Tables -->
-        $this->layout->add_js_files(array('jquery.dataTables.js','dataTables.bootstrap.js','dataTables.responsive.js','dataTables.tableTools.min.js'), base_url('assets/js/plugins/dataTables/'), 'footer');
+        $this->layout->add_js_files(array('jquery.dataTables.js', 'dataTables.bootstrap.js', 'dataTables.responsive.js', 'dataTables.tableTools.min.js'), base_url('assets/js/plugins/dataTables/'), 'footer');
 
         //ChartJS-->
         $this->layout->add_js_files(array('Chart.min.js'), base_url('assets/js/plugins/chartJs/'), 'header');
 
 
-        if ($this->ion_auth->logged_in())
-            {
-        $this->data['title'] = $this->lang->line('dashboard_heading');
-    	$this->data['current_user_menu'] = '';
+        if ($this->ion_auth->logged_in()) {
+            $this->data['title'] = $this->lang->line('dashboard_heading');
+            $this->data['current_user_menu'] = '';
 
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['dashboard'] = $this->lang->line('dashboard_heading');
-		$data['user'] = $this->ion_auth->user()->row();
-        $data['utilities']  = $this->core->getAllUtilities();
-		$data['schemes']  = $this->core->getSchemes();
-		$data['indicators']  = $this->core->getIndicators();
-        // load views and send data
-        $this->data['current_user_menu'] = $this->load->view('header', $data);
-		$this->data['current_user_menu'] = $this->load->view('index', $data);
-		$this->data['current_user_menu'] = $this->load->view('footer_main', $data);
-    } else {
-        //redirect them to the login page
-         redirect('auth/login', 'refresh');
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['dashboard'] = $this->lang->line('dashboard_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->core->getAllUtilities();
+            $data['schemes'] = $this->core->getSchemes();
+            $data['indicators'] = $this->core->getIndicators();
+
+            $data['request_summary'] = Request_model::getRequestsSummary();
+
+            // load views and send data
+            $this->data['current_user_menu'] = $this->load->view('header', $data);
+            $this->data['current_user_menu'] = $this->load->view('index', $data);
+            $this->data['current_user_menu'] = $this->load->view('footer_main', $data);
+        } else {
+            //redirect them to the login page
+            redirect('auth/login', 'refresh');
+        }
+
     }
-
-	}
 }

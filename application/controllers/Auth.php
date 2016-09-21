@@ -8,6 +8,7 @@ class Auth extends CI_Controller
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
+        $this->load->model('request_model');
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -141,6 +142,7 @@ EOF;
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
             $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
@@ -277,6 +279,8 @@ EOF;
             $this->data['user'] = $this->ion_auth->user()->row();
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
+            $this->data['request_summary'] = Request_model::getRequestsSummary();
+
             // render
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
@@ -329,6 +333,7 @@ EOF;
             $this->data['user'] = $this->ion_auth->user()->row();
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
+            $this->data['request_summary'] = Request_model::getRequestsSummary();
             // render
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
@@ -412,6 +417,8 @@ EOF;
                 $this->data['user'] = $this->ion_auth->user()->row();
                 $this->data['utilities'] = $this->core->getAllUtilities();
                 $this->data['indicators'] = $this->core->getIndicators();
+                $this->data['request_summary'] = Request_model::getRequestsSummary();
+
                 // render
                 $this->_render_page('header', $this->data);
                 $this->_render_page('user_nav', $this->data);
@@ -494,6 +501,8 @@ EOF;
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
             $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['request_summary'] = Request_model::getRequestsSummary();
+
             // render
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
@@ -635,6 +644,7 @@ EOF;
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
             $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
@@ -792,6 +802,7 @@ EOF;
         $this->data['utilities'] = $this->core->getAllUtilities();
         $this->data['indicators'] = $this->core->getIndicators();
         $this->data['schemes']  = $this->core->getSchemes();
+        $this->data['request_summary'] = Request_model::getRequestsSummary();
 
         $this->_render_page('header', $this->data);
         $this->_render_page('user_nav', $this->data);
@@ -842,6 +853,8 @@ EOF;
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
             $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['request_summary'] = Request_model::getRequestsSummary();
+
             // render
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
@@ -872,6 +885,7 @@ EOF;
             $this->data['utilities'] = $this->core->getAllUtilities();
             $this->data['indicators'] = $this->core->getIndicators();
             $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             $this->_render_page('header', $this->data);
             $this->_render_page('user_nav', $this->data);
@@ -938,6 +952,8 @@ EOF;
         $this->data['user'] = $this->ion_auth->user()->row();
         $this->data['utilities'] = $this->core->getAllUtilities();
         $this->data['indicators'] = $this->core->getIndicators();
+        $this->data['request_summary'] = Request_model::getRequestsSummary();
+
         // render
         $this->_render_page('header', $this->data);
         $this->_render_page('user_nav', $this->data);

@@ -11,6 +11,7 @@ class Indicator_properties extends CI_Controller {
         $this->indicatordao = $this->indicator_dao;
         $this->indicatorpropertydao = $this->indicator_property_dao;
 
+        $this->load->model('request_model');
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -108,6 +109,7 @@ EOF;
         $data['schemes'] = $this->core->getSchemes();
         $data['indicators'] = $this->core->getIndicators();
         $data['sindicators'] = $this->core->getSchemeIndicators();
+        $data['request_summary'] = Request_model::getRequestsSummary();
 
         $indicator = $this->indicatordao->getById($indicator_id);
         $data['indicator'] = $indicator;
@@ -127,6 +129,7 @@ EOF;
         $data['schemes'] = $this->core->getSchemes();
         $data['indicators'] = $this->core->getIndicators();
         $data['sindicators'] = $this->core->getSchemeIndicators();
+        $data['request_summary'] = Request_model::getRequestsSummary();
 
         $indicator = $this->indicatordao->getById($indicator_id);
         $data['indicator'] = $indicator;
@@ -168,6 +171,7 @@ EOF;
             $data['schemes'] = $this->core->getSchemes();
             $data['indicators'] = $this->core->getIndicators();
             $data['sindicators'] = $this->core->getSchemeIndicators();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
             $indicator = $this->indicatordao->getById($indicator_id);
             $data['indicator'] = $indicator;

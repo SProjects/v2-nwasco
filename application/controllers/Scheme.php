@@ -9,6 +9,7 @@ class Scheme extends CI_Controller {
         $this->loadDaos();
         $this->schemedao = $this->scheme_dao;
 
+        $this->load->model('request_model');
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -106,6 +107,7 @@ EOF;
             $data['schemes'] = $this->core->getSchemes();
             $data['indicators'] = $this->core->getIndicators();
             $data['sindicators'] = $this->core->getSchemeIndicators();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
             $scheme = $this->schemedao->get();
             $data['schemeObjs'] = $scheme;
@@ -129,6 +131,7 @@ EOF;
             $data['indicators'] = $this->core->getIndicators();
             $data['sindicators'] = $this->core->getSchemeIndicators();
             $data['inspectors'] = $this->ion_auth->users()->result();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
             $this->load->view('header', $data);
             $this->load->view('schemes/add', $data);
@@ -167,6 +170,7 @@ EOF;
             $data['schemes'] = $this->core->getSchemes();
             $data['indicators'] = $this->core->getIndicators();
             $data['inspectors'] = $this->ion_auth->users()->result();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
             $scheme = $this->schemedao->getById($id);
             $data['scheme'] = $scheme;
@@ -218,6 +222,7 @@ EOF;
         $data['sdirectives'] = $this->core->listSchemeDirectives($id);
         $data['tariffs'] = $this->core->listTarrifs($id);
         $data['srs'] = $this->core->listSRS($id);
+        $data['request_summary'] = Request_model::getRequestsSummary();
 
         $scheme = $this->schemedao->getById($id);
         $data['scheme'] = $scheme;

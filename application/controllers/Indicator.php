@@ -9,6 +9,7 @@ class Indicator extends CI_Controller{
         $this->loadDaos();
         $this->indicatordao = $this->indicator_dao;
 
+        $this->load->model('request_model');
         $this->load->library('ion_auth');
 		$this->lang->load('auth');
 
@@ -132,6 +133,7 @@ EOF;
             $data['utilities']  = $this->core->getAllUtilities();
             $data['indicators']  = $this->core->getIndicators();
             $data['directives'] = $this->core->show_directives();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
             $utility_where_field = array(Indicator_dao::KIND_FIELD => Indicator_model::getUtilityKind());
             $indicators = $this->indicatordao->get($utility_where_field);
@@ -158,6 +160,7 @@ EOF;
             $data['schemes']  = $this->core->getSchemes();
             $data['utilities']  = $this->core->getAllUtilities();
             $data['indicators']  = $this->core->getIndicators();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
             $data['kinds'] = Indicator_model::getAllKinds();
 
@@ -192,6 +195,7 @@ EOF;
             $data['schemes']  = $this->core->getSchemes();
             $data['utilities']  = $this->core->getAllUtilities();
             $data['indicators']  = $this->core->getIndicators();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
             $data['kinds'] = Indicator_model::getAllKinds();
 
@@ -256,6 +260,7 @@ EOF;
             $data['tariffs']    = $this->core->listTarrifs($id);
             $data['licence']    = $this->core->listLcondtions($id);
             $data['srs']    = $this->core->listSRS($id);
+            $data['request_summary'] = Request_model::getRequestsSummary();
             // load views and send data
 
             // load views and send data
