@@ -97,7 +97,7 @@ class Indicator_instruction_model extends CI_Model {
         return ($this->scheme == NULL) ? FALSE : TRUE;
     }
 
-    public function getInstructionsFromPostData($indicators, $utility, $indicator, $union_token=NULL) {
+    public function getUtilityInstructionsFromPostData($indicators, $utility, $indicator, $union_token=NULL) {
         $instruction_objects = array();
         $indicator_property_dao = new Indicator_property_dao();
         $union_token = ($union_token==NULL) ? self::generateUniqueToken() : $union_token;
@@ -109,6 +109,24 @@ class Indicator_instruction_model extends CI_Model {
 
             $instruction = new Indicator_instruction_model(
                 NULL, $instruction_value, $union_token, $indicator_property, $indicator, $utility, NULL, NULL);
+            array_push($instruction_objects, $instruction);
+        }
+
+        return $instruction_objects;
+    }
+
+    public function getSchemeInstructionsFromPostData($indicators, $scheme, $indicator, $union_token=NULL) {
+        $instruction_objects = array();
+        $indicator_property_dao = new Indicator_property_dao();
+        $union_token = ($union_token==NULL) ? self::generateUniqueToken() : $union_token;
+
+        foreach ($indicators as $property_token => $instruction_value) {
+            $indicator_property = $indicator_property_dao->get(array(
+                Indicator_property_dao::TOKEN_FIELD => $property_token
+            ))[0];
+
+            $instruction = new Indicator_instruction_model(
+                NULL, $instruction_value, $union_token, $indicator_property, $indicator, NULL, $scheme, NULL);
             array_push($instruction_objects, $instruction);
         }
 
