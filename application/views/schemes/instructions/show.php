@@ -161,19 +161,15 @@
                                                                             class="fa fa-archive"></i></a>
                                                             </div>
                                                         <?php } else { ?>
-
                                                             <div class="btn-group">
-                                                                <button data-toggle="tooltip"
-                                                                        data-placement="bottom"
-                                                                        title="Request Edit" data-toggle="modal"
-                                                                        data-target="#myModal"
-                                                                        class="btn btn-sm btn-white"><i
-                                                                        class="fa fa-edit"></i></button>
-                                                                <button type="button" data-toggle="tooltip"
-                                                                        data-placement="bottom"
-                                                                        title="Request Archive"
-                                                                        class="btn btn-sm btn-white"><i
-                                                                        class="fa fa-archive"></i></button>
+                                                                <a href="<?= base_url().'request/create/EDIT/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id; ?>"
+                                                                   type="button" title="Request Edit"
+                                                                   class="btn btn-xs btn-white"><i
+                                                                        class="fa fa-edit"></i></a>
+                                                                <a href="<?= base_url().'request/create/ARCHIVE/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id; ?>"
+                                                                   type="button" title="Request Archive"
+                                                                   class="btn btn-xs btn-white"><i
+                                                                        class="fa fa-archive"></i></a>
                                                             </div>
                                                         <?php } ?>
                                                     </td>

@@ -10,35 +10,6 @@
 
 </div>
 </div>
-<?php
-$editing = 'edit';
-$archiving = 'archive';
-$pending = 'pending';
-$accepted = 'accepted';
-
-$this->db->where('requests.type', $editing);
-$equery = $this->db->count_all_results('requests');
-
-$this->db->where('requests.type', $archiving);
-$aquery = $this->db->count_all_results('requests');
-
-$this->db->where('requests.type', $editing);
-$this->db->where('requests.status', $pending);
-$epquery = $this->db->count_all_results('requests');
-
-$this->db->where('requests.type', $archiving);
-$this->db->where('requests.status', $pending);
-$apquery = $this->db->count_all_results('requests');
-
-$this->db->where('requests.type', $editing);
-$this->db->where('requests.status', $accepted);
-$eaquery = $this->db->count_all_results('requests');
-
-$this->db->where('requests.type', $archiving);
-$this->db->where('requests.status', $accepted);
-$aaquery = $this->db->count_all_results('requests');
-$nots = $equery + $aquery;
-?>
 
 <?= CI_footer() ?>
 

@@ -125,34 +125,6 @@
 
         </div>
     </nav>
-    <?php
-    $editing = 'edit';
-    $archiving = 'archive';
-    $pending = 'pending';
-    $accepted = 'accepted';
-
-    $this->db->where('requests.type', $editing);
-    $equery = $this->db->count_all_results('requests');
-
-    $this->db->where('requests.type', $archiving);
-    $aquery = $this->db->count_all_results('requests');
-
-    $this->db->where('requests.type', $editing);
-    $this->db->where('requests.status', $pending);
-    $epquery = $this->db->count_all_results('requests');
-
-    $this->db->where('requests.type', $archiving);
-    $this->db->where('requests.status', $pending);
-    $apquery = $this->db->count_all_results('requests');
-
-    $this->db->where('requests.type', $editing);
-    $this->db->where('requests.status', $accepted);
-    $eaquery = $this->db->count_all_results('requests');
-
-    $this->db->where('requests.type', $archiving);
-    $this->db->where('requests.status', $accepted);
-    $aaquery = $this->db->count_all_results('requests');
-    ?>
 
     <div id="page-wrapper" class="gray-bg sidebar-content">
         <div class="row border-bottom">
@@ -177,7 +149,9 @@
                     <li>
                         <a class="count-info" data-toggle="dropdown" href="index.html#">
                             <i class="fa fa-bell"></i> <span
-                                class="label label-danger"><?php echo $equery + $aquery; ?></span>
+                                class="label label-danger">
+                                <?= $request_summary['TOTAL_EDIT_PENDING'] + $request_summary['TOTAL_ARCHIVE_PENDING']; ?>
+                            </span>
                         </a>
                     </li>
 
@@ -187,11 +161,6 @@
                             <i class="fa fa-sign-out"></i> Log out
                         </a>
                     </li>
-                    <!--  <li>
-                          <a class="right-sidebar-toggle">
-                              <i class="fa fa-tasks"></i>
-                          </a>
-                      </li> -->
                 </ul>
 
             </nav>
@@ -203,36 +172,48 @@
             <div class="full-height-scroll ">
 
                 <div class="m-t-md">
-                    <h4>Editing Requests <span class="badge badge-info pull-right"><?php echo ' ' . $equery; ?></span>
+                    <h4>Editing Requests <span class="badge badge-info pull-right"><?= $request_summary['TOTAL_EDIT']; ?></span>
                     </h4>
                     <div>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <span class="badge badge-danger"><?php echo ' ' . $epquery; ?></span>
+                                <span class="badge badge-danger"><?= $request_summary['TOTAL_EDIT_PENDING']; ?></span>
                                 Pending
                             </li>
                             <li class="list-group-item ">
-                                <span class="badge badge-success"><?php echo ' ' . $eaquery; ?></span>
+                                <span class="badge badge-success"><?= $request_summary['TOTAL_EDIT_ACCEPTED']?></span>
                                 Accepted
                             </li>
                         </ul>
                     </div>
+                    <div>
+                        <a href="<?= base_url().'requests/show/EDIT' ?>"
+                           type="button" title="View edit requests"
+                           class="btn btn-xs btn-info"><i
+                                class="fa fa-folder-open"></i> Open edit requests</a>
+                    </div>
                 </div>
 
                 <div class="m-t-md">
-                    <h4>Archive Requests <span class="badge badge-info pull-right"><?php echo ' ' . $aquery; ?></span>
+                    <h4>Archive Requests <span class="badge badge-info pull-right"><?= $request_summary['TOTAL_ARCHIVE']; ?></span>
                     </h4>
                     <div>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <span class="badge badge-danger"><?php echo ' ' . $apquery; ?></span>
+                                <span class="badge badge-danger"><?= $request_summary['TOTAL_ARCHIVE_PENDING']; ?></span>
                                 Pending
                             </li>
                             <li class="list-group-item ">
-                                <span class="badge badge-success"><?php echo ' ' . $aaquery; ?></span>
+                                <span class="badge badge-success"><?= $request_summary['TOTAL_ARCHIVE_ACCEPTED']; ?></span>
                                 Accepted
                             </li>
                         </ul>
+                    </div>
+                    <div>
+                        <a href="<?= base_url().'requests/show/ARCHIVE' ?>"
+                           type="button" title="View archive requests"
+                           class="btn btn-xs btn-info"><i
+                                class="fa fa-folder-open"></i> Open archive requests</a>
                     </div>
                 </div>
             </div>
