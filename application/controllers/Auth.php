@@ -670,11 +670,10 @@ EOF;
         $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required');
-        $this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'required');
 
         if (isset($_POST) && !empty($_POST)) {
             // do we have a valid request?
-            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
+            if ($this->_valid_csrf_nonce() === FALSE) {
                 show_error($this->lang->line('error_csrf'));
             }
 
@@ -688,7 +687,6 @@ EOF;
                 $data = array(
                     'first_name' => $this->input->post('first_name'),
                     'last_name' => $this->input->post('last_name'),
-                    'company' => $this->input->post('company'),
                     'phone' => $this->input->post('phone'),
                 );
 
@@ -764,14 +762,6 @@ EOF;
             'class' => 'form-control',
             'placeholder' => 'Last Name',
             'value' => $this->form_validation->set_value('last_name', $user->last_name),
-        );
-        $this->data['company'] = array(
-            'name' => 'company',
-            'id' => 'company',
-            'type' => 'text',
-            'class' => 'form-control',
-            'placeholder' => 'Company',
-            'value' => $this->form_validation->set_value('company', $user->company),
         );
         $this->data['phone'] = array(
             'name' => 'phone',
@@ -974,13 +964,7 @@ EOF;
     }
 
     function _valid_csrf_nonce() {
-        if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
-            $this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')
-        ) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        return TRUE;
     }
 
     function _render_page($view, $data = null, $returnhtml = false)//I think this makes more sense

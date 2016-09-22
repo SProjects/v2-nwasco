@@ -140,16 +140,9 @@
                 <div
                     class="m-r-sm welcome text-muted welcome-message success col-md-7"><?php echo lang('dashboard_heading'); ?></div>
                 <ul class="nav navbar-top-links navbar-right col-md-3">
-                    <?php if (!$this->ion_auth->is_admin()) { ?>
-
-                        <li>
-                            <span class="m-r-sm text-muted welcome-message"><small>Welcome <b><?php echo $user->last_name; ?></b></small></span>
-                        </li>
-                    <?php } else { ?>
-                        <li>
-                            <span class="m-r-sm text-muted welcome-message"><small>Welcome <b><?php echo $user->username; ?></b></small></span>
-                        </li>
-                    <?php } ?>
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message"><small>Welcome <b><?php echo $user->last_name; ?></b></small></span>
+                    </li>
                     <li>
                         <a class="count-info" data-toggle="dropdown" href="index.html#">
                             <i class="fa fa-bell"></i> <span
