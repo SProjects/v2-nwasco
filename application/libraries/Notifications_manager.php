@@ -23,11 +23,11 @@ class Notifications_manager {
 
         $number_of_admin_requests = count($admin_requests);
         if($number_of_admin_requests > 0)
-            array_push($notifications, $number_of_admin_requests.' pending administrator level requests.');
+            array_push($notifications, $number_of_admin_requests.' pending administrator level request(s).');
 
         $number_of_requests = count($requests);
         if($number_of_requests > 0)
-            array_push($notifications, $number_of_requests.' approved requests.');
+            array_push($notifications, $number_of_requests.' approved request(s).');
 
         return $notifications;
     }
@@ -48,10 +48,10 @@ class Notifications_manager {
         }
 
         if($overdue_count > 0)
-            array_push($notifications, $overdue_count.' overdue Commercial Utility instructions.');
+            array_push($notifications, $overdue_count.' overdue Commercial Utility instruction(s).');
 
         if($almost_count > 0)
-            array_push($notifications, $almost_count.' almost due Commercial Utility instructions.');
+            array_push($notifications, $almost_count.' almost due Commercial Utility instruction(s).');
 
         return $notifications;
     }
@@ -72,10 +72,10 @@ class Notifications_manager {
         }
 
         if($overdue_count > 0)
-            array_push($notifications, $overdue_count.' overdue Private Scheme instructions.');
+            array_push($notifications, $overdue_count.' overdue Private Scheme instruction(s).');
 
         if($almost_count > 0)
-            array_push($notifications, $almost_count.' almost due Private Scheme instructions.');
+            array_push($notifications, $almost_count.' almost due Private Scheme instruction(s).');
 
         return $notifications;
     }

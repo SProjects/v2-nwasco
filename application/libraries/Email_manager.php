@@ -11,10 +11,16 @@ class Email_manager {
 
     public function __construct() {
         $this->CI =& get_instance();
+        $this->CI->load->library('ion_auth');
     }
 
     public function getRequests($user, $kind) {
         $request_dao = new Request_dao();
+
+        if($this->CI->ion_auth->is_admin($user->id)) {
+            return $request_dao->get(array(Request_dao::STATUS_FIELD => $kind));
+        }
+
         return $request_dao->get(array(
             Request_dao::USER_FIELD => $user->id,
             Request_dao::STATUS_FIELD => $kind
