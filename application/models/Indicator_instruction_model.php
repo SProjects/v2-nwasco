@@ -167,7 +167,7 @@ class Indicator_instruction_model extends CI_Model {
                 if(($days_difference > $days_to_expire) && ($days_difference != $days_to_expire))
                     return 'ACTIVE';
 
-                if (1<$days_difference && $days_difference<$days_to_expire)
+                if (1<=$days_difference && $days_difference<=$days_to_expire)
                     return 'ALMOST';
             }
         }
