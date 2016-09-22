@@ -102,18 +102,20 @@ EOF;
         $this->load->model('daos/indicator_instruction_dao');
     }
 
-    public function create($kind, $status, $indicator_id, $instruction_token, $user_id) {
+    public function create($kind, $status, $indicator_id, $instruction_token, $user_id, $source, $facility_id) {
         $indicator = $this->indicatordao->getById($indicator_id);
         $instructions = $this->indicatorinstructiondao->get(array(
             Indicator_instruction_dao::UNION_TOKEN_FIELD => $instruction_token
         ));
         $user = $this->ion_auth->user($user_id)->row();
 
-        $request = new Request_model(NULL, $kind, $status, $instructions, now(), $user, $indicator);
+        $request = new Request_model(NULL, $kind, $status, $instructions, date('Y-m-d h:i:sa', time()), $user, $indicator);
         if($this->requestdao->post($request)) {
             $this->output->set_status_header(200);
+            redirect('/'.$source.'/show/'.$facility_id, 'refresh');
         } else {
             $this->output->set_status_header(500);
+            redirect('/'.$source.'/show/'.$facility_id, 'refresh');
         }
     }
 

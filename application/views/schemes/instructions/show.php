@@ -162,11 +162,11 @@
                                                             </div>
                                                         <?php } else { ?>
                                                             <div class="btn-group">
-                                                                <a href="<?= base_url().'request/create/EDIT/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id; ?>"
+                                                                <a href="<?= base_url().'requests/create/EDIT/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
                                                                    type="button" title="Request Edit"
                                                                    class="btn btn-xs btn-white"><i
                                                                         class="fa fa-edit"></i></a>
-                                                                <a href="<?= base_url().'request/create/ARCHIVE/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id; ?>"
+                                                                <a href="<?= base_url().'requests/create/ARCHIVE/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
                                                                    type="button" title="Request Archive"
                                                                    class="btn btn-xs btn-white"><i
                                                                         class="fa fa-archive"></i></a>
