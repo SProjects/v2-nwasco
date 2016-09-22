@@ -523,3 +523,13 @@
         </div>
     </div>
 </div>
+
+<script text="text/javascript">
+    $(document).ready(function () {
+        var notifications = <?php echo json_encode($notifications); ?>;
+        console.log(notifications);
+        for(var x=0; x<notifications.length; x++) {
+            alertify.log(notifications[x], "", 0);
+        }
+    });
+</script>

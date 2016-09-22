@@ -7,6 +7,7 @@ class Dashboard extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('ion_auth');
+        $this->load->library('notifications_manager');
         $this->lang->load('auth');
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -112,6 +113,11 @@ EOF;
         $this->layout->add_css_files(array('slick.css'), base_url() . 'assets/css/plugins/slick/');
         $this->layout->add_css_files(array('slick-theme.css'), base_url() . 'assets/css/plugins/slick/');
 
+        //Alertify
+        $this->layout->add_css_files(array('alertify.core.css'), base_url('assets/css/'));
+        $this->layout->add_css_files(array('alertify.default.css'), base_url('assets/css/'));
+        $this->layout->add_css_files(array('alertify.bootstrap.css'), base_url('assets/css/'));
+
         //Main Stylesheet
         $this->layout->add_css_files(array('unslider.css', 'animate.css', 'style.css', 'slider.css'), base_url() . 'assets/css/');
         // Google
@@ -140,23 +146,28 @@ EOF;
         //Data Tables -->
         $this->layout->add_js_files(array('jquery.dataTables.js', 'dataTables.bootstrap.js', 'dataTables.responsive.js', 'dataTables.tableTools.min.js'), base_url('assets/js/plugins/dataTables/'), 'footer');
 
+        //Alertify
+        $this->layout->add_js_files(array('alertify.min.js'), base_url('assets/js/'), 'footer');
+
         //ChartJS-->
         $this->layout->add_js_files(array('Chart.min.js'), base_url('assets/js/plugins/chartJs/'), 'header');
 
 
         if ($this->ion_auth->logged_in()) {
+            $user = $this->ion_auth->user()->row();
             $this->data['title'] = $this->lang->line('dashboard_heading');
             $this->data['current_user_menu'] = '';
 
             $this->layout->set_title('Welcome to :: Nwasco Dashboard');
             $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
             $data['dashboard'] = $this->lang->line('dashboard_heading');
-            $data['user'] = $this->ion_auth->user()->row();
+            $data['user'] = $user;
             $data['utilities'] = $this->core->getAllUtilities();
             $data['schemes'] = $this->core->getSchemes();
             $data['indicators'] = $this->core->getIndicators();
 
             $data['request_summary'] = Request_model::getRequestsSummary();
+            $data['notifications'] = $this->notifications_manager->getNotification($user);
 
             // load views and send data
             $this->data['current_user_menu'] = $this->load->view('header', $data);
