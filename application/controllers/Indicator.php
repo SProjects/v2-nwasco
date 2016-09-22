@@ -3,11 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Indicator extends CI_Controller{
     public $indicatordao;
+    public $utilitydao;
+    public $schemedao;
 
     public function __construct() {
         parent::__construct();
         $this->loadDaos();
         $this->indicatordao = $this->indicator_dao;
+        $this->utilitydao = $this->utility_dao;
+        $this->schemedao = $this->scheme_dao;
 
         $this->load->model('request_model');
         $this->load->library('ion_auth');
@@ -121,6 +125,8 @@ EOF;
 
     public function loadDaos(){
         $this->load->model('daos/indicator_dao');
+        $this->load->model('daos/utility_dao');
+        $this->load->model('daos/scheme_dao');
     }
 
 	public function index() {
@@ -229,6 +235,50 @@ EOF;
             } else {
                 $this->output->set_status_header(500);
             }
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function show_utility($id) {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['indicators']  = $this->core->getIndicators();
+            $data['request_summary'] = Request_model::getRequestsSummary();
+
+            $data['indicator'] = $this->indicatordao->getById($id);
+            $data['utility_objects'] = $this->utilitydao->get();
+
+            $this->load->view('header', $data);
+            $this->load->view('indicators/utilities/show', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function show_scheme($id) {
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['schemes']  = $this->core->getSchemes();
+            $data['utilities']  = $this->core->getAllUtilities();
+            $data['indicators']  = $this->core->getIndicators();
+            $data['request_summary'] = Request_model::getRequestsSummary();
+
+            $data['indicator'] = $this->indicatordao->getById($id);
+            $data['scheme_objects'] = $this->schemedao->get();
+
+            $this->load->view('header', $data);
+            $this->load->view('indicators/schemes/show', $data);
+            $this->load->view('footer_main');
         } else {
             redirect('auth/login');
         }

@@ -69,9 +69,13 @@
                                     $url = str_replace("'", '', $url);
                                     $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
 
-                                    echo base_url(); ?>indicator/details/<?php echo urlencode(strtolower($url)); ?>/<?php echo $indicator->in_id; ?>">
-                                        <?= $indicator->sname; ?>
-                                    </a></li>
+                                    if ($indicator->kind == 'UTILITY') {
+                                        echo base_url().'indicator/show_utility/'.$indicator->in_id; ?>
+                                    <?php } elseif ($indicator->kind == 'SCHEME') { ?>
+                                        <?php echo base_url().'indicator/show_scheme/'.$indicator->in_id; ?>
+                                    <?php } ?>
+                                    "><?= $indicator->sname; ?></a>
+                                </li>
                                 <?php
                             }
                         ?>
@@ -165,6 +169,7 @@
 
             </nav>
         </div>
+
         <div class="sidebard-panel border-left full-height">
             <li class="upperspace">
 
