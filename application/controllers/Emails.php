@@ -33,7 +33,7 @@ class Emails extends CI_Controller {
             $utility_instructions = $this->email_manager->getSummaryUtilityInstructions($user);
             $scheme_instructions = $this->email_manager->getSummarySchemeInstructions($user);
 
-            if (sizeof($requests) > 0 || sizeof($utility_instructions) > 0 || sizeof($scheme_instructions) > 0) {
+            if (sizeof($requests) > 0 || $utility_instructions != NULL || $scheme_instructions != NULL) {
                 $data['recipient'] = $user;
                 $data['admin_requests'] = $admin_requests;
                 $data['requests'] = $requests;
