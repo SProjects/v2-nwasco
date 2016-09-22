@@ -17,6 +17,7 @@ class Scheme_indicator_instructions extends CI_Controller {
         $this->indicatorinstructiondao = $this->indicator_instruction_dao;
         $this->indicatorinstructionmodel = $this->indicator_instruction_model;
 
+        $this->load->model('request_model');
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -117,6 +118,7 @@ EOF;
         $data['schemes'] = $this->core->getSchemes();
         $data['indicators'] = $this->core->getIndicators();
         $data['sindicators'] = $this->core->getSchemeIndicators();
+        $data['request_summary'] = Request_model::getRequestsSummary();
 
         $indicator = $this->indicatordao->getById($indicator_id);
 
@@ -167,6 +169,7 @@ EOF;
         $data['schemes'] = $this->core->getSchemes();
         $data['indicators'] = $this->core->getIndicators();
         $data['sindicators'] = $this->core->getSchemeIndicators();
+        $data['request_summary'] = Request_model::getRequestsSummary();
 
         $indicator = $this->indicatordao->getById($indicator_id);
         $scheme = $this->schemedao->getById($scheme_id);
