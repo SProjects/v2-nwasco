@@ -3,9 +3,9 @@ require APPPATH.'models/Indicator_model.php';
 
 class Indicator_dao extends CI_Model {
     const TABLE_NAME = 'indicators';
-    const ID_FIELD = 'in_id';
-    const NAME_FIELD = 'sname';
-    const DESCRIPTION_FIELD = 'fname';
+    const ID_FIELD = 'id';
+    const NAME_FIELD = 'name';
+    const DESCRIPTION_FIELD = 'description';
     const KIND_FIELD = 'kind';
     const DAYS_TO_EXPIRE_FIELD = 'days_to_expire';
 

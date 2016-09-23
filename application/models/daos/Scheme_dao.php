@@ -2,9 +2,9 @@
 require APPPATH.'models/Scheme_model.php';
 
 class Scheme_dao extends CI_Model {
-    const TABLE_NAME = 'private_schemes';
-    const ID_FIELD = 'ps_id';
-    const NAME_FIELD = 'scheme';
+    const TABLE_NAME = 'schemes';
+    const ID_FIELD = 'id';
+    const NAME_FIELD = 'name';
     const INSPECTOR_FIELD = 'user_id';
 
     public function __construct() {

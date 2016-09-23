@@ -2,10 +2,10 @@
 require APPPATH.'models/Utility_model.php';
 
 class Utility_dao extends CI_Model {
-    const TABLE_NAME = 'cus';
-    const ID_FIELD = 'cu_id';
-    const NAME_FIELD = 'utility';
-    const ABBREVIATION_FIELD = 'abr_utility';
+    const TABLE_NAME = 'utilities';
+    const ID_FIELD = 'id';
+    const NAME_FIELD = 'name';
+    const ABBREVIATION_FIELD = 'abbreviation';
     const INSPECTOR_FIELD = 'user_id';
 
     public function __construct() {
