@@ -2,3 +2,8 @@
     content:" *" !important;
     color: red !important;
 }
+
+input:read-only, input:-moz-read-only {
+    color: slategray !important;
+    size: 17px !important;
+}
