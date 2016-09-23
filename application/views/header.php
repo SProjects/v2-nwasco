@@ -15,6 +15,8 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="upperspace">
                 </li>
+
+                <!--Commericial Utilities menu-->
                 <li class="<?= ($this->uri->segment(1) === 'dashboard') ? 'active' : '' ?>">
                     <a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-desktop"></i> <span class="nav-label">Home</span></a>
                 </li>
@@ -25,31 +27,21 @@
                         <li class="<?= ($this->uri->segment(1) === 'utility' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
                             <a href="<?php echo base_url() . "utility"; ?>">Manage Utilities</a>
                         </li>
-                        <?php //if there is comments then print the comments
-                        if (count($utilities) > 0)
-                            foreach ($utilities as $utility) {
-
-                                ?>
-                                <li class="<?= ($this->uri->segment(3) === '' . $utility->cu_id . '') ? 'active' : '' ?>">
-                                    <a href="<?php
-
-                                    $url = str_replace(' ', '-', $utility->utility);
-                                    $url = str_replace(":", '', $url);
-                                    $url = str_replace("'", '', $url);
-                                    $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-
-                                    echo base_url(); ?>utility/show/<?php echo $utility->cu_id; ?>">
-                                        <?= $utility->utility; ?>
+                        <?php if (count($utilities) > 0): ?>
+                            <?php foreach ($utilities as $utility): ?>
+                                <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
+                                    <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
+                                        <?= $utility->getName(); ?>
                                     </a></li>
-                                <?php
-                            }
-                        else //when there is no comment
-                        {
-                            echo "<p>No Utilities</p>";
-                        }
-                        ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            No Utilities
+                        <?php endif; ?>
                     </ul>
                 </li>
+                <!--End: Commercial Utilities menu-->
+
+                <!--Indicators menu-->
                 <li class="<?= ($this->uri->segment(1) === 'indicator') ? 'active' : '' ?>">
                     <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Indicators</span><span
                             class="fa arrow"></span></a>
@@ -57,31 +49,28 @@
                         <li class="<?= ($this->uri->segment(1) === 'indicator' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
                             <a href="<?php echo base_url() . "indicator"; ?>">Manage Indicators</a>
                         </li>
-                        <?php
-                        if (count($indicators) > 0)
-                            foreach ($indicators as $indicator) {
-                                ?>
-                                <li class="<?= ($this->uri->segment(4) === '' . $indicator->in_id . '') ? 'active' : '' ?>">
+                        <?php if (count($indicators) > 0): ?>
+                            <?php foreach ($indicators as $indicator): ?>
+                                <li class="<?= ($this->uri->segment(4) === '' .$indicator->getId(). '') ? 'active' : '' ?>">
                                     <a href="<?php
-
-                                    $url = str_replace(' ', '-', $indicator->sname);
-                                    $url = str_replace(":", '', $url);
-                                    $url = str_replace("'", '', $url);
-                                    $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-
-                                    if ($indicator->kind == 'UTILITY') {
-                                        echo base_url().'indicator/show_utility/'.$indicator->in_id; ?>
-                                    <?php } elseif ($indicator->kind == 'SCHEME') { ?>
-                                        <?php echo base_url().'indicator/show_scheme/'.$indicator->in_id; ?>
-                                    <?php } ?>
-                                    "><?= $indicator->sname; ?></a>
+                                                if ($indicator->getKind() == 'UTILITY') {
+                                                    echo base_url().'indicator/show_utility/'.$indicator->getId(); ?>
+                                                <?php } elseif ($indicator->getKind() == 'SCHEME') { ?>
+                                                    <?php echo base_url().'indicator/show_scheme/'.$indicator->getId(); ?>
+                                                <?php } ?>
+                                                "><?= $indicator->getName();
+                                            ?>
+                                    </a>
                                 </li>
-                                <?php
-                            }
-                        ?>
-
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            No Indicators
+                        <?php endif; ?>
                     </ul>
                 </li>
+                <!--End: Indicators menu-->
+
+                <!--Private Schemes menu-->
                 <li class="<?= ($this->uri->segment(1) === 'scheme') ? 'active' : '' ?>">
                     <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Private Schemes</span><span
                             class="fa arrow"></span></a>
@@ -89,41 +78,31 @@
                         <li class="<?= ($this->uri->segment(1) === 'scheme' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
                             <a href="<?php echo base_url() . "scheme"; ?>">Manage Schemes</a>
                         </li>
-                        <?php //if there is comments then print the comments
-                        if (count($schemes) > 0)
-                            foreach ($schemes as $scheme) {
-
-                                ?>
-                                <li class="<?= ($this->uri->segment(4) === '' . $scheme->ps_id . '') ? 'active' : '' ?>">
-                                    <a href="<?php
-
-                                    $url = str_replace(' ', '-', $scheme->scheme);
-                                    $url = str_replace(":", '', $url);
-                                    $url = str_replace("'", '', $url);
-                                    $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-
-                                    echo base_url(); ?>scheme/show/<?php echo $scheme->ps_id; ?>">
-                                        <?= $scheme->scheme; ?>
+                        <?php if (count($schemes) > 0): ?>
+                            <?php foreach ($schemes as $scheme): ?>
+                                <li class="<?= ($this->uri->segment(4) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
+                                    <a href="<?= base_url().'scheme/show/'.$scheme->getId(); ?>">
+                                        <?= $scheme->getName(); ?>
                                     </a></li>
-                                <?php
-                            }
-                        else //when there is no comment
-                        {
-                            echo "<p>No schemes</p>";
-                        }
-                        ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No schemes</p>
+                        <?php endif; ?>
                     </ul>
                 </li>
-                <?php if ($this->ion_auth->is_admin()) { ?>
-                    <li class="<?= ($this->uri->segment(1) === 'auth') ? 'active' : '' ?>">
-                        <a href="<?php echo base_url(); ?>auth/"><i class="fa fa-users"></i> <span class="nav-label">Manage Users</span>
-                    </li>
-                <?php } else {
-                    #code.........
-                }
-                ?>
-                <li class="upperspace">
+                <!--End: Private Schemes menu-->
 
+                <!--User management-->
+                <?php if ($this->ion_auth->is_admin()): ?>
+                    <li class="<?= ($this->uri->segment(1) === 'auth') ? 'active' : '' ?>">
+                        <a href="<?php echo base_url().'auth/'; ?>"><i class="fa fa-users"></i>
+                            <span class="nav-label">Manage Users</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <!--End: User management-->
+
+                <li class="upperspace">
                 </li>
             </ul>
 

@@ -2,12 +2,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Scheme extends CI_Controller {
+    public $indicatordao;
+    public $utilitydao;
     public $schemedao;
 
     public function __construct() {
         parent::__construct();
         $this->loadDaos();
         $this->schemedao = $this->scheme_dao;
+        $this->indicatordao = $this->indicator_dao;
+        $this->utilitydao = $this->utility_dao;
 
         $this->load->model('request_model');
         $this->load->library('ion_auth');
@@ -94,7 +98,9 @@ EOF;
     }
 
     public function loadDaos(){
+        $this->load->model('daos/utility_dao');
         $this->load->model('daos/scheme_dao');
+        $this->load->model('daos/indicator_dao');
     }
 
     public function index() {
@@ -103,10 +109,9 @@ EOF;
             $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
             $data['title'] = $this->lang->line('login_heading');
             $data['user'] = $this->ion_auth->user()->row();
-            $data['utilities'] = $this->core->getAllUtilities();
-            $data['schemes'] = $this->core->getSchemes();
-            $data['indicators'] = $this->core->getIndicators();
-            $data['sindicators'] = $this->core->getSchemeIndicators();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
             $data['request_summary'] = Request_model::getRequestsSummary();
 
             $scheme = $this->schemedao->get();
@@ -126,10 +131,9 @@ EOF;
             $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
             $data['title'] = $this->lang->line('login_heading');
             $data['user'] = $this->ion_auth->user()->row();
-            $data['utilities'] = $this->core->getAllUtilities();
-            $data['schemes'] = $this->core->getSchemes();
-            $data['indicators'] = $this->core->getIndicators();
-            $data['sindicators'] = $this->core->getSchemeIndicators();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
             $data['inspectors'] = $this->ion_auth->users()->result();
             $data['request_summary'] = Request_model::getRequestsSummary();
 
@@ -166,9 +170,9 @@ EOF;
             $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
             $data['title'] = $this->lang->line('login_heading');
             $data['user'] = $this->ion_auth->user()->row();
-            $data['utilities'] = $this->core->getAllUtilities();
-            $data['schemes'] = $this->core->getSchemes();
-            $data['indicators'] = $this->core->getIndicators();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
             $data['inspectors'] = $this->ion_auth->users()->result();
             $data['request_summary'] = Request_model::getRequestsSummary();
 
@@ -215,13 +219,9 @@ EOF;
         $data['title'] = $this->lang->line('login_heading');
         $data['title'] = $this->lang->line('login_heading');
         $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->core->getAllUtilities();
-        $data['schemes'] = $this->core->getSchemes();
-        $data['indicators'] = $this->core->getIndicators();
-        $data['sindicators'] = $this->core->getSchemeIndicators();
-        $data['sdirectives'] = $this->core->listSchemeDirectives($id);
-        $data['tariffs'] = $this->core->listTarrifs($id);
-        $data['srs'] = $this->core->listSRS($id);
+        $data['utilities'] = $this->utilitydao->get();
+        $data['schemes'] = $this->schemedao->get();
+        $data['indicators'] = $this->indicatordao->get();
         $data['request_summary'] = Request_model::getRequestsSummary();
 
         $scheme = $this->schemedao->getById($id);

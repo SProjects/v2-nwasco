@@ -1,14 +1,21 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Controller
-{
+class Auth extends CI_Controller {
+    public $utilitydao;
+    public $schemedao;
+    public $indicatordao;
 
     function __construct() {
         parent::__construct();
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
+
+        $this->loadDaos();
         $this->load->model('request_model');
+        $this->utilitydao = $this->utility_dao;
+        $this->schemedao = $this->scheme_dao;
+        $this->indicatordao = $this->indicator_dao;
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -115,6 +122,12 @@ EOF;
         $this->layout->add_js_files(array('pace.min.js'), base_url('assets/js/plugins/pace/'), 'footer');
     }
 
+    public function loadDaos() {
+        $this->load->model('daos/utility_dao');
+        $this->load->model('daos/scheme_dao');
+        $this->load->model('daos/indicator_dao');
+    }
+
     // redirect if needed, otherwise display the user list
     function index() {
 
@@ -139,9 +152,9 @@ EOF;
 
             $this->layout->set_title('View Users :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['utilities'] = $this->core->getAllUtilities();
-            $this->data['indicators'] = $this->core->getIndicators();
-            $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['utilities'] = $this->utilitydao->get();
+            $this->data['schemes'] = $this->schemedao->get();
+            $this->data['indicators'] = $this->indicatordao->get();
             $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             $this->_render_page('header', $this->data);
@@ -277,8 +290,9 @@ EOF;
 
             $this->layout->set_title('Change Password :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['utilities'] = $this->core->getAllUtilities();
-            $this->data['indicators'] = $this->core->getIndicators();
+            $this->data['utilities'] = $this->utilitydao->get();
+            $this->data['schemes'] = $this->schemedao->get();
+            $this->data['indicators'] = $this->indicatordao->get();
             $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             // render
@@ -331,8 +345,9 @@ EOF;
 
             $this->layout->set_title('Forgot Password :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['utilities'] = $this->core->getAllUtilities();
-            $this->data['indicators'] = $this->core->getIndicators();
+            $this->data['utilities'] = $this->utilitydao->get();
+            $this->data['schemes'] = $this->schemedao->get();
+            $this->data['indicators'] = $this->indicatordao->get();
             $this->data['request_summary'] = Request_model::getRequestsSummary();
             // render
             $this->_render_page('header', $this->data);
@@ -415,8 +430,9 @@ EOF;
 
                 $this->layout->set_title('Reset Password :: Nwasco Dashboard');
                 $this->data['user'] = $this->ion_auth->user()->row();
-                $this->data['utilities'] = $this->core->getAllUtilities();
-                $this->data['indicators'] = $this->core->getIndicators();
+                $this->data['utilities'] = $this->utilitydao->get();
+                $this->data['schemes'] = $this->schemedao->get();
+                $this->data['indicators'] = $this->indicatordao->get();
                 $this->data['request_summary'] = Request_model::getRequestsSummary();
 
                 // render
@@ -498,9 +514,9 @@ EOF;
 
             $this->layout->set_title('Deactivate User :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['utilities'] = $this->core->getAllUtilities();
-            $this->data['indicators'] = $this->core->getIndicators();
-            $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['utilities'] = $this->utilitydao->get();
+            $this->data['schemes'] = $this->schemedao->get();
+            $this->data['indicators'] = $this->indicatordao->get();
             $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             // render
@@ -641,9 +657,9 @@ EOF;
 
             $this->layout->set_title('Create User :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['utilities'] = $this->core->getAllUtilities();
-            $this->data['indicators'] = $this->core->getIndicators();
-            $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['utilities'] = $this->utilitydao->get();
+            $this->data['schemes'] = $this->schemedao->get();
+            $this->data['indicators'] = $this->indicatordao->get();
             $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             $this->_render_page('header', $this->data);
@@ -789,9 +805,9 @@ EOF;
 
         $this->layout->set_title('View Users :: Nwasco Dashboard');
         $this->data['user'] = $this->ion_auth->user()->row();
-        $this->data['utilities'] = $this->core->getAllUtilities();
-        $this->data['indicators'] = $this->core->getIndicators();
-        $this->data['schemes']  = $this->core->getSchemes();
+        $this->data['utilities'] = $this->utilitydao->get();
+        $this->data['schemes'] = $this->schemedao->get();
+        $this->data['indicators'] = $this->indicatordao->get();
         $this->data['request_summary'] = Request_model::getRequestsSummary();
 
         $this->_render_page('header', $this->data);
@@ -840,9 +856,9 @@ EOF;
 
             $this->layout->set_title('View Users :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['utilities'] = $this->core->getAllUtilities();
-            $this->data['indicators'] = $this->core->getIndicators();
-            $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['utilities'] = $this->utilitydao->get();
+            $this->data['schemes'] = $this->schemedao->get();
+            $this->data['indicators'] = $this->indicatordao->get();
             $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             // render
@@ -872,9 +888,9 @@ EOF;
 
             $this->layout->set_title('View Users :: Nwasco Dashboard');
             $this->data['user'] = $this->ion_auth->user()->row();
-            $this->data['utilities'] = $this->core->getAllUtilities();
-            $this->data['indicators'] = $this->core->getIndicators();
-            $this->data['schemes']  = $this->core->getSchemes();
+            $this->data['utilities'] = $this->utilitydao->get();
+            $this->data['schemes'] = $this->schemedao->get();
+            $this->data['indicators'] = $this->indicatordao->get();
             $this->data['request_summary'] = Request_model::getRequestsSummary();
 
             $this->_render_page('header', $this->data);
@@ -940,8 +956,9 @@ EOF;
 
         $this->layout->set_title('Edit Group :: Nwasco Dashboard');
         $this->data['user'] = $this->ion_auth->user()->row();
-        $this->data['utilities'] = $this->core->getAllUtilities();
-        $this->data['indicators'] = $this->core->getIndicators();
+        $this->data['utilities'] = $this->utilitydao->get();
+        $this->data['schemes'] = $this->schemedao->get();
+        $this->data['indicators'] = $this->indicatordao->get();
         $this->data['request_summary'] = Request_model::getRequestsSummary();
 
         // render

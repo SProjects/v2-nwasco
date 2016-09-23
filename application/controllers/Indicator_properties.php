@@ -2,6 +2,8 @@
 
 class Indicator_properties extends CI_Controller {
     public $indicatordao;
+    public $utilitydao;
+    public $schemedao;
     public $indicatorpropertydao;
 
     public function __construct() {
@@ -9,6 +11,8 @@ class Indicator_properties extends CI_Controller {
         $this->loadDaos();
         $this->load->model('indicator_model');
         $this->indicatordao = $this->indicator_dao;
+        $this->utilitydao = $this->utility_dao;
+        $this->schemedao = $this->scheme_dao;
         $this->indicatorpropertydao = $this->indicator_property_dao;
 
         $this->load->model('request_model');
@@ -98,6 +102,8 @@ EOF;
     public function loadDaos() {
         $this->load->model('daos/indicator_dao');
         $this->load->model('daos/indicator_property_dao');
+        $this->load->model('daos/utility_dao');
+        $this->load->model('daos/scheme_dao');
     }
 
     public function show($indicator_id) {
@@ -105,10 +111,9 @@ EOF;
         $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
         $data['title'] = $this->lang->line('login_heading');
         $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->core->getAllUtilities();
-        $data['schemes'] = $this->core->getSchemes();
-        $data['indicators'] = $this->core->getIndicators();
-        $data['sindicators'] = $this->core->getSchemeIndicators();
+        $data['utilities'] = $this->utilitydao->get();
+        $data['schemes'] = $this->schemedao->get();
+        $data['indicators'] = $this->indicatordao->get();
         $data['request_summary'] = Request_model::getRequestsSummary();
 
         $indicator = $this->indicatordao->getById($indicator_id);
@@ -125,10 +130,9 @@ EOF;
         $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
         $data['title'] = $this->lang->line('login_heading');
         $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->core->getAllUtilities();
-        $data['schemes'] = $this->core->getSchemes();
-        $data['indicators'] = $this->core->getIndicators();
-        $data['sindicators'] = $this->core->getSchemeIndicators();
+        $data['utilities'] = $this->utilitydao->get();
+        $data['schemes'] = $this->schemedao->get();
+        $data['indicators'] = $this->indicatordao->get();
         $data['request_summary'] = Request_model::getRequestsSummary();
 
         $indicator = $this->indicatordao->getById($indicator_id);
@@ -167,10 +171,9 @@ EOF;
             $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
             $data['title'] = $this->lang->line('login_heading');
             $data['user'] = $this->ion_auth->user()->row();
-            $data['utilities'] = $this->core->getAllUtilities();
-            $data['schemes'] = $this->core->getSchemes();
-            $data['indicators'] = $this->core->getIndicators();
-            $data['sindicators'] = $this->core->getSchemeIndicators();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
             $data['request_summary'] = Request_model::getRequestsSummary();
 
             $indicator = $this->indicatordao->getById($indicator_id);
