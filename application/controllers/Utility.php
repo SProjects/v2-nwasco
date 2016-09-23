@@ -156,22 +156,26 @@ EOF;
     }
 
     public function create() {
-        $name = $this->input->post('name');
-        $abbreviation = $this->input->post('abbreviation');
-        $inspector_id = $this->input->post('inspector');
+        if ($this->ion_auth->logged_in()) {
+            $name = $this->input->post('name');
+            $abbreviation = $this->input->post('abbreviation');
+            $inspector_id = $this->input->post('inspector');
 
-        $inspector = NULL;
-        if($inspector_id != -1) {
-            $inspector = $this->ion_auth->user($inspector_id)->row();
-        }
+            $inspector = NULL;
+            if($inspector_id != -1) {
+                $inspector = $this->ion_auth->user($inspector_id)->row();
+            }
 
-        $new_utility = new Utility_model(NULL, $name, $abbreviation, $inspector);
-        if($this->utilitydao->post($new_utility)) {
+            $new_utility = new Utility_model(NULL, $name, $abbreviation, $inspector);
+            if($this->utilitydao->post($new_utility)) {
             $this->output->set_status_header(200);
             return true;
         } else {
             $this->output->set_status_header(500);
             return false;
+        }
+        } else {
+            redirect('auth/login');
         }
     }
 
@@ -227,26 +231,34 @@ EOF;
     }
 
     public function show($id) {
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->utilitydao->get();
-        $data['schemes'] = $this->schemedao->get();
-        $data['indicators'] = $this->indicatordao->get();
-        $data['request_summary'] = Request_model::getRequestsSummary();
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
-        $utility = $this->utilitydao->getById($id);
-        $data['utility'] = $utility;
-        $data['instructions'] = Utility_model::getIndicatorInstructions($utility);
+            $utility = $this->utilitydao->getById($id);
+            $data['utility'] = $utility;
+            $data['instructions'] = Utility_model::getIndicatorInstructions($utility);
 
-        $this->load->view('header', $data);
-        $this->load->view('utilities/instructions/show', $data);
-        $this->load->view('footer_main', $data);
+            $this->load->view('header', $data);
+            $this->load->view('utilities/instructions/show', $data);
+            $this->load->view('footer_main', $data);
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function delete($id) {
-        $this->utilitydao->delete($id);
-        redirect('/utility', 'refresh');
+        if ($this->ion_auth->logged_in()) {
+            $this->utilitydao->delete($id);
+            redirect('/utility', 'refresh');
+        } else {
+            redirect('auth/login');
+        }
     }
 }

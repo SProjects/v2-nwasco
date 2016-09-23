@@ -108,61 +108,73 @@ EOF;
     }
 
     public function show($indicator_id) {
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->utilitydao->get();
-        $data['schemes'] = $this->schemedao->get();
-        $data['indicators'] = $this->indicatordao->get();
-        $data['request_summary'] = Request_model::getRequestsSummary();
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
-        $indicator = $this->indicatordao->getById($indicator_id);
-        $data['indicator'] = $indicator;
-        $data['indicator_properties'] = $this->indicatorpropertydao->getByIndicator($indicator);
+            $indicator = $this->indicatordao->getById($indicator_id);
+            $data['indicator'] = $indicator;
+            $data['indicator_properties'] = $this->indicatorpropertydao->getByIndicator($indicator);
 
-        $this->load->view('header', $data);
-        $this->load->view('indicator_properties/show', $data);
-        $this->load->view('footer_main');
+            $this->load->view('header', $data);
+            $this->load->view('indicator_properties/show', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function add($indicator_id) {
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->utilitydao->get();
-        $data['schemes'] = $this->schemedao->get();
-        $data['indicators'] = $this->indicatordao->get();
-        $data['request_summary'] = Request_model::getRequestsSummary();
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
-        $indicator = $this->indicatordao->getById($indicator_id);
-        $data['indicator'] = $indicator;
-        $data['datatypes'] = Indicator_property_model::getAllDataTypes();
+            $indicator = $this->indicatordao->getById($indicator_id);
+            $data['indicator'] = $indicator;
+            $data['datatypes'] = Indicator_property_model::getAllDataTypes();
 
-        $this->load->view('header', $data);
-        $this->load->view('indicator_properties/add', $data);
-        $this->load->view('footer_main');
+            $this->load->view('header', $data);
+            $this->load->view('indicator_properties/add', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function create() {
-        $name = $this->input->post('name');
-        $description = $this->input->post('description');
-        $datatype = $this->input->post('datatype');
-        $indicator_id = $this->input->post('indicator_id');
-        $unique_token = Indicator_property_model::generateUniqueToken();
+        if ($this->ion_auth->logged_in()) {
+            $name = $this->input->post('name');
+            $description = $this->input->post('description');
+            $datatype = $this->input->post('datatype');
+            $indicator_id = $this->input->post('indicator_id');
+            $unique_token = Indicator_property_model::generateUniqueToken();
 
-        $indicator = $this->indicatordao->getById($indicator_id);
+            $indicator = $this->indicatordao->getById($indicator_id);
 
-        $new_indicator_property = new Indicator_property_model(NULL, $name, $description,
-            $datatype, $unique_token, $indicator);
+            $new_indicator_property = new Indicator_property_model(NULL, $name, $description,
+                $datatype, $unique_token, $indicator);
 
-        if($this->indicatorpropertydao->post($new_indicator_property)) {
-            $this->output->set_status_header(200);
-            return true;
+            if($this->indicatorpropertydao->post($new_indicator_property)) {
+                $this->output->set_status_header(200);
+                return true;
+            } else {
+                $this->output->set_status_header(500);
+                return false;
+            }
         } else {
-            $this->output->set_status_header(500);
-            return false;
+            redirect('auth/login');
         }
     }
 

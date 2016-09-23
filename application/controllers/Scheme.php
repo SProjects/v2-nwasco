@@ -215,27 +215,35 @@ EOF;
     }
 
     public function show($id) {
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->utilitydao->get();
-        $data['schemes'] = $this->schemedao->get();
-        $data['indicators'] = $this->indicatordao->get();
-        $data['request_summary'] = Request_model::getRequestsSummary();
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
-        $scheme = $this->schemedao->getById($id);
-        $data['scheme'] = $scheme;
-        $data['instructions'] = Scheme_model::getIndicatorInstructions($scheme);
+            $scheme = $this->schemedao->getById($id);
+            $data['scheme'] = $scheme;
+            $data['instructions'] = Scheme_model::getIndicatorInstructions($scheme);
 
-        $this->load->view('header', $data);
-        $this->load->view('schemes/instructions/show', $data);
-        $this->load->view('footer_main', $data);
+            $this->load->view('header', $data);
+            $this->load->view('schemes/instructions/show', $data);
+            $this->load->view('footer_main', $data);
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function delete($id) {
-        $this->schemedao->delete($id);
-        redirect('/scheme', 'refresh');
+        if ($this->ion_auth->logged_in()) {
+            $this->schemedao->delete($id);
+            redirect('/scheme', 'refresh');
+        } else {
+            redirect('auth/login');
+        }
     }
 }

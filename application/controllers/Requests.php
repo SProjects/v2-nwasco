@@ -110,53 +110,69 @@ EOF;
     }
 
     public function create($kind, $status, $indicator_id, $instruction_token, $user_id, $source, $facility_id) {
-        $indicator = $this->indicatordao->getById($indicator_id);
-        $instructions = $this->indicatorinstructiondao->get(array(
-            Indicator_instruction_dao::UNION_TOKEN_FIELD => $instruction_token
-        ));
-        $user = $this->ion_auth->user($user_id)->row();
+        if ($this->ion_auth->logged_in()) {
+            $indicator = $this->indicatordao->getById($indicator_id);
+            $instructions = $this->indicatorinstructiondao->get(array(
+                Indicator_instruction_dao::UNION_TOKEN_FIELD => $instruction_token
+            ));
+            $user = $this->ion_auth->user($user_id)->row();
 
-        $request = new Request_model(NULL, $kind, $status, $instructions, date('Y-m-d h:i:sa', time()), $user, $indicator);
-        if($this->requestdao->post($request)) {
+            $request = new Request_model(NULL, $kind, $status, $instructions, date('Y-m-d h:i:sa', time()), $user, $indicator);
+            if($this->requestdao->post($request)) {
             $this->output->set_status_header(200);
             redirect('/'.$source.'/show/'.$facility_id, 'refresh');
         } else {
             $this->output->set_status_header(500);
             redirect('/'.$source.'/show/'.$facility_id, 'refresh');
         }
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function show($kind) {
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->utilitydao->get();
-        $data['schemes'] = $this->schemedao->get();
-        $data['indicators'] = $this->indicatordao->get();
-        $data['request_summary'] = Request_model::getRequestsSummary();
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
-        $data['heading'] = $kind;
-        $data['requests'] = $this->requestdao->get(array(
-            Request_dao::KIND_FIELD => $kind,
-            Request_dao::STATUS_FIELD => 'PENDING'
-        ));
+            $data['heading'] = $kind;
+            $data['requests'] = $this->requestdao->get(array(
+                Request_dao::KIND_FIELD => $kind,
+                Request_dao::STATUS_FIELD => 'PENDING'
+            ));
 
-        $this->load->view('header', $data);
-        $this->load->view('requests/show', $data);
-        $this->load->view('footer_main');
+            $this->load->view('header', $data);
+            $this->load->view('requests/show', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function approve($id, $status=NULL, $kind) {
-        $request = $this->requestdao->getById($id);
-        $request->setStatus($status);
-        $this->requestdao->update($request);
+        if ($this->ion_auth->logged_in()) {
+            $request = $this->requestdao->getById($id);
+            $request->setStatus($status);
+            $this->requestdao->update($request);
 
-        redirect('/requests/show/'.$kind, 'refresh');
+            redirect('/requests/show/'.$kind, 'refresh');
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function delete($id, $kind) {
-        $this->requestdao->delete($id);
-        redirect('/requests/show/'.$kind, 'refresh');
+        if ($this->ion_auth->logged_in()) {
+            $this->requestdao->delete($id);
+            redirect('/requests/show/'.$kind, 'refresh');
+        } else {
+            redirect('auth/login');
+        }
     }
 }

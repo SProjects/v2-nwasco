@@ -117,154 +117,178 @@ EOF;
     }
 
     public function add($scheme_id, $indicator_id) {
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->utilitydao->get();
-        $data['schemes'] = $this->schemedao->get();
-        $data['indicators'] = $this->indicatordao->get();
-        $data['request_summary'] = Request_model::getRequestsSummary();
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
-        $indicator = $this->indicatordao->getById($indicator_id);
+            $indicator = $this->indicatordao->getById($indicator_id);
 
-        $data['scheme'] = $this->schemedao->getById($scheme_id);
-        $data['indicator'] = $indicator;
-        $data['indicator_properties'] = $indicator->getIndicatorProperties($indicator);
+            $data['scheme'] = $this->schemedao->getById($scheme_id);
+            $data['indicator'] = $indicator;
+            $data['indicator_properties'] = $indicator->getIndicatorProperties($indicator);
 
-        $this->load->view('header', $data);
-        $this->load->view('scheme_indicator_instructions/add', $data);
-        $this->load->view('footer_main');
+            $this->load->view('header', $data);
+            $this->load->view('scheme_indicator_instructions/add', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function create() {
-        $indicator_id = $this->input->post('indicator_id');
-        $scheme_id = $this->input->post('scheme_id');
+        if ($this->ion_auth->logged_in()) {
+            $indicator_id = $this->input->post('indicator_id');
+            $scheme_id = $this->input->post('scheme_id');
 
-        $indicator = $this->indicatordao->getById($indicator_id);
-        $scheme = $this->schemedao->getById($scheme_id);
+            $indicator = $this->indicatordao->getById($indicator_id);
+            $scheme = $this->schemedao->getById($scheme_id);
 
-        $new_indicator_instructions = array();
-        $indicator_properties = $indicator->getIndicatorProperties($indicator);
+            $new_indicator_instructions = array();
+            $indicator_properties = $indicator->getIndicatorProperties($indicator);
 
-        //Loop over the Instructions fields using their tokens to pick post data from the dynamic form
-        foreach ($indicator_properties as $indicator_property) {
-            $token = $indicator_property->getToken();
-            $new_indicator_instructions[$token] = $this->input->post($indicator_property->getToken());
-        }
-
-        //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
-        $new_instructions = $this->indicatorinstructionmodel->getSchemeInstructionsFromPostData(
-            $new_indicator_instructions, $scheme, $indicator, NULL);
-
-        foreach ($new_instructions as $new_instruction) {
-            if ($this->indicatorinstructiondao->post($new_instruction)) {
-                $this->output->set_status_header(200);
-            } else {
-                $this->output->set_status_header(500);
+            //Loop over the Instructions fields using their tokens to pick post data from the dynamic form
+            foreach ($indicator_properties as $indicator_property) {
+                $token = $indicator_property->getToken();
+                $new_indicator_instructions[$token] = $this->input->post($indicator_property->getToken());
             }
+
+            //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
+            $new_instructions = $this->indicatorinstructionmodel->getSchemeInstructionsFromPostData(
+                $new_indicator_instructions, $scheme, $indicator, NULL);
+
+            foreach ($new_instructions as $new_instruction) {
+                if ($this->indicatorinstructiondao->post($new_instruction)) {
+                    $this->output->set_status_header(200);
+                } else {
+                    $this->output->set_status_header(500);
+                }
+            }
+        } else {
+            redirect('auth/login');
         }
     }
 
     public function edit($scheme_id, $indicator_id, $union_token) {
-        $this->layout->set_title('Welcome to :: Nwasco Dashboard');
-        $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
-        $data['title'] = $this->lang->line('login_heading');
-        $data['user'] = $this->ion_auth->user()->row();
-        $data['utilities'] = $this->utilitydao->get();
-        $data['schemes'] = $this->schemedao->get();
-        $data['indicators'] = $this->indicatordao->get();
-        $data['request_summary'] = Request_model::getRequestsSummary();
+        if ($this->ion_auth->logged_in()) {
+            $this->layout->set_title('Welcome to :: Nwasco Dashboard');
+            $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
+            $data['title'] = $this->lang->line('login_heading');
+            $data['user'] = $this->ion_auth->user()->row();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['request_summary'] = Request_model::getRequestsSummary();
 
-        $indicator = $this->indicatordao->getById($indicator_id);
-        $scheme = $this->schemedao->getById($scheme_id);
+            $indicator = $this->indicatordao->getById($indicator_id);
+            $scheme = $this->schemedao->getById($scheme_id);
 
-        $existing_instructions = $this->indicatorinstructiondao->get(array(
-            Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token,
-            Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
-            Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
-        ));
+            $existing_instructions = $this->indicatorinstructiondao->get(array(
+                Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token,
+                Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
+                Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
+            ));
 
-        $data['union_token'] = $union_token;
-        $data['scheme'] = $this->schemedao->getById($scheme_id);
-        $data['indicator'] = $indicator;
-        $data['existing_instructions'] = $existing_instructions;
+            $data['union_token'] = $union_token;
+            $data['scheme'] = $this->schemedao->getById($scheme_id);
+            $data['indicator'] = $indicator;
+            $data['existing_instructions'] = $existing_instructions;
 
-        $this->load->view('header', $data);
-        $this->load->view('scheme_indicator_instructions/edit', $data);
-        $this->load->view('footer_main');
+            $this->load->view('header', $data);
+            $this->load->view('scheme_indicator_instructions/edit', $data);
+            $this->load->view('footer_main');
+        } else {
+            redirect('auth/login');
+        }
     }
 
     public function update() {
-        $indicator_id = $this->input->post('indicator_id');
-        $scheme_id = $this->input->post('scheme_id');
-        $union_token = $this->input->post('union_token');
+        if ($this->ion_auth->logged_in()) {
+            $indicator_id = $this->input->post('indicator_id');
+            $scheme_id = $this->input->post('scheme_id');
+            $union_token = $this->input->post('union_token');
 
-        $indicator = $this->indicatordao->getById($indicator_id);
-        $scheme = $this->schemedao->getById($scheme_id);
+            $indicator = $this->indicatordao->getById($indicator_id);
+            $scheme = $this->schemedao->getById($scheme_id);
 
-        $existing_instructions = $this->indicatorinstructiondao->get(array(
-            Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token,
-            Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
-            Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
-        ));
+            $existing_instructions = $this->indicatorinstructiondao->get(array(
+                Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token,
+                Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
+                Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
+            ));
 
-        $updated_indicator_instructions = array();
-        $indicator_properties = $indicator->getIndicatorProperties($indicator);
+            $updated_indicator_instructions = array();
+            $indicator_properties = $indicator->getIndicatorProperties($indicator);
 
-        foreach ($indicator_properties as $indicator_property) {
-            $token = $indicator_property->getToken();
-            $updated_indicator_instructions[$token] = $this->input->post($indicator_property->getToken());
-        }
-
-        //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
-        $new_instructions = $this->indicatorinstructionmodel->getSchemeInstructionsFromPostData(
-            $updated_indicator_instructions, $scheme, $indicator, $union_token);
-
-        //Use new instruction data to update the value fields on the existing instructions
-        $updated_instructions = $this->indicatorinstructionmodel->updateExistingInstructions(
-            $existing_instructions, $new_instructions);
-
-        foreach ($updated_instructions as $updated_instruction) {
-            if ($this->indicatorinstructiondao->update($updated_instruction)) {
-                $this->destroy_request($updated_instruction);
-                $this->output->set_status_header(200);
-            } else {
-                $this->output->set_status_header(500);
+            foreach ($indicator_properties as $indicator_property) {
+                $token = $indicator_property->getToken();
+                $updated_indicator_instructions[$token] = $this->input->post($indicator_property->getToken());
             }
+
+            //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
+            $new_instructions = $this->indicatorinstructionmodel->getSchemeInstructionsFromPostData(
+                $updated_indicator_instructions, $scheme, $indicator, $union_token);
+
+            //Use new instruction data to update the value fields on the existing instructions
+            $updated_instructions = $this->indicatorinstructionmodel->updateExistingInstructions(
+                $existing_instructions, $new_instructions);
+
+            foreach ($updated_instructions as $updated_instruction) {
+                if ($this->indicatorinstructiondao->update($updated_instruction)) {
+                    $this->destroy_request($updated_instruction);
+                    $this->output->set_status_header(200);
+                } else {
+                    $this->output->set_status_header(500);
+                }
+            }
+        } else {
+            redirect('auth/login');
         }
     }
 
     public function archive($scheme_id, $indicator_id, $union_token) {
-        $indicator = $this->indicatordao->getById($indicator_id);
-        $scheme = $this->schemedao->getById($scheme_id);
+        if ($this->ion_auth->logged_in()) {
+            $indicator = $this->indicatordao->getById($indicator_id);
+            $scheme = $this->schemedao->getById($scheme_id);
 
-        $existing_instructions = $this->indicatorinstructiondao->get(array(
-            Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token,
-            Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
-            Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
-        ));
+            $existing_instructions = $this->indicatorinstructiondao->get(array(
+                Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token,
+                Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
+                Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
+            ));
 
-        foreach ($existing_instructions as $existing_instruction) {
-            $existing_instruction->setDeletedAt(date("Y-m-d",time()));
-            $this->indicatorinstructiondao->update($existing_instruction);
-            $this->destroy_request($existing_instruction);
+            foreach ($existing_instructions as $existing_instruction) {
+                $existing_instruction->setDeletedAt(date("Y-m-d",time()));
+                $this->indicatorinstructiondao->update($existing_instruction);
+                $this->destroy_request($existing_instruction);
+            }
+
+            redirect('/scheme/show/'.$scheme->getId(), 'refresh');
+        } else {
+            redirect('auth/login');
         }
-
-        redirect('/scheme/show/'.$scheme->getId(), 'refresh');
     }
 
     public function complete($union_token, $scheme_id) {
-        $instructions = $this->indicatorinstructiondao->get(
-            array(Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token)
-        );
+        if ($this->ion_auth->logged_in()) {
+            $instructions = $this->indicatorinstructiondao->get(
+                array(Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token)
+            );
 
-        $completion_time = date('Y-m-d h:i:sa', time());
-        foreach ($instructions as $instruction) {
-            $instruction->setCompletedAt($completion_time);
-            $this->indicatorinstructiondao->update($instruction);
+            $completion_time = date('Y-m-d h:i:sa', time());
+            foreach ($instructions as $instruction) {
+                $instruction->setCompletedAt($completion_time);
+                $this->indicatorinstructiondao->update($instruction);
+            }
+            redirect('/scheme/show/'.$scheme_id, 'refresh');
+        } else {
+            redirect('auth/login');
         }
-        redirect('/scheme/show/'.$scheme_id, 'refresh');
     }
 
     private function destroy_request($instruction) {
