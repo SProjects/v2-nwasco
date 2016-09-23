@@ -158,6 +158,14 @@ EOF;
                 $new_indicator_instructions[$token] = $this->input->post($indicator_property->getToken());
             }
 
+            //Check for missing field
+            foreach ($new_indicator_instructions as $new_indicator_instruction) {
+                if ($new_indicator_instruction == NULL) {
+                    $this->session->set_flashdata('message', 'One or more missing fields.');
+                    redirect('add');
+                }
+            }
+
             //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
             $new_instructions = $this->indicatorinstructionmodel->getSchemeInstructionsFromPostData(
                 $new_indicator_instructions, $scheme, $indicator, NULL);

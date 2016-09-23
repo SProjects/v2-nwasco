@@ -163,7 +163,7 @@ EOF;
 
             if($name == NULL || $abbreviation == NULL) {
                 $this->session->set_flashdata('message', 'Notice: One or more missing fields');
-                redirect('utility/create');
+                redirect('add');
             }
 
             $inspector = NULL;
@@ -218,6 +218,12 @@ EOF;
             $utility = $this->utilitydao->getById($id);
             $utility->setName($name);
             $utility->setAbbreviation($abbreviation);
+
+            if($name == NULL || $abbreviation == NULL) {
+                $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+                redirect('edit/'.$id);
+            }
+
             if ($inspector_id == -1) {
                 $utility->setInspector(NULL);
             } elseif ($inspector_id != $utility->getInspectorId()) {

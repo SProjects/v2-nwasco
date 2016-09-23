@@ -183,6 +183,11 @@ EOF;
         $kind = $this->input->post('kind');
         $days_to_expire = $this->input->post('days_to_expire');
 
+        if($name == NULL || $description == NULL || $kind == -1 || $days_to_expire == NULL) {
+            $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+            redirect('add');
+        }
+
         $new_indicator = new Indicator_model(NULL, $name, $description, $kind, $days_to_expire);
         if($this->indicatordao->post($new_indicator)) {
             return true;
@@ -222,6 +227,11 @@ EOF;
             $description = $this->input->post('description');
             $kind = $this->input->post('kind');
             $days_to_expire = $this->input->post('days_to_expire');
+
+            if($name == NULL || $description == NULL || $kind == -1 || $days_to_expire == NULL) {
+                $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+                redirect('edit/'.$id);
+            }
 
             $indicator = $this->indicatordao->getById($id);
             $indicator->setName($name);

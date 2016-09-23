@@ -150,6 +150,11 @@ EOF;
         $name = $this->input->post('name');
         $inspector_id = $this->input->post('inspector');
 
+        if($name == NULL) {
+            $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+            redirect('add');
+        }
+
         $inspector = NULL;
         if($inspector_id != -1) {
             $inspector = $this->ion_auth->user($inspector_id)->row();
@@ -193,6 +198,11 @@ EOF;
             $id = $this->input->post('id');
             $name = $this->input->post('name');
             $inspector_id = $this->input->post('inspector');
+
+            if($name == NULL) {
+                $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+                redirect('edit/'.$id);
+            }
 
             //TODO: Improve this by adding it to a save() in the Scheme model
             $scheme = $this->schemedao->getById($id);

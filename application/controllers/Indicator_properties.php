@@ -161,6 +161,11 @@ EOF;
             $indicator_id = $this->input->post('indicator_id');
             $unique_token = Indicator_property_model::generateUniqueToken();
 
+            if($name == NULL || $description == NULL || $datatype == -1) {
+                $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+                redirect('add');
+            }
+
             $indicator = $this->indicatordao->getById($indicator_id);
 
             $new_indicator_property = new Indicator_property_model(NULL, $name, $description,
@@ -209,6 +214,11 @@ EOF;
             $description = $this->input->post('description');
             $datatype = $this->input->post('datatype');
             $indicator_id = $this->input->post('indicator_id');
+
+            if($name == NULL || $description == NULL || $datatype == -1) {
+                $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+                redirect('edit/'.$indicator_id.'/'.$id);
+            }
 
             $indicator = $this->indicatordao->getById($indicator_id);
 
