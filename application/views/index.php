@@ -106,7 +106,7 @@
                     var barOptions = {
                         focusTarget: 'category',
                         backgroundColor: 'transparent',
-                        colors: ['red', 'yellow', 'green'],
+                        colors: ['red', 'orange', '#1ab394'],
                         fontName: 'Open Sans',
                         chartArea: {
                             left: 50,
