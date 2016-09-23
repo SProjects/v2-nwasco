@@ -33,7 +33,8 @@
                                             <i class="fa fa-external-link"></i>
                                         </a>
                                         <a href="<?php echo base_url()."requests/delete/".$request->getId().'/'.$heading; ?>"
-                                           type="button" title="Delete" class="btn btn-xs btn-white">
+                                           type="button" title="Delete"
+                                           class="btn btn-xs btn-white" onclick="return confirm('Are you sure? This action is irreversible.');">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </div>
