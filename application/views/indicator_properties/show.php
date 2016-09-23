@@ -15,10 +15,17 @@
             </div>
             <div class="pull-right">
                 <div class="btn-group">
-                    <a href="<?php echo base_url().'indicator_properties/add/'.$indicator->getId(); ?>"
-                       type="button" class="btn btn-xs btn-success">
-                        Add Property
-                    </a>
+                    <?php if(!$indicator_properties[0]->hasData($indicator_properties[0])): ?>
+                        <a href="<?php echo base_url().'indicator_properties/add/'.$indicator->getId(); ?>"
+                           type="button" class="btn btn-xs btn-success">
+                            Add Property
+                        </a>
+                    <?php else: ?>
+                        <a href="#" type="button" class="btn btn-xs btn-default"
+                           title="This indicator already has data attached">
+                            Can't add more properties
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <h3></h3>
             </div>

@@ -20,20 +20,25 @@
                                 </textarea>
 
                                 <label class="required">Type of property</label>
-                                <select name="datatype" class="select2_demo_1 form-control">
-                                    <option value="-1">None</option>
-                                    <?php foreach ($datatypes as $key => $value) :
-                                        if(!strcmp($key, $indicator_property->getDatatype())): ?>
-                                            <option value="<?=$key;?>" selected="selected">
-                                                <?= $value; ?>
-                                            </option>
-                                        <?php else: ?>
-                                            <option value="<?=$key;?>">
-                                                <?= $value; ?>
-                                            </option>
-                                        <?php endif; ?>
-                                    <?php endforeach;?>
-                                </select>
+                                <?php if($indicator_property->hasData($indicator_property) && $indicator_property->getDatatype() != NULL): ?>
+                                    <br/>
+                                    <input type="text" title="Can not be edited" name="datatype" value="<?= $indicator_property->getDatatype(); ?>" readonly/>
+                                <?php else: ?>
+                                    <select name="datatype" class="select2_demo_1 form-control">
+                                        <option value="-1">None</option>
+                                        <?php foreach ($datatypes as $key => $value) :
+                                            if(!strcmp($key, $indicator_property->getDatatype())): ?>
+                                                <option value="<?=$key;?>" selected="selected">
+                                                    <?= $value; ?>
+                                                </option>
+                                            <?php else: ?>
+                                                <option value="<?=$key;?>">
+                                                    <?= $value; ?>
+                                                </option>
+                                            <?php endif; ?>
+                                        <?php endforeach;?>
+                                    </select>
+                                <?php endif; ?>
 
                                 <input name="id" type="hidden" value="<?= $indicator_property->getId(); ?>"/>
                                 <input name="indicator_id" type="hidden" value="<?= $indicator->getId(); ?>"/>

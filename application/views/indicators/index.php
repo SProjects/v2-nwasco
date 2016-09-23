@@ -18,7 +18,7 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Properties(#)</th>
+                    <th>Properties/Fields(#)</th>
                     <th title="Send alert when days to expiry date are less than those in this field">
                         Days to Expire(#)
                     </th>
@@ -41,8 +41,8 @@
                         <td>
                             <?= sizeof($indicator->getIndicatorProperties($indicator)).' '; ?>
                             <a href="<?= base_url().'indicator_properties/show/'.$indicator->getId(); ?>"
-                               type="button" title="Add property" class="btn btn-xs btn-white">
-                                <i class="fa fa-plus"></i>
+                               type="button" title="View/Add property" class="btn btn-xs btn-white">
+                                <i class="fa fa-search-plus"></i>
                             </a>
                         </td>
                         <td>
@@ -80,7 +80,7 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Properties(#)</th>
+                    <th>Properties/Fields(#)</th>
                     <th title="Send alert when days to expiry date are less than those in this field">
                         Days to Expire(#)
                     </th>
@@ -104,8 +104,8 @@
                         <td>
                             <?= sizeof($indicator->getIndicatorProperties($indicator)).' '; ?>
                             <a href="<?= base_url().'indicator_properties/show/'.$indicator->getId(); ?>"
-                               type="button" title="Add property" class="btn btn-xs btn-white">
-                                <i class="fa fa-plus"></i>
+                               type="button" title="View/Add property" class="btn btn-xs btn-white">
+                                <i class="fa fa-search-plus"></i>
                             </a>
                         </td>
                         <td>
