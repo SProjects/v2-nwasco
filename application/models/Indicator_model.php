@@ -62,6 +62,20 @@ class Indicator_model extends CI_Model {
         $this->days_to_expire = $days_to_expire;
     }
 
+    public function hasData($indicator) {
+        $indicator_instruction_dao = new Indicator_instruction_dao();
+        $instructions = $indicator_instruction_dao->get(array(
+            Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
+        ));
+
+        $indicator_property_dao = new Indicator_property_dao();
+        $properties = $indicator_property_dao->get(array(
+            Indicator_property_dao::INDICATOR_FIELD => $indicator->getId()
+        ));
+
+        return (count($properties) > 0 || count($instructions) > 0) ? TRUE : FALSE;
+    }
+
     public static function getAllKinds() {
         return array(
             "UTILITY" => "COMMERCIAL UTILITY",

@@ -58,10 +58,13 @@
                                    type="button" title="Edit" class="btn btn-xs btn-white">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="<?php echo base_url()."indicator/delete/".$indicator->getId(); ?>"
-                                   type="button" title="Delete" class="btn btn-xs btn-white">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                <?php if(!$indicator->hasData($indicator)): ?>
+                                    <a href="<?php echo base_url()."indicator/delete/".$indicator->getId(); ?>"
+                                       type="button" title="Delete" class="btn btn-xs btn-white"
+                                       onclick="return confirm('Are you sure? This action is irreversible.');">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
@@ -118,10 +121,13 @@
                                    type="button" title="Edit" class="btn btn-xs btn-white">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="<?php echo base_url()."indicator/delete/".$indicator->getId(); ?>"
-                                   type="button" title="Delete" class="btn btn-xs btn-white">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                <?php if(!$indicator->hasData($indicator)): ?>
+                                    <a href="<?php echo base_url()."indicator/delete/".$indicator->getId(); ?>"
+                                       type="button" title="Delete" class="btn btn-xs btn-white"
+                                       onclick="return confirm('Are you sure? This action is irreversible.');">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
