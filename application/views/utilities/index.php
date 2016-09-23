@@ -17,7 +17,7 @@
                     <th>Name</th>
                     <th>Abbreviation</th>
                     <th>Inspector</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <?php $x = 1;

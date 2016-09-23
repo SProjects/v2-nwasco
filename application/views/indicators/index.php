@@ -22,7 +22,7 @@
                     <th title="Send alert when days to expiry date are less than those in this field">
                         Days to Expire(#)
                     </th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -81,7 +81,7 @@
                     <th title="Send alert when days to expiry date are less than those in this field">
                         Days to Expire(#)
                     </th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>

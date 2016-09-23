@@ -16,7 +16,7 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Inspector</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <?php $x = 1;
