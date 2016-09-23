@@ -232,11 +232,11 @@ EOF;
 
     public function archive($scheme_id, $indicator_id, $union_token) {
         $indicator = $this->indicatordao->getById($indicator_id);
-        $utility = $this->schemedao->getById($scheme_id);
+        $scheme = $this->schemedao->getById($scheme_id);
 
         $existing_instructions = $this->indicatorinstructiondao->get(array(
             Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token,
-            Indicator_instruction_dao::SCHEME_FIELD => $utility->getId(),
+            Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
             Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
         ));
 
@@ -245,6 +245,19 @@ EOF;
             $this->indicatorinstructiondao->update($existing_instruction);
         }
 
-        redirect('/scheme/show/'.$utility->getId(), 'refresh');
+        redirect('/scheme/show/'.$scheme->getId(), 'refresh');
+    }
+
+    public function complete($union_token, $scheme_id) {
+        $instructions = $this->indicatorinstructiondao->get(
+            array(Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token)
+        );
+
+        $completion_time = date('Y-m-d h:i:sa', time());
+        foreach ($instructions as $instruction) {
+            $instruction->setCompletedAt($completion_time);
+            $this->indicatorinstructiondao->update($instruction);
+        }
+        redirect('/scheme/show/'.$scheme_id, 'refresh');
     }
 }

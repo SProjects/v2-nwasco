@@ -15,6 +15,7 @@ class Indicator_instruction_dao extends CI_Model {
     const UTILITY_FIELD = 'utility_id';
     const SCHEME_FIELD = 'scheme_id';
     const DELETED_AT_FIELD = 'deleted_at';
+    const COMPLETED_AT_FIELD = 'completed_at';
 
     public function __construct() {
         parent::__construct();
@@ -41,7 +42,7 @@ class Indicator_instruction_dao extends CI_Model {
     }
 
     public function delete($id) {
-        //TODO: Create a transaction to delete the Scheme object and attached Instruction objects
+        //TODO: Create a transaction to delete Instruction objects
     }
 
     private function fromArray($indicator_instructions = array()) {
@@ -52,6 +53,7 @@ class Indicator_instruction_dao extends CI_Model {
             $indicator_instruction_object->setValue($indicator_instruction[self::VALUE_FIELD]);
             $indicator_instruction_object->setUnionToken($indicator_instruction[self::UNION_TOKEN_FIELD]);
             $indicator_instruction_object->setDeletedAt($indicator_instruction[self::DELETED_AT_FIELD]);
+            $indicator_instruction_object->setCompletedAt($indicator_instruction[self::COMPLETED_AT_FIELD]);
 
             $indicator_property_id = $indicator_instruction[self::INDICATOR_PROPERTY_FIELD];
             if($indicator_property_id != NULL) {
@@ -90,7 +92,8 @@ class Indicator_instruction_dao extends CI_Model {
             self::INDICATOR_FIELD => $indicator_instruction->getIndicator()->getId(),
             self::UTILITY_FIELD => ($indicator_instruction->isUtility()) ? $indicator_instruction->getUtility()->getId() : NULL,
             self::SCHEME_FIELD => ($indicator_instruction->isScheme()) ? $indicator_instruction->getScheme()->getId() : NULL,
-            self::DELETED_AT_FIELD => $indicator_instruction->getDeletedAt()
+            self::DELETED_AT_FIELD => $indicator_instruction->getDeletedAt(),
+            self::COMPLETED_AT_FIELD => $indicator_instruction->getCompletedAt(),
         );
     }
 }

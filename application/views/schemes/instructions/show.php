@@ -144,6 +144,9 @@
                                                             case 'MISSING':
                                                                 echo '<span class="label label-info right">Missing date</span>';
                                                                 break;
+                                                            case 'COMPLETE':
+                                                                echo '<span class="label label-info right">Complete</span>';
+                                                                break;
                                                         }
                                                         ?>
                                                     </td>
@@ -162,14 +165,26 @@
                                                             </div>
                                                         <?php } else { ?>
                                                             <div class="btn-group">
-                                                                <a href="<?= base_url().'requests/create/EDIT/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
-                                                                   type="button" title="Request Edit"
-                                                                   class="btn btn-xs btn-white"><i
-                                                                        class="fa fa-edit"></i></a>
+                                                                <?php if(!$instructions[0]->isCompleted($instructions[0])):?>
+                                                                    <a href="<?= base_url().'requests/create/EDIT/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
+                                                                       type="button" title="Request Edit"
+                                                                       class="btn btn-xs btn-white"><i
+                                                                            class="fa fa-edit"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
+
                                                                 <a href="<?= base_url().'requests/create/ARCHIVE/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
                                                                    type="button" title="Request Archive"
                                                                    class="btn btn-xs btn-white"><i
                                                                         class="fa fa-archive"></i></a>
+
+                                                                <?php if(!$instructions[0]->isCompleted($instructions[0])):?>
+                                                                    <a href="<?= base_url().'scheme_indicator_instructions/complete/'.$instructions[0]->getUnionToken().'/'.$scheme->getId(); ?>"
+                                                                       type="button" title="Mark Task Complete"
+                                                                       class="btn btn-xs btn-white"><i
+                                                                            class="fa fa-check-circle" onclick="return confirm('Are you sure the task is complete?');"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
                                                             </div>
                                                         <?php } ?>
                                                     </td>

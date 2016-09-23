@@ -247,4 +247,17 @@ EOF;
 
         redirect('/utility/show/'.$utility->getId(), 'refresh');
     }
+
+    public function complete($union_token, $utility_id) {
+        $instructions = $this->indicatorinstructiondao->get(
+            array(Indicator_instruction_dao::UNION_TOKEN_FIELD => $union_token)
+        );
+
+        $completion_time = date('Y-m-d h:i:sa', time());
+        foreach ($instructions as $instruction) {
+            $instruction->setCompletedAt($completion_time);
+            $this->indicatorinstructiondao->update($instruction);
+        }
+        redirect('/utility/show/'.$utility_id, 'refresh');
+    }
 }

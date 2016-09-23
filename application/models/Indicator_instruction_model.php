@@ -11,9 +11,10 @@ class Indicator_instruction_model extends CI_Model {
     private $indicator;
     private $utility;
     private $scheme;
+    private $completed_at;
 
     public function __construct($id=NULL, $value=NULL, $union_token=NULL, $indicator_property=NULL,
-                                $indicator=NULL, $utility=NULL, $scheme=NULL, $deleted_at=NULL) {
+                                $indicator=NULL, $utility=NULL, $scheme=NULL, $deleted_at=NULL, $completed_at=NULL) {
         parent::__construct();
         $this->id = $id;
         $this->value = $value;
@@ -23,6 +24,7 @@ class Indicator_instruction_model extends CI_Model {
         $this->utility = $utility;
         $this->scheme = $scheme;
         $this->deleted_at = $deleted_at;
+        $this->completed_at = $completed_at;
     }
 
     public function getId() {
@@ -79,6 +81,18 @@ class Indicator_instruction_model extends CI_Model {
 
     public function setUtility($utility) {
         $this->utility = $utility;
+    }
+
+    public function getCompletedAt() {
+        return $this->completed_at;
+    }
+
+    public function setCompletedAt($completed_at) {
+        $this->completed_at = $completed_at;
+    }
+
+    public function isCompleted() {
+        return ($this->completed_at == NULL) ? FALSE : TRUE;
     }
 
     public function isUtility() {
@@ -151,6 +165,9 @@ class Indicator_instruction_model extends CI_Model {
     public function getStatus($instructions) {
         foreach ($instructions as $instruction) {
             if($instruction->getIndicatorProperty()->getDatatype() == 'DATE') {
+                if($instruction->isCompleted())
+                    return 'COMPLETE';
+
                 $due_date = strtotime($instruction->getValue());
                 if($due_date == NULL)
                     return 'MISSING';
