@@ -151,41 +151,75 @@
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <?php if ($this->ion_auth->is_admin()) { ?>
+                                                        <?php $instruction = $instructions[0];
+                                                        if ($this->ion_auth->is_admin()) { ?>
                                                             <div class="btn-group">
                                                                 <div class="btn-group">
-                                                                    <a href="<?= base_url().'scheme_indicator_instructions/edit/'.$scheme->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
+                                                                    <a href="<?= base_url().'scheme_indicator_instructions/edit/'.$scheme->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
                                                                        type="button" title="Edit"
                                                                        class="btn btn-xs btn-white"><i
                                                                             class="fa fa-edit"></i></a>
-                                                                    <a href="<?= base_url().'scheme_indicator_instructions/archive/'.$scheme->getId().'/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken(); ?>"
+                                                                    <a href="<?= base_url().'scheme_indicator_instructions/archive/'.$scheme->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
                                                                        type="button" title="Archive"
                                                                        class="btn btn-xs btn-white"><i
                                                                             class="fa fa-archive"></i></a>
                                                             </div>
                                                         <?php } else { ?>
-                                                            <div class="btn-group">
-                                                                <?php if(!$instructions[0]->isCompleted($instructions[0])):?>
-                                                                    <a href="<?= base_url().'requests/create/EDIT/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
-                                                                       type="button" title="Request Edit"
-                                                                       class="btn btn-xs btn-white"><i
-                                                                            class="fa fa-edit"></i>
-                                                                    </a>
+                                                                <?php $hasPendingEditRequest = $instruction->hasPendingEditRequest($instruction);
+                                                                      if ($hasPendingEditRequest): ?>
+                                                                            <span class="label label-info right"><i
+                                                                                    class="fa fa-edit"></i> Pending Edit Request</span>
                                                                 <?php endif; ?>
 
-                                                                <a href="<?= base_url().'requests/create/ARCHIVE/PENDING/'.$indicator[0]->getId().'/'.$instructions[0]->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
-                                                                   type="button" title="Request Archive"
-                                                                   class="btn btn-xs btn-white"><i
-                                                                        class="fa fa-archive"></i></a>
-
-                                                                <?php if(!$instructions[0]->isCompleted($instructions[0])):?>
-                                                                    <a href="<?= base_url().'scheme_indicator_instructions/complete/'.$instructions[0]->getUnionToken().'/'.$scheme->getId(); ?>"
-                                                                       type="button" title="Mark Task Complete"
-                                                                       class="btn btn-xs btn-white"><i
-                                                                            class="fa fa-check-circle" onclick="return confirm('Are you sure the task is complete?');"></i>
-                                                                    </a>
+                                                                <?php $hasPendingArchiveRequest = $instruction->hasPendingArchiveRequest($instruction);
+                                                                      if ($hasPendingArchiveRequest): ?>
+                                                                            <span class="label label-info right"><i
+                                                                                    class="fa fa-archive"></i> Pending Archive Request</span>
                                                                 <?php endif; ?>
-                                                            </div>
+
+                                                                <?php $hasAcceptedEditRequest = $instruction->hasAcceptedEditRequest($instruction);
+                                                                      if ($hasAcceptedEditRequest): ?>
+                                                                            <a href="<?= base_url().'scheme_indicator_instructions/edit/'.$scheme->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
+                                                                               type="button" title="Click to Edit"
+                                                                               class="btn btn-xs btn-white"><i
+                                                                                    class="fa fa-edit"></i> Click to edit
+                                                                            </a>
+                                                                <?php endif; ?>
+
+                                                                <?php $hasAcceptedArchiveRequest = $instruction->hasAcceptedArchiveRequest($instruction);
+                                                                      if ($hasAcceptedArchiveRequest): ?>
+                                                                            <a href="<?= base_url().'scheme_indicator_instructions/archive/'.$scheme->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
+                                                                               type="button" title="Click to Archive"
+                                                                               class="btn btn-xs btn-white"><i
+                                                                                    class="fa fa-archive"></i> Click to archive
+                                                                            </a>
+                                                                <?php endif; ?>
+
+                                                                <!--Prevent these actions from showing if there is an active request-->
+                                                                <?php if (!$hasPendingArchiveRequest && !$hasPendingEditRequest && !$hasAcceptedEditRequest && !$hasAcceptedArchiveRequest): ?>
+                                                                    <div class="btn-group">
+                                                                        <?php if(!$instruction->isCompleted($instruction)):?>
+                                                                            <a href="<?= base_url().'requests/create/EDIT/PENDING/'.$indicator[0]->getId().'/'. $instruction->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
+                                                                               type="button" title="Request Edit"
+                                                                               class="btn btn-xs btn-white"><i
+                                                                                    class="fa fa-edit"></i>
+                                                                            </a>
+                                                                        <?php endif; ?>
+
+                                                                        <a href="<?= base_url().'requests/create/ARCHIVE/PENDING/'.$indicator[0]->getId().'/'. $instruction->getUnionToken().'/'.$user->id.'/scheme/'.$scheme->getId(); ?>"
+                                                                           type="button" title="Request Archive"
+                                                                           class="btn btn-xs btn-white"><i
+                                                                                class="fa fa-archive"></i></a>
+
+                                                                        <?php if(!$instruction->isCompleted($instruction)):?>
+                                                                            <a href="<?= base_url().'scheme_indicator_instructions/complete/'. $instruction->getUnionToken().'/'.$scheme->getId(); ?>"
+                                                                               type="button" title="Mark Task Complete"
+                                                                               class="btn btn-xs btn-white"><i
+                                                                                    class="fa fa-check-circle" onclick="return confirm('Are you sure the task is complete?');"></i>
+                                                                            </a>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                <?php endif; ?>
                                                         <?php } ?>
                                                     </td>
                                                 </tr>

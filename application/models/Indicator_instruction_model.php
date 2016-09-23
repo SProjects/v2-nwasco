@@ -1,6 +1,7 @@
 <?php
 require_once APPPATH.'models/daos/Indicator_instruction_dao.php';
 require_once APPPATH.'models/daos/Indicator_property_dao.php';
+require_once APPPATH.'models/daos/Request_dao.php';
 
 class Indicator_instruction_model extends CI_Model {
     private $id;
@@ -93,6 +94,22 @@ class Indicator_instruction_model extends CI_Model {
 
     public function isCompleted() {
         return ($this->completed_at == NULL) ? FALSE : TRUE;
+    }
+
+    public function hasPendingEditRequest($instruction) {
+        return $this->hasRequests($instruction, 'EDIT', 'PENDING');
+    }
+
+    public function hasAcceptedEditRequest($instruction) {
+        return $this->hasRequests($instruction, 'EDIT', 'ACCEPTED');
+    }
+
+    public function hasPendingArchiveRequest($instruction) {
+        return $this->hasRequests($instruction, 'ARCHIVE', 'PENDING');
+    }
+
+    public function hasAcceptedArchiveRequest($instruction) {
+        return $this->hasRequests($instruction, 'ARCHIVE', 'ACCEPTED');
     }
 
     public function isUtility() {
@@ -256,6 +273,16 @@ class Indicator_instruction_model extends CI_Model {
         $summary['OVERDUE'] = $overdue_count;
 
         return $summary;
+    }
+
+    private function hasRequests($instruction, $kind, $status) {
+        $request_dao = new Request_dao();
+        $requests = $request_dao->get(array(
+            Request_dao::INSTRUCTION_FIELD => $instruction->getUnionToken(),
+            Request_dao::KIND_FIELD => $kind,
+            Request_dao::STATUS_FIELD => $status
+        ));
+        return (count($requests) > 0) ? TRUE : FALSE;
     }
 
     public static function generateUniqueToken() {

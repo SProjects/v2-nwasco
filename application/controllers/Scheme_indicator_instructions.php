@@ -5,6 +5,7 @@ class Scheme_indicator_instructions extends CI_Controller {
     public $utilitydao;
     public $schemedao;
     public $indicatordao;
+    public $requestdao;
     public $indicatorpropertydao;
     public $indicatorinstructiondao;
     public $indicatorinstructionmodel;
@@ -14,6 +15,7 @@ class Scheme_indicator_instructions extends CI_Controller {
         $this->loadDaos();
         $this->utilitydao = $this->utility_dao;
         $this->indicatordao = $this->indicator_dao;
+        $this->requestdao = $this->request_dao;
         $this->indicatorpropertydao = $this->indicator_property_dao;
         $this->schemedao = $this->scheme_dao;
         $this->indicatorinstructiondao = $this->indicator_instruction_dao;
@@ -108,6 +110,7 @@ EOF;
         $this->load->model('daos/scheme_dao');
         $this->load->model('daos/indicator_property_dao');
         $this->load->model('daos/indicator_dao');
+        $this->load->model('daos/request_dao');
         $this->load->model('daos/indicator_instruction_dao');
         $this->load->model('indicator_instruction_model');
     }
@@ -223,6 +226,7 @@ EOF;
 
         foreach ($updated_instructions as $updated_instruction) {
             if ($this->indicatorinstructiondao->update($updated_instruction)) {
+                $this->destroy_request($updated_instruction);
                 $this->output->set_status_header(200);
             } else {
                 $this->output->set_status_header(500);
@@ -243,6 +247,7 @@ EOF;
         foreach ($existing_instructions as $existing_instruction) {
             $existing_instruction->setDeletedAt(date("Y-m-d",time()));
             $this->indicatorinstructiondao->update($existing_instruction);
+            $this->destroy_request($existing_instruction);
         }
 
         redirect('/scheme/show/'.$scheme->getId(), 'refresh');
@@ -259,5 +264,17 @@ EOF;
             $this->indicatorinstructiondao->update($instruction);
         }
         redirect('/scheme/show/'.$scheme_id, 'refresh');
+    }
+
+    private function destroy_request($instruction) {
+        $requests = $this->requestdao->get(array(
+            Request_dao::INSTRUCTION_FIELD => $instruction->getUnionToken()
+        ));
+
+        if (sizeof($requests) > 0) {
+            $request = $requests[0];
+            if($request != NULL)
+                $request->destroy($request);
+        }
     }
 }

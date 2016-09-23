@@ -78,6 +78,11 @@ class Request_model extends CI_Model {
         $this->indicator = $indicator;
     }
 
+    public function destroy($request) {
+        $request_dao = new Request_dao();
+        return $request_dao->delete($request->getId());
+    }
+
     public static function getRequestsSummary() {
         $request_dao = new Request_dao();
 
