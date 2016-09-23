@@ -67,7 +67,7 @@
             $("#response").fadeOut("slow");
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url() ?>utility/update/',
+                url: '<?= base_url() ?>utility/update/',
                 dataType: 'text',
                 data: $("#update_utility").serialize(),
                 timeout: 5000,
@@ -78,6 +78,7 @@
                             $('#update_utility');
                             $("#response").fadeOut(7000);
                         });
+                    window.location.href = "<?= base_url().'utility'; ?>";
                 },
                 error: function () {
                     $('.errorresponse').text("Something is going wrong...")
