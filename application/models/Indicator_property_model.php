@@ -68,14 +68,20 @@ class Indicator_property_model extends CI_Model {
         $this->token = $token;
     }
 
+    public function hasData($property) {
+        $indicator_instruction_dao = new Indicator_instruction_dao();
+        $instructions = $indicator_instruction_dao->get(array(
+            Indicator_instruction_dao::INDICATOR_PROPERTY_FIELD => $property->getId()
+        ));
+        return (count($instructions) > 0) ? TRUE : FALSE;
+    }
+
     public static function getAllDataTypes() {
         return array(
             "TEXT" => "TEXT",
             "LONG_TEXT" => "LONG TEXT",
             "INTEGER" => "INTEGER",
-            "DATE" => "DATE",
-            "FROM_DATE" => "DATE RANGE(FROM)",
-            "TO_DATE" => "DATE RANGE(TO)",
+            "DATE" => "DATE"
         );
     }
 

@@ -29,7 +29,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Data Type</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,10 +52,12 @@
                                        type="button" title="Edit" class="btn btn-xs btn-white">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="<?= base_url().'indicator_properties/delete/'.$indicator->getId().'/'.$indicator_property->getId(); ?>"
-                                       type="button" title="Delete" class="btn btn-xs btn-white">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                                    <?php if(!$indicator_property->hasData($indicator_property)): ?>
+                                        <a href="<?= base_url().'indicator_properties/delete/'.$indicator->getId().'/'.$indicator_property->getId(); ?>"
+                                           type="button" title="Delete" class="btn btn-xs btn-white">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                         </tr>
