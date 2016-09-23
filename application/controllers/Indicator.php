@@ -101,7 +101,7 @@ EOF;
         $this->layout->add_css_files(array('datepicker3.css'), base_url().'assets/css/plugins/datapicker/');
         $this->layout->add_css_file('http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css');
         $this->layout->add_css_files(array('summernote.css','summernote-bs3.css'), base_url().'assets/css/plugins/summernote/');
-        $this->layout->add_css_files(array('animate.css','style.css'), base_url().'assets/css/');
+        $this->layout->add_css_files(array('animate.css','style.css', 'base.css'), base_url().'assets/css/');
 
         $this->layout->add_js_file('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js');
         $this->layout->add_js_files(array('bootstrap.min.js'), base_url('assets/js/'), 'footer');

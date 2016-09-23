@@ -8,7 +8,7 @@
                         <div class="col-lg-12">
                             <div class="form-group">
 
-                                <label class="">Name</label>
+                                <label class="required">Name</label>
                                 <input name="name" class="form-control" placeholder="Enter name"/>
 
                                 <label class="">Assign Inspector</label>

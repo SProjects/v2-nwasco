@@ -8,14 +8,14 @@
                         <div class="col-lg-12">
                             <div class="form-group">
 
-                                <label class="">Name</label>
+                                <label class="required">Name</label>
                                 <input type="text" name="name" class="form-control" placeholder="Enter name"/>
 
-                                <label class="">Description</label>
+                                <label class="required">Description</label>
                                 <textarea name="description" class="form-control"
                                           placeholder="Enter description"></textarea>
 
-                                <label class="">Type of facility</label>
+                                <label class="required">Type of facility</label>
                                 <select name="kind" class="select2_demo_1 form-control">
                                     <option value="-1">None</option>
                                     <?php foreach ($kinds as $key => $value) :?>
@@ -26,7 +26,7 @@
                                 </select>
                                 <h3></h3>
 
-                                <label class="">Send alert when days to indicator expiry date are</label>
+                                <label class="required">Send alert when days to indicator expiry date are</label>
                                 <input type="number" name="days_to_expire" class="form-control" placeholder="No. of days"/>
                                 <h3></h3>
 

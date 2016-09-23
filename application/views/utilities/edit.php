@@ -9,11 +9,11 @@
                             <div class="form-group">
                                 <input type="hidden" name="id" value="<?php echo $utility->getId(); ?>"/>
 
-                                <label class="">Name</label>
+                                <label class="required">Name</label>
                                 <input name="name" class="form-control" placeholder="Enter name"
                                        value="<?php echo $utility->getName(); ?>"/>
 
-                                <label class="">Abbreviation</label>
+                                <label class="required">Abbreviation</label>
                                 <input name="abbreviation" class="form-control" placeholder="Enter abbreviation"
                                        value="<?php echo $utility->getAbbreviation(); ?>"/>
 

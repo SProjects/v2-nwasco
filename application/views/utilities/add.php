@@ -8,10 +8,10 @@
                         <div class="col-lg-12">
                             <div class="form-group">
 
-                                <label class="">Name</label>
+                                <label class="required">Name</label>
                                 <input name="name" class="form-control" placeholder="Enter name"/>
 
-                                <label class="">Abbreviation</label>
+                                <label class="required">Abbreviation</label>
                                 <input name="abbreviation" class="form-control" placeholder="Enter abbreviation"/>
 
                                 <label class="">Assign Inspector</label>

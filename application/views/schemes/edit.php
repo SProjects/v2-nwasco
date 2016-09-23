@@ -9,7 +9,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="id" value="<?php echo $scheme->getId(); ?>"/>
 
-                                <label class="">Name</label>
+                                <label class="required">Name</label>
                                 <input name="name" class="form-control" placeholder="Enter name"
                                        value="<?php echo $scheme->getName(); ?>"/>
 

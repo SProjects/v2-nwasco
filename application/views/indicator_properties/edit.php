@@ -10,16 +10,16 @@
                         <div class="col-lg-12">
                             <div class="form-group">
 
-                                <label class="">Name</label>
+                                <label class="required">Name</label>
                                 <input name="name" class="form-control"
                                        placeholder="Enter name" value="<?= $indicator_property->getName(); ?>"/>
 
-                                <label class="">Description</label>
+                                <label class="required">Description</label>
                                 <textarea name="description" class="form-control"
                                           placeholder="Enter description"><?= $indicator_property->getDescription(); ?>
                                 </textarea>
 
-                                <label class="">Type of property</label>
+                                <label class="required">Type of property</label>
                                 <select name="datatype" class="select2_demo_1 form-control">
                                     <option value="-1">None</option>
                                     <?php foreach ($datatypes as $key => $value) :

@@ -30,7 +30,7 @@
                                                 <div class='row'>
                                                     <div class='col-md-12'>
                                                         <div class="form-group">
-                                                            <label class="font-noraml"><?= $indicator_property->getName(); ?></label>
+                                                            <label class="font-noraml required required"><?= $indicator_property->getName(); ?></label>
                                                             <input type="text" class="form-control"
                                                                    name="<?= $indicator_property->getToken()?>"
                                                                    placeholder="Enter <?= strtolower($indicator_property->getName()); ?>"/>
@@ -45,7 +45,7 @@
                                                 <div class='row'>
                                                     <div class='col-md-6'>
                                                         <div class="form-group">
-                                                            <label class="font-noraml"><?= $indicator_property->getName(); ?></label>
+                                                            <label class="font-noraml required"><?= $indicator_property->getName(); ?></label>
                                                             <div class="input-group date">
                                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                                 <input type="date" class="form-control"
@@ -64,7 +64,7 @@
                                                     <div class='col-md-12'>
                                                         <div class="form-group">
                                                             <div class="ibox-content no-padding">
-                                                                <label class="font-noraml"><?= $indicator_property->getName(); ?></label>
+                                                                <label class="font-noraml required"><?= $indicator_property->getName(); ?></label>
                                                                 <textarea class="form-control"
                                                                           name="<?= $indicator_property->getToken() ?>"
                                                                           placeholder="Enter <?= strtolower($indicator_property->getName()); ?>"></textarea>
@@ -80,7 +80,7 @@
                                                 <div class='row'>
                                                     <div class='col-md-6'>
                                                         <div class="form-group">
-                                                            <label class="font-noraml"><?= $indicator_property->getName(); ?></label>
+                                                            <label class="font-noraml required"><?= $indicator_property->getName(); ?></label>
                                                             <input type="number" class="form-control"
                                                                    name="<?= $indicator_property->getToken()?>"
                                                                    placeholder="Enter <?= strtolower($indicator_property->getName()); ?>"/>

@@ -77,7 +77,7 @@ EOF;
         $this->layout->add_css_files(array('slick.css'), base_url() . 'assets/css/plugins/slick/');
         $this->layout->add_css_files(array('slick-theme.css'), base_url() . 'assets/css/plugins/slick/');
         $this->layout->add_css_files(array('dataTables.bootstrap.css', 'dataTables.responsive.css', 'dataTables.tableTools.min.css'), base_url() . 'assets/css/plugins/dataTables/');
-        $this->layout->add_css_files(array('bootstrap.min.css', 'animate.css', 'style.css', 'unslider.css'), base_url() . 'assets/css/');
+        $this->layout->add_css_files(array('bootstrap.min.css', 'animate.css', 'style.css', 'unslider.css', 'base.css'), base_url() . 'assets/css/');
 
         $this->layout->add_js_file('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js');
 
@@ -160,6 +160,11 @@ EOF;
             $name = $this->input->post('name');
             $abbreviation = $this->input->post('abbreviation');
             $inspector_id = $this->input->post('inspector');
+
+            if($name == NULL || $abbreviation == NULL) {
+                $this->session->set_flashdata('message', 'Notice: One or more missing fields');
+                redirect('utility/create');
+            }
 
             $inspector = NULL;
             if($inspector_id != -1) {
