@@ -2,7 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
-
+    public $utilitydao;
+    public $schemedao;
+    public $indicatordao;
 
     public function __construct() {
         parent::__construct();
@@ -13,7 +15,17 @@ class Dashboard extends CI_Controller {
             redirect('auth/login', 'refresh');
         }
 
+        $this->loadDaos();
         $this->load->model('request_model');
+        $this->utilitydao = $this->utility_dao;
+        $this->schemedao = $this->scheme_dao;
+        $this->indicatordao = $this->indicator_dao;
+    }
+
+    public function loadDaos() {
+        $this->load->model('daos/utility_dao');
+        $this->load->model('daos/scheme_dao');
+        $this->load->model('daos/indicator_dao');
     }
 
     public function index() {
@@ -156,25 +168,25 @@ EOF;
         if ($this->ion_auth->logged_in()) {
             $user = $this->ion_auth->user()->row();
             $this->data['title'] = $this->lang->line('dashboard_heading');
-            $this->data['current_user_menu'] = '';
 
             $this->layout->set_title('Welcome to :: Nwasco Dashboard');
             $this->layout->set_body_attr(array('id' => 'home', 'class' => 'test more_class'));
             $data['dashboard'] = $this->lang->line('dashboard_heading');
             $data['user'] = $user;
-            $data['utilities'] = $this->core->getAllUtilities();
-            $data['schemes'] = $this->core->getSchemes();
-            $data['indicators'] = $this->core->getIndicators();
+            $data['utilities'] = $this->utilitydao->get();
+            $data['schemes'] = $this->schemedao->get();
+            $data['indicators'] = $this->indicatordao->get();
+            $data['utility_indicators'] = $this->indicatordao->get(array(
+                Indicator_dao::KIND_FIELD => Indicator_model::getUtilityKind()
+            ));
 
             $data['request_summary'] = Request_model::getRequestsSummary();
             $data['notifications'] = $this->notifications_manager->getNotification($user);
 
-            // load views and send data
-            $this->data['current_user_menu'] = $this->load->view('header', $data);
-            $this->data['current_user_menu'] = $this->load->view('index', $data);
-            $this->data['current_user_menu'] = $this->load->view('footer_main', $data);
+            $this->load->view('header', $data);
+            $this->load->view('index', $data);
+            $this->load->view('footer_main', $data);
         } else {
-            //redirect them to the login page
             redirect('auth/login', 'refresh');
         }
 

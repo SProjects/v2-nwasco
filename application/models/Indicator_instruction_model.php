@@ -183,6 +183,38 @@ class Indicator_instruction_model extends CI_Model {
         return $this->getStatusSummary($instruction_groups, $indicator);
     }
 
+    public function getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, $status) {
+        $indicator_instruction_dao = new Indicator_instruction_dao();
+        $instructions = $indicator_instruction_dao->get(array(
+            Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
+        ));
+
+        $count = 0;
+        foreach ($instructions as $instruction) {
+            if($instruction->getUtility()->getId() == $utility->getId()) {
+                if (strcmp($this->getStatus(array($instruction)), $status) == 0)
+                    $count += 1;
+            }
+        }
+        return $count;
+    }
+
+    public function getUtilityBarChartData($indicator) {
+        $chart_data = array(
+            array('Commercial Utility', 'Over Due', 'Almost Due', 'Active')
+        );
+
+        $utility_dao = new Utility_dao();
+        $utilities = $utility_dao->get();
+        foreach ($utilities as $utility) {
+            $summary = $this->getUtilityInstructionsStatusSummary($utility, $indicator);
+            array_push($chart_data, array(
+                $utility->getAbbreviation(), $summary['OVERDUE'], $summary['ALMOST'], $summary['ACTIVE']
+            ));
+        }
+        return $chart_data;
+    }
+
     private function getStatusSummary($instruction_groups, $indicator) {
         $active_count = 0;
         $almost_count = 0;
