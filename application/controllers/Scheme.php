@@ -233,4 +233,9 @@ EOF;
         $this->load->view('schemes/instructions/show', $data);
         $this->load->view('footer_main', $data);
     }
+
+    public function delete($id) {
+        $this->schemedao->delete($id);
+        redirect('/scheme', 'refresh');
+    }
 }

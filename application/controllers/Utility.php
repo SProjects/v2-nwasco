@@ -245,4 +245,8 @@ EOF;
         $this->load->view('footer_main', $data);
     }
 
+    public function delete($id) {
+        $this->utilitydao->delete($id);
+        redirect('/utility', 'refresh');
+    }
 }

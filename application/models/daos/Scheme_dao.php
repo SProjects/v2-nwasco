@@ -39,7 +39,8 @@ class Scheme_dao extends CI_Model {
     }
 
     public function delete($id) {
-        //TODO: Create a transaction to delete the Scheme object and attached Instruction objects
+        $this->db->where(self::ID_FIELD, $id);
+        return $this->db->delete(self::TABLE_NAME);
     }
 
     private function fromArray($schemes = array()) {

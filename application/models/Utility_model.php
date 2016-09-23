@@ -56,6 +56,14 @@ class Utility_model extends CI_Model {
         $this->inspector = $inspector;
     }
 
+    public function hasData($utility) {
+        $indicator_instruction_dao = new Indicator_instruction_dao();
+        $instructions = $indicator_instruction_dao->get(array(
+            Indicator_instruction_dao::UTILITY_FIELD => $utility->getId()
+        ));
+        return (count($instructions) > 0) ? TRUE : FALSE;
+    }
+
     public static function getIndicatorInstructions($utility) {
         $indicatordao = new Indicator_dao();
         $indicatorinstructiondao = new Indicator_instruction_dao();

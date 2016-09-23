@@ -48,6 +48,14 @@ class Scheme_model extends CI_Model {
         $this->inspector = $inspector;
     }
 
+    public function hasData($scheme) {
+        $indicator_instruction_dao = new Indicator_instruction_dao();
+        $instructions = $indicator_instruction_dao->get(array(
+            Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId()
+        ));
+        return (count($instructions) > 0) ? TRUE : FALSE;
+    }
+
     public static function getIndicatorInstructions($scheme) {
         $indicatordao = new Indicator_dao();
         $indicatorinstructiondao = new Indicator_instruction_dao();

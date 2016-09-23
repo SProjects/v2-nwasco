@@ -36,10 +36,13 @@
                                    type="button" title="Edit" class="btn btn-xs btn-white">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="#"
-                                   type="button" title="Delete" class="btn btn-xs btn-white">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                <?php if(!$scheme->hasData($scheme)): ?>
+                                    <a href="<?php echo base_url()."scheme/delete/".$scheme->getId(); ?>"
+                                       type="button" title="Delete" class="btn btn-xs btn-white"
+                                       onclick="return confirm('Are you sure? This action is irreversible.');">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>

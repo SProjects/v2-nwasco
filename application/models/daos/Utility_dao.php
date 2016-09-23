@@ -40,7 +40,8 @@ class Utility_dao extends CI_Model {
     }
 
     public function delete($id) {
-        //TODO: Create a transaction to delete the Utility object and attached instructions
+        $this->db->where(self::ID_FIELD, $id);
+        return $this->db->delete(self::TABLE_NAME);
     }
 
     private function fromArray($utilities = array()) {
