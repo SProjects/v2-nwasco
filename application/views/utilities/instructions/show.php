@@ -163,7 +163,7 @@
                                                                         class="fa fa-edit"></i></a>
                                                                 <a href="<?= base_url().'utility_indicator_instructions/archive/'.$utility->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
                                                                    type="button" title="Archive"
-                                                                   class="btn btn-xs btn-white"><i
+                                                                   class="btn btn-xs btn-white" onclick="return confirm('Are you sure?');"><i
                                                                         class="fa fa-archive"></i></a>
                                                             </div>
                                                         <?php else: ?>
@@ -192,7 +192,7 @@
                                                                   if ($hasAcceptedArchiveRequest): ?>
                                                                     <a href="<?= base_url().'utility_indicator_instructions/archive/'.$utility->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
                                                                        type="button" title="Click to Archive"
-                                                                       class="btn btn-xs btn-white"><i
+                                                                       class="btn btn-xs btn-white" onclick="return confirm('Are you sure?');"><i
                                                                             class="fa fa-archive"></i> Click to archive
                                                                     </a>
                                                             <?php endif; ?>
