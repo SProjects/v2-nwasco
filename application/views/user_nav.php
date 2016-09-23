@@ -10,17 +10,19 @@
                 <li class="<?= ($this->uri->uri_string() === 'auth') ? 'active' : '' ?>"><i class="fa fa-user"></i>
                     <?php echo anchor('auth/', lang('index_view_user_link')) ?>
                 </li>
-                <li class="<?= ($this->uri->uri_string() === 'auth/create_user') ? 'active' : '' ?>"><i
-                        class="fa fa-user-plus"></i><?php echo anchor('auth/create_user', lang('index_create_user_link')) ?>
-                </li>
-                <li class="<?= ($this->uri->uri_string() === 'auth/view_groups') ? 'active' : '' ?>"><i
-                        class="fa fa-square"></i>
-                    <?php echo anchor('auth/view_groups', lang('index_view_group_link')) ?>
-                </li>
-                <li class="<?= ($this->uri->uri_string() === 'auth/create_group') ? 'active' : '' ?>"><i
-                        class="fa fa-plus-square"></i>
-                    <?php echo anchor('auth/create_group', lang('index_create_group_link')) ?>
-                </li>
+                <?php if ($this->ion_auth->is_admin()): ?>
+                    <li class="<?= ($this->uri->uri_string() === 'auth/create_user') ? 'active' : '' ?>"><i
+                            class="fa fa-user-plus"></i><?php echo anchor('auth/create_user', lang('index_create_user_link')) ?>
+                    </li>
+                    <li class="<?= ($this->uri->uri_string() === 'auth/view_groups') ? 'active' : '' ?>"><i
+                            class="fa fa-square"></i>
+                        <?php echo anchor('auth/view_groups', lang('index_view_group_link')) ?>
+                    </li>
+                    <li class="<?= ($this->uri->uri_string() === 'auth/create_group') ? 'active' : '' ?>"><i
+                            class="fa fa-plus-square"></i>
+                        <?php echo anchor('auth/create_group', lang('index_create_group_link')) ?>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
         <div class="full-height col-lg-c9">

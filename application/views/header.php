@@ -24,15 +24,21 @@
                     <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Commercial Utilities</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li class="<?= ($this->uri->segment(1) === 'utility' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
-                            <a href="<?php echo base_url() . "utility"; ?>">Manage Utilities</a>
-                        </li>
+                        <?php if($this->ion_auth->is_admin()): ?>
+                            <li class="<?= ($this->uri->segment(1) === 'utility' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
+                                <a href="<?php echo base_url() . "utility"; ?>">Manage Utilities</a>
+                            </li>
+                        <?php endif; ?>
+
                         <?php if (count($utilities) > 0): ?>
                             <?php foreach ($utilities as $utility): ?>
-                                <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
-                                    <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
-                                        <?= $utility->getName(); ?>
-                                    </a></li>
+                                <?php if($utility->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
+                                    <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
+                                        <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
+                                            <?= $utility->getName(); ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         <?php else: ?>
                             No Utilities
@@ -46,12 +52,14 @@
                     <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Indicators</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li class="<?= ($this->uri->segment(1) === 'indicator' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
-                            <a href="<?php echo base_url() . "indicator"; ?>">Manage Indicators</a>
-                        </li>
+                        <?php if($this->ion_auth->is_admin()): ?>
+                            <li class="<?= ($this->uri->segment(1) === 'indicator' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
+                                <a href="<?php echo base_url() . "indicator"; ?>">Manage Indicators</a>
+                            </li>
+                        <?php endif; ?>
                         <?php if (count($indicators) > 0): ?>
                             <?php foreach ($indicators as $indicator): ?>
-                                <li class="<?= ($this->uri->segment(4) === '' .$indicator->getId(). '') ? 'active' : '' ?>">
+                                <li class="<?= ($this->uri->segment(3) === '' .$indicator->getId(). '') ? 'active' : '' ?>">
                                     <a href="<?php
                                                 if ($indicator->getKind() == 'UTILITY') {
                                                     echo base_url().'indicator/show_utility/'.$indicator->getId(); ?>
@@ -75,15 +83,20 @@
                     <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Private Schemes</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li class="<?= ($this->uri->segment(1) === 'scheme' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
-                            <a href="<?php echo base_url() . "scheme"; ?>">Manage Schemes</a>
-                        </li>
+                        <?php if($this->ion_auth->is_admin()): ?>
+                            <li class="<?= ($this->uri->segment(1) === 'scheme' && $this->uri->segment(2) == NULL) ? 'active' : '' ?>">
+                                <a href="<?php echo base_url() . "scheme"; ?>">Manage Schemes</a>
+                            </li>
+                        <?php endif; ?>
                         <?php if (count($schemes) > 0): ?>
                             <?php foreach ($schemes as $scheme): ?>
-                                <li class="<?= ($this->uri->segment(4) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
-                                    <a href="<?= base_url().'scheme/show/'.$scheme->getId(); ?>">
-                                        <?= $scheme->getName(); ?>
-                                    </a></li>
+                                <?php if($scheme->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
+                                    <li class="<?= ($this->uri->segment(3) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
+                                        <a href="<?= base_url().'scheme/show/'.$scheme->getId(); ?>">
+                                            <?= $scheme->getName(); ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <p>No schemes</p>
@@ -93,13 +106,15 @@
                 <!--End: Private Schemes menu-->
 
                 <!--User management-->
-                <?php if ($this->ion_auth->is_admin()): ?>
-                    <li class="<?= ($this->uri->segment(1) === 'auth') ? 'active' : '' ?>">
-                        <a href="<?php echo base_url().'auth/'; ?>"><i class="fa fa-users"></i>
+                <li class="<?= ($this->uri->segment(1) === 'auth') ? 'active' : '' ?>">
+                    <a href="<?php echo base_url().'auth/'; ?>"><i class="fa fa-users"></i>
+                        <?php if ($this->ion_auth->is_admin()): ?>
                             <span class="nav-label">Manage Users</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
+                        <?php else: ?>
+                            <span class="nav-label">Manage Account</span>
+                        <?php endif; ?>
+                    </a>
+                </li>
                 <!--End: User management-->
 
                 <li class="upperspace">
@@ -163,12 +178,15 @@
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <a href="<?= base_url().'requests/show/EDIT' ?>"
-                           type="button" title="View edit requests"
-                           class="btn btn-xs btn-info"><i
-                                class="fa fa-folder-open"></i> Open edit requests</a>
-                    </div>
+
+                    <?php if($this->ion_auth->is_admin()): ?>
+                        <div>
+                            <a href="<?= base_url().'requests/show/EDIT' ?>"
+                               type="button" title="View edit requests"
+                               class="btn btn-xs btn-info"><i
+                                    class="fa fa-folder-open"></i> Open edit requests</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="m-t-md">
@@ -186,12 +204,15 @@
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <a href="<?= base_url().'requests/show/ARCHIVE' ?>"
-                           type="button" title="View archive requests"
-                           class="btn btn-xs btn-info"><i
-                                class="fa fa-folder-open"></i> Open archive requests</a>
-                    </div>
+
+                    <?php if($this->ion_auth->is_admin()): ?>
+                        <div>
+                            <a href="<?= base_url().'requests/show/ARCHIVE' ?>"
+                               type="button" title="View archive requests"
+                               class="btn btn-xs btn-info"><i
+                                    class="fa fa-folder-open"></i> Open archive requests</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -26,8 +26,18 @@
 			            <td><i class="fa fa-envelope"></i> <?php echo htmlspecialchars($user->email,ENT_QUOTES,'UTF-8');?></td>
 						<td><i class="fa fa-phone"> </i> <?php echo htmlspecialchars($user->phone,ENT_QUOTES,'UTF-8');?>
 						</td>
-						<td class="client-status"><?php echo ($user->active) ? anchor("auth/deactivate/".$user->id, lang('index_active_link')) : anchor("auth/activate/". $user->id, lang('index_inactive_link'));?></td>
-						<td class="project-actions"><span class="btn btn-white btn-xs white-bg"><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></span></td>
+						<td class="client-status">
+							<?php if($this->ion_auth->is_admin()): ?>
+								<?php echo ($user->active) ? anchor("auth/deactivate/".$user->id, lang('index_active_link')) : anchor("auth/activate/". $user->id, lang('index_inactive_link'));?>
+							<?php endif; ?>
+						</td>
+						<td class="project-actions">
+							<?php if ($user->id == $this->session->userdata('user_id')): ?>
+								<span class="btn btn-white btn-xs white-bg">
+									<?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?>
+								</span>
+							<?php endif; ?>
+						</td>
 					</tr>
 				<?php endforeach;?>
 				</tbody>
