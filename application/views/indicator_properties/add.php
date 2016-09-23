@@ -63,7 +63,7 @@
             $("#response").fadeOut("slow");
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url() ?>indicator_properties/create/',
+                url: '<?= base_url() ?>indicator_properties/create/',
                 dataType: 'text',
                 data: $("#add_new_property").serialize(),
                 timeout: 5000,
@@ -74,6 +74,7 @@
                             $('#add_new_property');
                             $("#response").fadeOut(7000);
                         });
+                    window.location.href = "<?= base_url().'indicator_properties/show/'.$indicator->getId(); ?>";
                 },
                 error: function () {
                     $('.errorresponse').text("Something is going wrong...")
