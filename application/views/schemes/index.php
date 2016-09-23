@@ -28,7 +28,7 @@
                         <td><?php echo $scheme->getInspectorName(); ?></td>
                         <td>
                             <div class="btn-group">
-                                <a href="<?php echo base_url()."scheme/details/".$scheme->getId(); ?>"
+                                <a href="<?php echo base_url()."scheme/show/".$scheme->getId(); ?>"
                                    type="button" title="View" class="btn btn-xs btn-white">
                                     <i class="fa fa-external-link"></i>
                                 </a>

@@ -50,7 +50,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="<?php echo base_url()."indicator/details/directives/".$indicator->getId(); ?>"
+                                <a href="<?php echo base_url()."indicator/show_utility/".$indicator->getId(); ?>"
                                    type="button" title="View" class="btn btn-xs btn-white">
                                     <i class="fa fa-external-link"></i>
                                 </a>
@@ -110,7 +110,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="<?php echo base_url()."indicator/details/directives/".$indicator->getId(); ?>"
+                                <a href="<?php echo base_url()."indicator/show_scheme/".$indicator->getId(); ?>"
                                    type="button" title="View" class="btn btn-xs btn-white">
                                     <i class="fa fa-external-link"></i>
                                 </a>

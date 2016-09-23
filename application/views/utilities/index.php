@@ -30,7 +30,7 @@
                         <td><?php echo $utility->getInspectorName(); ?></td>
                         <td>
                             <div class="btn-group">
-                                <a href="<?php echo base_url()."utility/details/".$utility->getId(); ?>"
+                                <a href="<?php echo base_url()."utility/show/".$utility->getId(); ?>"
                                    type="button" title="View" class="btn btn-xs btn-white">
                                     <i class="fa fa-external-link"></i>
                                 </a>
