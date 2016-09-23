@@ -13,6 +13,7 @@ class Scheme extends CI_Controller {
         $this->indicatordao = $this->indicator_dao;
         $this->utilitydao = $this->utility_dao;
 
+        $this->lang->load('auth');
         $this->load->model('request_model');
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in()) {

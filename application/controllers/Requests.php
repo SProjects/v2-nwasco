@@ -16,6 +16,7 @@ class Requests extends CI_Controller {
         $this->schemedao = $this->scheme_dao;
         $this->indicatorinstructiondao = $this->indicator_instruction_dao;
 
+        $this->lang->load('auth');
         $this->load->model('request_model');
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in()) {

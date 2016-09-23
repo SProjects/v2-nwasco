@@ -21,6 +21,7 @@ class Scheme_indicator_instructions extends CI_Controller {
         $this->indicatorinstructiondao = $this->indicator_instruction_dao;
         $this->indicatorinstructionmodel = $this->indicator_instruction_model;
 
+        $this->lang->load('auth');
         $this->load->model('request_model');
         $this->load->library('ion_auth');
         if (!$this->ion_auth->logged_in()) {

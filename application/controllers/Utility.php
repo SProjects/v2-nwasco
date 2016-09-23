@@ -17,6 +17,7 @@ class Utility extends CI_Controller {
         $this->indicatorinstructiondao = $this->indicator_instruction_dao;
         $this->indicatordao = $this->indicator_dao;
 
+        $this->lang->load('auth');
         $this->load->model('request_model');
         $this->load->library('ion_auth');
 
