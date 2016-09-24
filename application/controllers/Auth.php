@@ -680,6 +680,7 @@ EOF;
         $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email');
 
         if (isset($_POST) && !empty($_POST)) {
             // do we have a valid request?
@@ -698,6 +699,7 @@ EOF;
                     'first_name' => $this->input->post('first_name'),
                     'last_name' => $this->input->post('last_name'),
                     'phone' => $this->input->post('phone'),
+                    'email' => $this->input->post('email')
                 );
 
                 // update the password if it was posted
@@ -728,17 +730,14 @@ EOF;
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
                     if ($this->ion_auth->is_admin()) {
                         redirect('auth', 'refresh');
-                    } else {
-                        redirect('/', 'refresh');
                     }
-
                 } else {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
                     if ($this->ion_auth->is_admin()) {
                         redirect('auth', 'refresh');
                     } else {
-                        redirect('/', 'refresh');
+                        redirect('auth', 'refresh');
                     }
 
                 }
@@ -772,6 +771,14 @@ EOF;
             'class' => 'form-control',
             'placeholder' => 'Last Name',
             'value' => $this->form_validation->set_value('last_name', $user->last_name),
+        );
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'email',
+            'class' => 'form-control',
+            'placeholder' => 'Email Address',
+            'value' => $this->form_validation->set_value('email', $user->email),
         );
         $this->data['phone'] = array(
             'name' => 'phone',

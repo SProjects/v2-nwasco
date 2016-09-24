@@ -32,7 +32,7 @@
 							<?php endif; ?>
 						</td>
 						<td class="project-actions">
-							<?php if ($user->id == $this->session->userdata('user_id')): ?>
+							<?php if ($this->ion_auth->is_admin() || $user->id == $this->session->userdata('user_id')): ?>
 								<span class="btn btn-white btn-xs white-bg">
 									<?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?>
 								</span>
