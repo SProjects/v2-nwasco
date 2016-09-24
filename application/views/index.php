@@ -5,7 +5,7 @@
         <div class="row utility">
             <div class="col-lg-12 no-gutter">
                 <h3 class="head"> Commercial Utility Status </h3>
-                <ul class="maj-sum" style="padding-left: 0;">
+                <ul class="maj-sum" style="padding-left: 2px;">
                     <?php $indicator_instruction = new Indicator_instruction_model(); ?>
                     <?php if(count($utilities) > 0): ?>
                         <?php foreach ($utilities as $utility): ?>
@@ -38,9 +38,6 @@
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
-                                            <span class="pull-right label label-danger">
-                                                <a href="#">VIEW DETAILS</a>
-                                            </span>
                                         </ul>
                                     </li>
                                     <!--End Overdue-->
@@ -54,13 +51,10 @@
                                                     $almost_count = $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'ALMOST');
                                                     ?>
                                                     <span><?= $indicator->getName(); ?></span>
-                                                    <div class="stat-percent font-bold text-danger"><?= $almost_count; ?></div>
+                                                    <div class="stat-percent font-bold text-warning"><?= $almost_count; ?></div>
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
-                                            <span class="pull-right label label-warning">
-                                                <a href="#">VIEW DETAILS</a>
-                                            </span>
                                         </ul>
                                     </li>
                                     <!--End Almost-->
@@ -74,13 +68,10 @@
                                                     $active_count = $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'ACTIVE');
                                                     ?>
                                                     <span><?= $indicator->getName(); ?></span>
-                                                    <div class="stat-percent font-bold text-danger"><?= $active_count; ?></div>
+                                                    <div class="stat-percent font-bold text-primary"><?= $active_count; ?></div>
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
-                                            <span class="pull-right label label-primary">
-                                                <a href="#">VIEW DETAILS</a>
-                                            </span>
                                         </ul>
                                     </li>
                                     <!--End Active-->
