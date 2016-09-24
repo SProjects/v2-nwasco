@@ -18,9 +18,11 @@
                                 <select name="inspector" class="select2_demo_1 form-control">
                                     <option value="-1">None</option>
                                     <?php foreach ($inspectors as $inspector) :?>
-                                        <option value="<?=$inspector->id;?>">
-                                            <?= $inspector->last_name.' '.$inspector->first_name; ?>
-                                        </option>
+                                        <?php if(!$this->ion_auth->is_admin($inspector->id)): ?>
+                                            <option value="<?=$inspector->id;?>">
+                                                <?= $inspector->last_name.' '.$inspector->first_name; ?>
+                                            </option>
+                                        <?php endif; ?>
                                     <?php endforeach;?>
                                 </select>
 

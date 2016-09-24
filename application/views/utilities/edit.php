@@ -20,8 +20,9 @@
                                 <label class="">Assign Inspector</label>
                                 <select name="inspector" class="select2_demo_1 form-control">
                                     <option value="-1">None</option>
-                                    <?php foreach ($inspectors as $inspector):
-                                            if($inspector->id == $utility->getInspectorId()): ?>
+                                    <?php foreach ($inspectors as $inspector): ?>
+                                        <?php if(!$this->ion_auth->is_admin($inspector->id)): ?>
+                                            <?php if($inspector->id == $utility->getInspectorId()): ?>
                                                 <option value="<?=$inspector->id;?>" selected="selected">
                                                     <?= $inspector->last_name.' '.$inspector->first_name; ?>
                                                 </option>
@@ -30,6 +31,7 @@
                                                     <?= $inspector->last_name.' '.$inspector->first_name; ?>
                                                 </option>
                                             <?php endif; ?>
+                                        <?php endif;?>
                                     <?php endforeach;?>
                                 </select>
 
