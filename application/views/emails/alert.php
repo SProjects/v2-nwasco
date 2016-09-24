@@ -10,7 +10,7 @@
             <p>Dear <?= $recipient->last_name.' '.$recipient->first_name; ?>,</p>
 
             <p width="40%" style="text-wrap: normal">
-                This email is to bring to your attention to the following issue that you have
+                This email is to bring to your attention to the following issues that you have
                 to resolve by visiting the <a href="<?= base_url(); ?>">NWASCO dashboard</a>;
             </p>
 
