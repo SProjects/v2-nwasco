@@ -104,6 +104,10 @@ switch (ENVIRONMENT)
 		exit(1); // EXIT_ERROR
 }
 
+if (function_exists( 'date_default_timezone_set' )) {
+    date_default_timezone_set('Africa/Lusaka');
+}
+
 /*
  *---------------------------------------------------------------
  * SYSTEM DIRECTORY NAME
