@@ -155,10 +155,12 @@
                                                         if ($this->ion_auth->is_admin()) { ?>
                                                             <div class="btn-group">
                                                                 <div class="btn-group">
-                                                                    <a href="<?= base_url().'scheme_indicator_instructions/edit/'.$scheme->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
-                                                                       type="button" title="Edit"
-                                                                       class="btn btn-xs btn-white"><i
-                                                                            class="fa fa-edit"></i></a>
+                                                                    <?php if(!$instruction->isCompleted($instruction)):?>
+                                                                        <a href="<?= base_url().'scheme_indicator_instructions/edit/'.$scheme->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
+                                                                           type="button" title="Edit"
+                                                                           class="btn btn-xs btn-white"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                    <?php endif; ?>
                                                                     <a href="<?= base_url().'scheme_indicator_instructions/archive/'.$scheme->getId().'/'.$indicator[0]->getId().'/'. $instruction->getUnionToken(); ?>"
                                                                        type="button" title="Archive"
                                                                        class="btn btn-xs btn-white" onclick="return confirm('Are you sure?');"><i
