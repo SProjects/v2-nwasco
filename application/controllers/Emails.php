@@ -11,7 +11,7 @@ class Emails extends CI_Controller {
     public function sendEmail() {
         $this->email->initialize(array(
             'protocol' => 'smtp',
-            'smtp_host' => 'tls://smtp.gmail.com',
+            'smtp_host' => getenv('SMTP_HOST'),
             'smtp_user' => getenv('SMTP_USERNAME'),
             'smtp_pass' => getenv('SMTP_PASSWORD'),
             'smtp_port' => 465,
@@ -33,24 +33,32 @@ class Emails extends CI_Controller {
             $utility_instructions = $this->email_manager->getSummaryUtilityInstructions($user);
             $scheme_instructions = $this->email_manager->getSummarySchemeInstructions($user);
 
-            if (sizeof($requests) > 0 || $utility_instructions != NULL || $scheme_instructions != NULL) {
-                $data['recipient'] = $user;
-                $data['admin_requests'] = $admin_requests;
-                $data['requests'] = $requests;
-                $data['utility_instructions'] = $utility_instructions;
-                $data['scheme_instructions'] = $scheme_instructions;
+            if(sizeof($admin_requests) > 0)
+                $this->executeSend($user, $admin_requests, $requests, array(), array());
 
-                $recipient_email = $user->email;
-                if ($recipient_email != NULL && valid_email($recipient_email)) {
-                    $this->email->to($recipient_email);
-                    $this->email->subject('Alert - National Water Supply and Sanitation Council (no-reply)');
-
-                    $body = $this->load->view('emails/alert.php', $data, TRUE);
-                    $this->email->message($body);
-
-                    $this->email->send();
-                }
+            if (sizeof($requests) > 0 || $this->email_manager->shouldCreateEmail($utility_instructions) ||
+                    $this->email_manager->shouldCreateEmail($scheme_instructions)) {
+                $this->executeSend($user, $admin_requests, $requests, $utility_instructions, $scheme_instructions);
             }
+        }
+    }
+
+    private function executeSend($user, $admin_requests, $requests, $utility_instructions, $scheme_instructions) {
+        $data['recipient'] = $user;
+        $data['admin_requests'] = $admin_requests;
+        $data['requests'] = $requests;
+        $data['utility_instructions'] = $utility_instructions;
+        $data['scheme_instructions'] = $scheme_instructions;
+
+        $recipient_email = $user->email;
+        if ($recipient_email != NULL && valid_email($recipient_email)) {
+            $this->email->to($recipient_email);
+            $this->email->subject('Alert - National Water Supply and Sanitation Council (no-reply)');
+
+            $body = $this->load->view('emails/alert.php', $data, TRUE);
+            $this->email->message($body);
+
+            $this->email->send();
         }
     }
 }

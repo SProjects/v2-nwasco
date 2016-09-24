@@ -33,16 +33,21 @@ class Email_manager {
         $indicator_instruction = new Indicator_instruction_model();
         $utilities = $utility_dao->get(array(Utility_dao::INSPECTOR_FIELD => $user->id));
 
-        $instructions_summary = NULL;
+        $instructions_summary = array();
         foreach ($utilities as $utility) {
             $indicators = $indicator_dao->get(array(Indicator_dao::KIND_FIELD => Indicator_model::getUtilityKind()));
             foreach ($indicators as $indicator) {
-                $instructions_summary[$utility->getName()][$indicator->getName()] = array();
                 $summary = $indicator_instruction->getUtilityInstructionsStatusSummary($utility, $indicator);
-                array_push($instructions_summary[$utility->getName()][$indicator->getName()],  array(
-                    'OVERDUE' => $summary['OVERDUE'],
-                    'ALMOST' => $summary['ALMOST']
-                ));
+
+                if(count($summary) > 0) {
+                    if($summary['OVERDUE'] != 0 && $summary['ALMOST'] != 0) {
+                        $instructions_summary[$utility->getName()][$indicator->getName()] = array();
+                        array_push($instructions_summary[$utility->getName()][$indicator->getName()], array(
+                            'OVERDUE' => $summary['OVERDUE'],
+                            'ALMOST' => $summary['ALMOST']
+                        ));
+                    }
+                }
             }
         }
         return $instructions_summary;
@@ -54,18 +59,39 @@ class Email_manager {
         $indicator_instruction = new Indicator_instruction_model();
         $schemes = $scheme_dao->get(array(Scheme_dao::INSPECTOR_FIELD => $user->id));
 
-        $instructions_summary = NULL;
+        $instructions_summary = array();
         foreach ($schemes as $scheme) {
             $indicators = $indicator_dao->get(array(Indicator_dao::KIND_FIELD => Indicator_model::getSchemeKind()));
             foreach ($indicators as $indicator) {
-                $instructions_summary[$scheme->getName()][$indicator->getName()] = array();
                 $summary = $indicator_instruction->getSchemeInstructionsStatusSummary($scheme, $indicator);
-                array_push($instructions_summary[$scheme->getName()][$indicator->getName()],  array(
-                    'OVERDUE' => $summary['OVERDUE'],
-                    'ALMOST' => $summary['ALMOST']
-                ));
+
+                if(count($summary) > 0) {
+                    if($summary['OVERDUE'] != 0 || $summary['ALMOST'] != 0) {
+                        $instructions_summary[$scheme->getName()][$indicator->getName()] = array();
+                        array_push($instructions_summary[$scheme->getName()][$indicator->getName()],  array(
+                            'OVERDUE' => $summary['OVERDUE'],
+                            'ALMOST' => $summary['ALMOST']
+                        ));
+                    }
+                }
             }
         }
         return $instructions_summary;
+    }
+
+    public function shouldCreateEmail($instructions) {
+        return $this->hasData($instructions);
+    }
+
+    public function hasData($instructions) {
+        foreach ($instructions as $facility_name => $indicators) {
+            foreach ($indicators as $indicator_name => $summary) {
+                if(count($summary) > 0){
+                    if($summary[0]['OVERDUE'] > 0 || $summary[0]['ALMOST'] > 0)
+                        return TRUE;
+                }
+            }
+        }
+        return FALSE;
     }
 }

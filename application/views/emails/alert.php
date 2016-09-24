@@ -11,7 +11,7 @@
 
             <p width="40%" style="text-wrap: normal">
                 This email is to bring to your attention to the following issue that you have
-                to resolve on the NWASCO dashboard;
+                to resolve by visiting the <a href="<?= base_url(); ?>">NWASCO dashboard</a>;
             </p>
 
             <?php if (count($admin_requests) > 0): ?>
@@ -32,7 +32,7 @@
                     foreach ($admin_requests as $request): ?>
                         <tr>
                             <td><?= $x; ?></td>
-                            <td><?= $request->getUser()->last_name . ' ' . $request->getUser()->last_name; ?></td>
+                            <td><?= $request->getUser()->last_name . ' ' . $request->getUser()->first_name; ?></td>
                             <td><?= $request->getKind(); ?></td>
                             <td><?= $request->getCreatedAt(); ?></td>
                             <td><?= $request->getStatus(); ?></td>
@@ -44,9 +44,8 @@
 
             <?php if (count($requests) > 0): ?>
                 <h4>Requests</h4>
-                <br/>
 
-                <table width="40%" border="1" style="border: 1px solid black;">
+                <table width="40%" style="border: 1px solid black;">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -60,7 +59,7 @@
                     <?php $x=1; foreach ($requests as $request): ?>
                         <tr>
                             <td><?= $x; ?></td>
-                            <td><?= $request->getUser()->last_name.' '.$request->getUser()->last_name; ?></td>
+                            <td><?= $request->getUser()->last_name.' '.$request->getUser()->first_name; ?></td>
                             <td><?= $request->getKind(); ?></td>
                             <td><?= $request->getCreatedAt(); ?></td>
                             <td><?= $request->getStatus(); ?></td>
@@ -70,68 +69,73 @@
                 </table>
             <?php endif; ?>
 
-            <?php if (count($utility_instructions) > 0): ?>
+            <?php if ($this->email_manager->hasData($utility_instructions)): ?>
                 <h4>Commercial Utility Summary</h4>
                 <?php foreach ($utility_instructions as $utility_name => $indicators): ?>
-                    <h5><?= $utility_name; ?></h5>
-                    <table width="40%" style="border: 1px solid black;">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Indicator Name</th>
-                            <th>Almost Due</th>
-                            <th>Overdue</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $x=1; foreach ($indicators as $indicator_name => $summary): ?>
-                            <?php if ($summary[0]['ALMOST'] > 0 || $summary[0]['OVERDUE'] > 0): ?>
-                                <tr>
-                                    <td><?= $x; ?></td>
-                                    <td><?= $indicator_name; ?></td>
-                                    <td style="text-align: center"><?= $summary[0]['ALMOST']; ?></td>
-                                    <td style="text-align: center"><?= $summary[0]['OVERDUE']; ?></td>
-                                </tr>
-                            <?php endif; ?>
-                        <?php $x++; endforeach; ?>
-                        </tbody>
-                    </table>
+                    <?php if(count($indicators) > 0):?>
+                        <h5><?= $utility_name; ?></h5>
+                        <table width="40%" style="border: 1px solid black;">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Indicator Name</th>
+                                <th>Almost Due</th>
+                                <th>Overdue</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $x=1; foreach ($indicators as $indicator_name => $summary): ?>
+                                <?php if ($summary[0]['ALMOST'] > 0 || $summary[0]['OVERDUE'] > 0): ?>
+                                    <tr>
+                                        <td><?= $x; ?></td>
+                                        <td><?= $indicator_name; ?></td>
+                                        <td style="text-align: center"><?= $summary[0]['ALMOST']; ?></td>
+                                        <td style="text-align: center"><?= $summary[0]['OVERDUE']; ?></td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php $x++; endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
                 <?php endforeach;?>
             <?php endif; ?>
 
-            <?php if (count($scheme_instructions) > 0): ?>
+            <?php if ($this->email_manager->hasData($scheme_instructions)): ?>
                 <h4>Private Scheme Summary</h4>
                 <?php foreach ($scheme_instructions as $scheme_name => $indicators): ?>
-                    <h5><?= $scheme_name; ?></h5>
-                    <table width="40%" style="border: 1px solid black;">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Indicator Name</th>
-                            <th>Almost Due</th>
-                            <th>Overdue</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $x=1; foreach ($indicators as $indicator_name => $summary): ?>
-                            <?php if ($summary[0]['ALMOST'] > 0 || $summary[0]['OVERDUE'] > 0): ?>
-                                <tr>
-                                    <td><?= $x; ?></td>
-                                    <td><?= $indicator_name; ?></td>
-                                    <td style="text-align: center"><?= $summary[0]['ALMOST']; ?></td>
-                                    <td style="text-align: center"><?= $summary[0]['OVERDUE']; ?></td>
-                                </tr>
-                            <?php endif; ?>
-                        <?php $x++; endforeach; ?>
-                        </tbody>
-                    </table>
+                    <?php if(count($indicators) > 0):?>
+                        <h5><?= $scheme_name; ?></h5>
+                        <table width="40%" style="border: 1px solid black;">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Indicator Name</th>
+                                <th>Almost Due</th>
+                                <th>Overdue</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $x=1; foreach ($indicators as $indicator_name => $summary): ?>
+                                <?php if ($summary[0]['ALMOST'] > 0 || $summary[0]['OVERDUE'] > 0): ?>
+                                    <tr>
+                                        <td><?= $x; ?></td>
+                                        <td><?= $indicator_name; ?></td>
+                                        <td style="text-align: center"><?= $summary[0]['ALMOST']; ?></td>
+                                        <td style="text-align: center"><?= $summary[0]['OVERDUE']; ?></td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php $x++; endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
                 <?php endforeach;?>
             <?php endif; ?>
             <br/>
 
             <p>
                 Regards, <br/>
-                NWASCO Team
+                NWASCO Team <br/>
+                <img src="<?= base_url().'assets/images/logo.jpg'?>" width="133"/>
             </p>
         </div>
     </body>
