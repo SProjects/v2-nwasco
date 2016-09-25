@@ -33,3 +33,11 @@ Installation
   'database' => '[DATABASE NAME]',
   ```
 - And that is it. You can now go to your browser and load the base url.
+
+Log-in and Use
+--------------
+Use the following login credentials;
+```
+Username: admin@admin.com
+Password: password
+```
