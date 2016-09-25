@@ -185,10 +185,11 @@ class Indicator_instruction_model extends CI_Model {
                 if($instruction->isCompleted())
                     return 'COMPLETE';
 
-                $due_date = strtotime($instruction->getValue());
+                $due_date = $instruction->getValue();
                 if($due_date == NULL)
                     return 'MISSING';
 
+                $due_date = strtotime($due_date);
                 $days_to_expire = $instruction->getIndicator()->getDaysToExpire();
 
                 $now = time();
