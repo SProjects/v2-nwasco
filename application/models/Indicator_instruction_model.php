@@ -13,9 +13,11 @@ class Indicator_instruction_model extends CI_Model {
     private $utility;
     private $scheme;
     private $completed_at;
+    private $created_at;
 
     public function __construct($id=NULL, $value=NULL, $union_token=NULL, $indicator_property=NULL,
-                                $indicator=NULL, $utility=NULL, $scheme=NULL, $deleted_at=NULL, $completed_at=NULL) {
+                                $indicator=NULL, $utility=NULL, $scheme=NULL, $deleted_at=NULL,
+                                $completed_at=NULL, $created_at=NULL) {
         parent::__construct();
         $this->id = $id;
         $this->value = $value;
@@ -26,6 +28,7 @@ class Indicator_instruction_model extends CI_Model {
         $this->scheme = $scheme;
         $this->deleted_at = $deleted_at;
         $this->completed_at = $completed_at;
+        $this->created_at = $created_at;
     }
 
     public function getId() {
@@ -96,6 +99,14 @@ class Indicator_instruction_model extends CI_Model {
         return ($this->completed_at == NULL) ? FALSE : TRUE;
     }
 
+    public function getCreatedAt() {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt($created_at) {
+        $this->created_at = $created_at;
+    }
+
     public function hasPendingEditRequest($instruction) {
         return $this->hasRequests($instruction, 'EDIT', 'PENDING');
     }
@@ -146,7 +157,7 @@ class Indicator_instruction_model extends CI_Model {
         return $instruction_objects;
     }
 
-    public function getSchemeInstructionsFromPostData($indicators, $scheme, $indicator, $union_token=NULL) {
+    public function getSchemeInstructionsFromPostData($indicators, $scheme, $indicator, $union_token=NULL, $created_at) {
         $instruction_objects = array();
         $indicator_property_dao = new Indicator_property_dao();
         $union_token = ($union_token==NULL) ? self::generateUniqueToken() : $union_token;
@@ -157,7 +168,9 @@ class Indicator_instruction_model extends CI_Model {
             ))[0];
 
             $instruction = new Indicator_instruction_model(
-                NULL, $instruction_value, $union_token, $indicator_property, $indicator, NULL, $scheme, NULL);
+                NULL, $instruction_value, $union_token, $indicator_property,
+                $indicator, NULL, $scheme, NULL, NULL, $created_at
+            );
             array_push($instruction_objects, $instruction);
         }
 
@@ -172,6 +185,7 @@ class Indicator_instruction_model extends CI_Model {
                 $new_instruction_property_id = $new_instruction->getIndicatorProperty()->getId();
                 if ($existing_instruction_property_id == $new_instruction_property_id) {
                     $existing_instruction->setValue($new_instruction->getValue());
+                    $existing_instruction->setCreatedAt($new_instruction->getCreatedAt());
                     array_push($updated_instructions, $existing_instruction);
                 }
             }

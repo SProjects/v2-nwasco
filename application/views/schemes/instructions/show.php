@@ -118,6 +118,7 @@
                                                             <?= $instruction_headings[$x]->getIndicatorProperty()->getName(); ?>
                                                         </th>
                                                     <?php endfor; ?>
+                                                    <th>Date of Issue</th>
                                                     <th>Status</th>
                                                     <th style="width: 80px;">Actions</th>
                                                 </tr>
@@ -130,6 +131,7 @@
                                                     <?php for ($x = 0; $x < sizeof($instructions); $x++): ?>
                                                         <td><?= $instructions[$x]->getValue(); ?></td>
                                                     <?php endfor; ?>
+                                                    <td><?= $instructions[0]->getCreatedAt();?></td>
                                                     <td>
                                                         <?php
                                                         $indicator_instruction = new Indicator_instruction_model();
