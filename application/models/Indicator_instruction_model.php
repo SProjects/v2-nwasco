@@ -139,7 +139,7 @@ class Indicator_instruction_model extends CI_Model {
         return ($this->scheme == NULL) ? FALSE : TRUE;
     }
 
-    public function getUtilityInstructionsFromPostData($indicators, $utility, $indicator, $union_token=NULL) {
+    public function getUtilityInstructionsFromPostData($indicators, $utility, $indicator, $union_token=NULL, $created_at) {
         $instruction_objects = array();
         $indicator_property_dao = new Indicator_property_dao();
         $union_token = ($union_token==NULL) ? self::generateUniqueToken() : $union_token;
@@ -150,7 +150,8 @@ class Indicator_instruction_model extends CI_Model {
             ))[0];
 
             $instruction = new Indicator_instruction_model(
-                NULL, $instruction_value, $union_token, $indicator_property, $indicator, $utility, NULL, NULL);
+                NULL, $instruction_value, $union_token, $indicator_property,
+                $indicator, $utility, NULL, NULL, NULL, $created_at);
             array_push($instruction_objects, $instruction);
         }
 

@@ -129,6 +129,7 @@ EOF;
 
             $indicator = $this->indicatordao->getById($indicator_id);
 
+            $data['today'] = date('Y-m-d', time());
             $data['utility'] = $this->utilitydao->getById($utility_id);
             $data['indicator'] = $indicator;
             $data['indicator_properties'] = $indicator->getIndicatorProperties($indicator);
@@ -145,6 +146,7 @@ EOF;
         if ($this->ion_auth->logged_in()) {
             $indicator_id = $this->input->post('indicator_id');
             $utility_id = $this->input->post('utility_id');
+            $created_at = $this->input->post('created_at');
 
             $indicator = $this->indicatordao->getById($indicator_id);
             $utility = $this->utilitydao->getById($utility_id);
@@ -168,7 +170,7 @@ EOF;
 
             //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
             $new_instructions = $this->indicatorinstructionmodel->getUtilityInstructionsFromPostData(
-                $new_indicator_instructions, $utility, $indicator, NULL);
+                $new_indicator_instructions, $utility, $indicator, NULL, $created_at);
 
             foreach ($new_instructions as $new_instruction) {
                 if ($this->indicatorinstructiondao->post($new_instruction)) {
@@ -220,6 +222,7 @@ EOF;
             $indicator_id = $this->input->post('indicator_id');
             $utility_id = $this->input->post('utility_id');
             $union_token = $this->input->post('union_token');
+            $created_at = $this->input->post('created_at');
 
             $indicator = $this->indicatordao->getById($indicator_id);
             $utility = $this->utilitydao->getById($utility_id);
@@ -240,9 +243,9 @@ EOF;
 
             //Create IndicatorInstruction objects from the form data. Each field is an IndicatorInstruction.
             $new_instructions = $this->indicatorinstructionmodel->getUtilityInstructionsFromPostData(
-                $updated_indicator_instructions, $utility, $indicator, $union_token);
+                $updated_indicator_instructions, $utility, $indicator, $union_token, $created_at);
 
-            //Use new instruction data to update the value fields on the exisiting instructions
+            //Use new instruction data to update the value fields on the existing instructions
             $updated_instructions = $this->indicatorinstructionmodel->updateExistingInstructions(
                 $existing_instructions, $new_instructions);
 

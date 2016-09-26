@@ -103,6 +103,22 @@
                                 <?php endforeach; ?>
 
                                 <div class="col-lg-12">
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <div class="form-group">
+                                                <label class="font-noraml required">Date of Issue</label>
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input type="date" class="form-control"
+                                                           name="created_at"
+                                                           placeholder="Enter date of issue" value="<?= $existing_instructions[0]->getCreatedAt(); ?>"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
                                     <div class="form-group">
 
                                         <input type="hidden" name="indicator_id" value="<?= $indicator->getId(); ?>"/>
