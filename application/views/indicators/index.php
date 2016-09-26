@@ -22,6 +22,7 @@
                     <th title="Send alert when days to expiry date are less than those in this field">
                         Days to Expire(#)
                     </th>
+                    <th>Chart</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -47,6 +48,13 @@
                         </td>
                         <td>
                             <?php echo ($indicator->getDaysToExpire() == NULL) ? "Not set" : $indicator->getDaysToExpire(); ?>
+                        </td>
+                        <td style="text-align: center;">
+                            <?php if($indicator->getHaveChart()): ?>
+                                <span class="fa fa-check-circle"></span>
+                            <?php else: ?>
+                                <span class="fa fa-times-circle"></span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <div class="btn-group">
@@ -84,6 +92,7 @@
                     <th title="Send alert when days to expiry date are less than those in this field">
                         Days to Expire(#)
                     </th>
+                    <th>Chart</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -110,6 +119,13 @@
                         </td>
                         <td>
                             <?php echo ($indicator->getDaysToExpire() == NULL) ? "Not set" : $indicator->getDaysToExpire(); ?>
+                        </td>
+                        <td style="text-align: center;">
+                            <?php if($indicator->getHaveChart()): ?>
+                                <span class="fa fa-check-circle"></span>
+                            <?php else: ?>
+                                <span class="fa fa-times-circle"></span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <div class="btn-group">

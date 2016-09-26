@@ -30,6 +30,13 @@
                                 <input type="number" name="days_to_expire" class="form-control" placeholder="No. of days"/>
                                 <h3></h3>
 
+                                <label class="required">Should display a chart</label>
+                                <select name="have_chart" class="select2_demo_1 form-control">
+                                    <option value="1" selected="selected">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                                <h3></h3>
+
                                 <a href="<?php echo base_url().'indicator'?>" type="button"
                                    class="btn btn-sm btn-info pull-left col-sm-2">
                                     <i class="fa fa-caret-left"></i> Go Back

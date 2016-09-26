@@ -8,6 +8,7 @@ class Indicator_dao extends CI_Model {
     const DESCRIPTION_FIELD = 'description';
     const KIND_FIELD = 'kind';
     const DAYS_TO_EXPIRE_FIELD = 'days_to_expire';
+    const HAVE_CHART_FIELD = 'have_chart';
 
     public function __construct() {
         parent::__construct();
@@ -55,6 +56,7 @@ class Indicator_dao extends CI_Model {
                 $indicatorObject->setDescription($indicator[self::DESCRIPTION_FIELD]);
                 $indicatorObject->setKind($indicator[self::KIND_FIELD]);
                 $indicatorObject->setDaysToExpire($indicator[self::DAYS_TO_EXPIRE_FIELD]);
+                $indicatorObject->setHaveChart($indicator[self::HAVE_CHART_FIELD]);
                 array_push($indicatorObjects, $indicatorObject);
             }
         }
@@ -66,7 +68,8 @@ class Indicator_dao extends CI_Model {
             self::NAME_FIELD => $indicator->getName(),
             self::DESCRIPTION_FIELD => $indicator->getDescription(),
             self::KIND_FIELD => $indicator->getKind(),
-            self::DAYS_TO_EXPIRE_FIELD => $indicator->getDaysToExpire()
+            self::DAYS_TO_EXPIRE_FIELD => $indicator->getDaysToExpire(),
+            self::HAVE_CHART_FIELD => $indicator->getHaveChart()
         );
     }
 

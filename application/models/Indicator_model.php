@@ -7,14 +7,17 @@ class Indicator_model extends CI_Model {
     private $description;
     private $kind;
     private $days_to_expire;
+    private $have_chart;
 
-    public function __construct($id=NULL, $name=NULL, $description=NULL, $kind=NULL, $days_to_expire=NULL) {
+    public function __construct($id=NULL, $name=NULL, $description=NULL,
+                                $kind=NULL, $days_to_expire=NULL, $have_chart=NULL) {
         parent::__construct();
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->kind = $kind;
         $this->days_to_expire = $days_to_expire;
+        $this->have_chart = $have_chart;
     }
 
     public function getId() {
@@ -60,6 +63,14 @@ class Indicator_model extends CI_Model {
 
     public function setDaysToExpire($days_to_expire) {
         $this->days_to_expire = $days_to_expire;
+    }
+
+    public function getHaveChart() {
+        return $this->have_chart;
+    }
+
+    public function setHaveChart($have_chart) {
+        $this->have_chart = $have_chart;
     }
 
     public function hasData($indicator) {

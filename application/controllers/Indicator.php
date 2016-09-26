@@ -182,13 +182,14 @@ EOF;
         $description = $this->input->post('description');
         $kind = $this->input->post('kind');
         $days_to_expire = $this->input->post('days_to_expire');
+        $have_chart = $this->input->post('have_chart');
 
         if($name == NULL || $description == NULL || $kind == -1 || $days_to_expire == NULL) {
             $this->session->set_flashdata('message', 'Notice: One or more missing fields');
             redirect('add');
         }
 
-        $new_indicator = new Indicator_model(NULL, $name, $description, $kind, $days_to_expire);
+        $new_indicator = new Indicator_model(NULL, $name, $description, $kind, $days_to_expire, $have_chart);
         if($this->indicatordao->post($new_indicator)) {
             return true;
         } else {
@@ -227,6 +228,7 @@ EOF;
             $description = $this->input->post('description');
             $kind = $this->input->post('kind');
             $days_to_expire = $this->input->post('days_to_expire');
+            $have_chart = $this->input->post('have_chart');
 
             if($name == NULL || $description == NULL || $kind == -1 || $days_to_expire == NULL) {
                 $this->session->set_flashdata('message', 'Notice: One or more missing fields');
@@ -238,6 +240,7 @@ EOF;
             $indicator->setDescription($description);
             $indicator->setKind($kind);
             $indicator->setDaysToExpire($days_to_expire);
+            $indicator->setHaveChart($have_chart);
 
             if($this->indicatordao->update($indicator)) {
                 $this->output->set_status_header(200);

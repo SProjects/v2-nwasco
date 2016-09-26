@@ -41,6 +41,13 @@
                                        value="<?php echo $indicator->getDaysToExpire(); ?>"/>
                                 <h3></h3>
 
+                                <label class="required">Should display a chart</label>
+                                <select name="have_chart" class="select2_demo_1 form-control">
+                                    <option value="1" <?php if($indicator->getHaveChart() == 1) { echo 'selected="selected"'; }?>>Yes</option>
+                                    <option value="0" <?php if($indicator->getHaveChart() == 0) { echo 'selected="selected"'; }?>>No</option>
+                                </select>
+                                <h3></h3>
+
                                 <a href="<?php echo base_url().'indicator'?>" type="button"
                                    class="btn btn-sm btn-info pull-left col-sm-2">
                                     <i class="fa fa-caret-left"></i> Go Back

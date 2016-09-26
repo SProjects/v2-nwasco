@@ -116,57 +116,59 @@
 
             function drawCharts() {
                 <?php foreach ($utility_indicators as $indicator): ?>
-                    // actual bar chart data
-                    var barData = google.visualization.arrayToDataTable(<?= json_encode($indicator_instruction->getUtilityBarChartData($indicator))?>);
+                    <?php if($indicator->getHaveChart()): ?>
+                        // actual bar chart data
+                        var barData = google.visualization.arrayToDataTable(<?= json_encode($indicator_instruction->getUtilityBarChartData($indicator))?>);
 
-                    // set bar chart options
-                    var barOptions = {
-                        focusTarget: 'category',
-                        backgroundColor: 'transparent',
-                        colors: ['red', 'orange', '#1ab394'],
-                        fontName: 'Open Sans',
-                        chartArea: {
-                            left: 50,
-                            top: 0,
-                            width: '100%',
-                            height: '70%'
-                        },
-                        bar: {
-                            groupWidth: '100%'
-                        },
-                        hAxis: {
-                            textStyle: {
-                                fontSize: 11
-                            }
-                        },
-                        vAxis: {
-                            minValue: 0,
-                            maxValue: 20,
-                            baselineColor: '#DDD',
-                            gridlines: {
-                                color: '#DDD',
-                                count: 5
+                        // set bar chart options
+                        var barOptions = {
+                            focusTarget: 'category',
+                            backgroundColor: 'transparent',
+                            colors: ['red', 'orange', '#1ab394'],
+                            fontName: 'Open Sans',
+                            chartArea: {
+                                left: 50,
+                                top: 0,
+                                width: '100%',
+                                height: '70%'
                             },
-                            textStyle: {
-                                fontSize: 11
+                            bar: {
+                                groupWidth: '100%'
+                            },
+                            hAxis: {
+                                textStyle: {
+                                    fontSize: 11
+                                }
+                            },
+                            vAxis: {
+                                minValue: 0,
+                                maxValue: 20,
+                                baselineColor: '#DDD',
+                                gridlines: {
+                                    color: '#DDD',
+                                    count: 5
+                                },
+                                textStyle: {
+                                    fontSize: 11
+                                }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                textStyle: {
+                                    fontSize: 12
+                                }
+                            },
+                            animation: {
+                                duration: 1200,
+                                easing: 'out',
+                                startup: true
                             }
-                        },
-                        legend: {
-                            position: 'bottom',
-                            textStyle: {
-                                fontSize: 12
-                            }
-                        },
-                        animation: {
-                            duration: 1200,
-                            easing: 'out',
-                            startup: true
-                        }
-                    };
+                        };
 
-                    // draw bar chart twice so it animates
-                    var barChart = new google.visualization.ColumnChart(document.getElementById('chart_div_<?= $indicator->getId();?>'));
-                    barChart.draw(barData, barOptions);
+                        // draw bar chart twice so it animates
+                        var barChart = new google.visualization.ColumnChart(document.getElementById('chart_div_<?= $indicator->getId();?>'));
+                        barChart.draw(barData, barOptions);
+                    <?php endif; ?>
                 <?php endforeach; ?>
             }
         </script>
@@ -180,10 +182,12 @@
                                 <main>
                                     <ul>
                                         <?php foreach ($utility_indicators as $indicator): ?>
-                                            <li>
-                                                <h5><?= $indicator->getDescription(); ?></h5>
-                                                <div id="chart_div_<?= $indicator->getId(); ?>"></div>
-                                            </li>
+                                            <?php if($indicator->getHaveChart()): ?>
+                                                <li>
+                                                    <h5><?= $indicator->getDescription(); ?></h5>
+                                                    <div id="chart_div_<?= $indicator->getId(); ?>"></div>
+                                                </li>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </ul>
                                 </main>
