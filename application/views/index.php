@@ -38,6 +38,15 @@
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
+                                            <?php if($this->ion_auth->is_admin() || $utility->getInspectorId() == $this->session->userdata('user_id')): ?>
+                                                <div>
+                                                    <span class="pull-right label label-danger">
+                                                      <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
+                                                          VIEW DETAILS
+                                                      </a>
+                                                    </span>
+                                                </div>
+                                            <?php endif; ?>
                                         </ul>
                                     </li>
                                     <!--End Overdue-->
@@ -55,6 +64,15 @@
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
+                                            <?php if($this->ion_auth->is_admin() || $utility->getInspectorId() == $this->session->userdata('user_id')): ?>
+                                                <div>
+                                                    <span class="pull-right label label-warning">
+                                                      <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
+                                                          VIEW DETAILS
+                                                      </a>
+                                                    </span>
+                                                </div>
+                                            <?php endif; ?>
                                         </ul>
                                     </li>
                                     <!--End Almost-->
@@ -72,10 +90,18 @@
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
+                                            <?php if($this->ion_auth->is_admin() || $utility->getInspectorId() == $this->session->userdata('user_id')): ?>
+                                                <div>
+                                                    <span class="pull-right label label-primary">
+                                                      <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
+                                                          VIEW DETAILS
+                                                      </a>
+                                                    </span>
+                                                </div>
+                                            <?php endif; ?>
                                         </ul>
                                     </li>
                                     <!--End Active-->
-
                                 </ul>
                             </li>
                         <?php endforeach; ?>
