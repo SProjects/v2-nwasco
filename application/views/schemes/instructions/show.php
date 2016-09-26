@@ -112,6 +112,7 @@
                                                 $instruction_headings = $instruction_group;
                                                 ?>
                                                 <tr>
+                                                    <th>#</th>
                                                     <?php for ($x = 0; $x < sizeof($instruction_headings); $x++): ?>
                                                         <th>
                                                             <?= $instruction_headings[$x]->getIndicatorProperty()->getName(); ?>
@@ -123,8 +124,9 @@
                                                 <?php break; endforeach; ?>
                                             </thead>
                                             <tbody>
-                                            <?php foreach ($instruction_groups as $instructions): ?>
+                                            <?php $i=1; foreach ($instruction_groups as $instructions): ?>
                                                 <tr>
+                                                    <td><?= $i; ?></td>
                                                     <?php for ($x = 0; $x < sizeof($instructions); $x++): ?>
                                                         <td><?= $instructions[$x]->getValue(); ?></td>
                                                     <?php endfor; ?>
@@ -225,7 +227,7 @@
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
-                                            <?php endforeach; ?>
+                                            <?php $i++; endforeach; ?>
                                             </tbody>
                                         </table>
                                     <?php endif; ?>
