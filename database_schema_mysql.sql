@@ -7,7 +7,7 @@
 #
 # Host: us-cdbr-iron-east-04.cleardb.net (MySQL 5.5.46-log)
 # Database: heroku_9d1f25f74e0ed9a
-# Generation Time: 2016-09-23 17:57:45 +0000
+# Generation Time: 2016-09-27 02:07:29 +0000
 # ************************************************************
 
 
@@ -18,40 +18,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Dump of table utilities
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `utilities`;
-
-CREATE TABLE `utilities` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `abbreviation` varchar(11) NOT NULL DEFAULT '',
-  `user_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `utilities` WRITE;
-/*!40000 ALTER TABLE `utilities` DISABLE KEYS */;
-
-INSERT INTO `utilities` (`id`, `name`, `abbreviation`, `user_id`)
-VALUES
-  (1,'Luapula WSC','LPWSC',NULL),
-  (2,'Chambeshi WSC','CHWSC',NULL),
-  (3,'Eastern WSC','EWSC',NULL),
-  (4,'Lukanga','LGWSC',NULL),
-  (5,'Mulonga WSC','MWSC',NULL),
-  (6,'Nkana WSC','NWSC',NULL),
-  (7,'Kafubu WSC','KWSC',NULL),
-  (8,'Lusaka WSC','LWSC',NULL),
-  (9,'Southern WSC','SWSC',NULL),
-  (10,'Western WSC','WWSC',NULL),
-  (11,'N-Western WSC','NWWSC',NULL);
-
-/*!40000 ALTER TABLE `utilities` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table groups
@@ -72,10 +38,8 @@ LOCK TABLES `groups` WRITE;
 INSERT INTO `groups` (`id`, `name`, `description`)
 VALUES
   (1,'admin','Administrator'),
-  (2,'chief_inspector','Chief Inspector'),
-  (12,'senior_inspector','Senior Inspector'),
-  (22,'inspector','Junior Inspector'),
-  (32,'guests','Guest');
+  (32,'guests','Guest'),
+  (42,'desk_officer','Desk Officer');
 
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -96,6 +60,7 @@ CREATE TABLE `indicator_instructions` (
   `scheme_id` int(11) DEFAULT NULL,
   `deleted_at` date DEFAULT NULL,
   `completed_at` datetime DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -129,23 +94,25 @@ CREATE TABLE `indicators` (
   `description` varchar(255) DEFAULT NULL,
   `kind` varchar(20) DEFAULT NULL,
   `days_to_expire` int(11) DEFAULT NULL,
+  `have_chart` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `indicators` WRITE;
 /*!40000 ALTER TABLE `indicators` DISABLE KEYS */;
 
-INSERT INTO `indicators` (`id`, `name`, `description`, `kind`, `days_to_expire`)
+INSERT INTO `indicators` (`id`, `name`, `description`, `kind`, `days_to_expire`, `have_chart`)
 VALUES
-  (1,'Directives','Inspection Directives','UTILITY',NULL),
-  (2,'Tariff Conditions','Tariff Conditions','UTILITY',NULL),
-  (3,'SRS','Special Regulatory Supervision','UTILITY',NULL),
-  (4,'Projects','WSS Projects','UTILITY',NULL),
-  (5,'RBI','Regulation by Incentives','UTILITY',NULL),
-  (6,'SLAs/ SLGs','Service Level Guarantees and Agreements ','UTILITY',NULL),
-  (12,'Directives','Inspection Directives','SCHEME',NULL),
-  (22,'OL','Operating License','SCHEME',NULL),
-  (32,'SLAs/SLGs','Service Level Guarantees and Agreements','SCHEME',NULL);
+  (1,'Directives','Inspection Directives                                                                ','UTILITY',5,1),
+  (2,'Tariff Conditions','Tariff Conditions                                                                                                ','UTILITY',5,1),
+  (3,'SRS','Special Regulatory Supervision','UTILITY',NULL,NULL),
+  (4,'Projects','WSS Projects','UTILITY',NULL,NULL),
+  (5,'RBI','Regulation by Incentives','UTILITY',NULL,NULL),
+  (6,'SLAs/ SLGs','Service Level Guarantees and Agreements ','UTILITY',NULL,NULL),
+  (12,'Directives','Inspection Directives','SCHEME',NULL,NULL),
+  (22,'OL','Operating License ','SCHEME',30,0),
+  (32,'SLAs/SLGs','Service Level Guarantees and Agreements','SCHEME',NULL,NULL),
+  (42,'Hot Spots','Areas of focus','UTILITY',90,NULL);
 
 /*!40000 ALTER TABLE `indicators` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -163,6 +130,25 @@ CREATE TABLE `login_attempts` (
   `time` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table requests
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `requests`;
+
+CREATE TABLE `requests` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `kind` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `reason` text,
+  `created_at` datetime DEFAULT NULL,
+  `instruction_token` varchar(20) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `indicator_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 
@@ -193,24 +179,6 @@ VALUES
 
 /*!40000 ALTER TABLE `schemes` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table requests
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `requests`;
-
-CREATE TABLE `requests` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `kind` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `instruction_token` varchar(20) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `indicator_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 
 # Dump of table users
@@ -244,7 +212,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`)
 VALUES
-  (1,'127.0.0.1','admin','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,'pEzxKZ5IDdQyPf30AkuuM.',1268889823,1474652881,1,'Admin','Admin','ADMIN','0705245356');
+  (1,'127.0.0.1','admin','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,'pEzxKZ5IDdQyPf30AkuuM.',1268889823,1474941220,1,'Admin','Admin','ADMIN','0705245356');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -276,6 +244,40 @@ VALUES
   (22,1,32);
 
 /*!40000 ALTER TABLE `users_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table utilities
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `utilities`;
+
+CREATE TABLE `utilities` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `abbreviation` varchar(11) NOT NULL DEFAULT '',
+  `user_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `utilities` WRITE;
+/*!40000 ALTER TABLE `utilities` DISABLE KEYS */;
+
+INSERT INTO `utilities` (`id`, `name`, `abbreviation`, `user_id`)
+VALUES
+  (1,'Luapula WSC','LPWSC',NULL),
+  (2,'Chambeshi WSC','CHWSC',NULL),
+  (3,'Eastern WSC','EWSC',NULL),
+  (4,'Lukanga','LGWSC',NULL),
+  (5,'Mulonga WSC','MWSC',NULL),
+  (6,'Nkana WSC','NWSC',NULL),
+  (7,'Kafubu WSC','KWSC',NULL),
+  (8,'Lusaka WSC','LWSC',NULL),
+  (9,'Southern WSC','SWSC',NULL),
+  (11,'N-Western WSC','NWWSC',NULL),
+  (12,'Western WSC','WWSC',NULL);
+
+/*!40000 ALTER TABLE `utilities` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
