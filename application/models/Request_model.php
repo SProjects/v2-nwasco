@@ -6,17 +6,19 @@ class Request_model extends CI_Model {
     private $kind;
     private $status;
     private $instructions;
+    private $reason;
     private $created_at;
     private $user;
     private $indicator;
 
     public function __construct($id=NULL, $kind=NULL, $status=NULL, $instructions=NULL,
-                                $create_at=NULL, $user=NULL, $indicator=NULL) {
+                                $reason=NULL, $create_at=NULL, $user=NULL, $indicator=NULL) {
         parent::__construct();
         $this->id = $id;
         $this->kind = $kind;
         $this->status = $status;
         $this->instructions = $instructions;
+        $this->reason = $reason;
         $this->created_at = $create_at;
         $this->user = $user;
         $this->indicator = $indicator;
@@ -52,6 +54,14 @@ class Request_model extends CI_Model {
 
     public function setInstructions($instructions) {
         $this->instructions = $instructions;
+    }
+
+    public function getReason() {
+        return $this->reason;
+    }
+
+    public function setReason($reason) {
+        $this->reason = $reason;
     }
 
     public function getCreatedAt() {

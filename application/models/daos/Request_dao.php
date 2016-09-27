@@ -10,6 +10,7 @@ class Request_dao extends CI_Model {
     const STATUS_FIELD = 'status';
     const CREATED_AT_FIELD = 'created_at';
     const INSTRUCTION_FIELD = 'instruction_token';
+    const REASON_FIELD = 'reason';
     const USER_FIELD = 'user_id';
     const INDICATOR_FIELD = 'indicator_id';
 
@@ -57,6 +58,7 @@ class Request_dao extends CI_Model {
             $request_object->setKind($request[self::KIND_FIELD]);
             $request_object->setStatus($request[self::STATUS_FIELD]);
             $request_object->setCreatedAt($request[self::CREATED_AT_FIELD]);
+            $request_object->setReason($request[self::REASON_FIELD]);
 
             $indicator_id = $request[self::INDICATOR_FIELD];
             if($indicator_id != NULL) {
@@ -88,6 +90,7 @@ class Request_dao extends CI_Model {
             self::STATUS_FIELD => $request->getStatus(),
             self::CREATED_AT_FIELD => $request->getCreatedAt(),
             self::INSTRUCTION_FIELD => $request->getInstructions()[0]->getUnionToken(),
+            self::REASON_FIELD => $request->getReason(),
             self::USER_FIELD => $request->getUser()->id,
             self::INDICATOR_FIELD => $request->getIndicator()->getId()
         );

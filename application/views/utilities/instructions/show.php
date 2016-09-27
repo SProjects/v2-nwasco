@@ -207,21 +207,18 @@
                                                             <?php if (!$hasPendingArchiveRequest && !$hasPendingEditRequest && !$hasAcceptedEditRequest && !$hasAcceptedArchiveRequest):?>
                                                                 <div class="btn-group">
                                                                     <?php if(!$instruction->isCompleted($instruction)):?>
-                                                                        <a href="<?= base_url().'requests/create/EDIT/PENDING/'.$indicator[0]->getId().'/'. $instruction->getUnionToken().'/'.$user->id.'/utility/'.$utility->getId(); ?>"
-                                                                           type="button" title="Request Edit"
-                                                                           class="btn btn-xs btn-white"><i
-                                                                                class="fa fa-edit"></i>
-                                                                        </a>
+                                                                        <a href="#" type="button" title="Edit" class="btn btn-xs btn-white"
+                                                                           data-toggle="modal" data-target="#utilityEditModal_<?= $instruction->getUnionToken(); ?>"><i
+                                                                                class="fa fa-edit"></i></a>
                                                                     <?php endif; ?>
 
-                                                                    <a href="<?= base_url().'requests/create/ARCHIVE/PENDING/'.$indicator[0]->getId().'/'. $instruction->getUnionToken().'/'.$user->id.'/utility/'.$utility->getId(); ?>"
-                                                                       type="button" title="Request Archive"
-                                                                       class="btn btn-xs btn-white"><i
+                                                                    <a href="#" type="button" title="Request Archive" class="btn btn-xs btn-white"
+                                                                       data-toggle="modal" data-target="#utilityArchiveModal_<?= $instruction->getUnionToken(); ?>"><i
                                                                             class="fa fa-archive"></i></a>
 
                                                                     <?php if(!$instruction->isCompleted($instruction)):?>
                                                                         <a href="<?= base_url().'utility_indicator_instructions/complete/'. $instruction->getUnionToken().'/'.$utility->getId(); ?>"
-                                                                           type="button" title="Mark Task Complete"
+                                                                           type="button" title="Mark Task As Complete"
                                                                            class="btn btn-xs btn-white"><i
                                                                                 class="fa fa-check-circle" onclick="return confirm('Are you sure the task is complete?');"></i>
                                                                         </a>
@@ -231,6 +228,81 @@
                                                         <?php endif; ?>
                                                     </td>
                                                 </tr>
+
+                                                <?php if(!$instruction->isCompleted($instruction)):?>
+                                                    <!-- Utility Edit Modal -->
+                                                    <div id="utilityEditModal_<?= $instruction->getUnionToken(); ?>" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    <h4 class="modal-title">Utility Instruction Edit Request</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form action="<?= base_url().'requests/create'?>" method="post" id="edit_reason" class="form-horizontal">
+                                                                        <label class="required">Describe reason for edit</label>
+                                                                        <textarea name="reason" class="form-control" placeholder="Enter reason here"></textarea>
+
+                                                                        <input type="hidden" name="kind" value="EDIT">
+                                                                        <input type="hidden" name="status" value="PENDING">
+                                                                        <input type="hidden" name="indicator_id" value="<?= $indicator[0]->getId(); ?>">
+                                                                        <input type="hidden" name="instruction_token" value="<?= $instruction->getUnionToken(); ?>">
+                                                                        <input type="hidden" name="user_id" value="<?= $user->id; ?>">
+                                                                        <input type="hidden" name="source" value="utility">
+                                                                        <input type="hidden" name="facility_id" value="<?= $utility->getId(); ?>">
+
+                                                                        <button class="btn btn-primary pull-right col-sm-3 btn-sm" id="button"
+                                                                                name="submit" type="submit"><i class="fa fa-save"></i> Save
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                                <!-- Utility Archive Modal -->
+                                                <div id="utilityArchiveModal_<?= $instruction->getUnionToken(); ?>" class="modal fade" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Utility Instruction Archive Request</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="<?= base_url().'requests/create'?>" method="post" id="edit_reason" class="form-horizontal">
+                                                                    <label class="required">Describe reason for archiving</label>
+                                                                    <textarea name="reason" class="form-control" placeholder="Enter reason here"></textarea>
+
+                                                                    <input type="hidden" name="kind" value="ARCHIVE">
+                                                                    <input type="hidden" name="status" value="PENDING">
+                                                                    <input type="hidden" name="indicator_id" value="<?= $indicator[0]->getId(); ?>">
+                                                                    <input type="hidden" name="instruction_token" value="<?= $instruction->getUnionToken(); ?>">
+                                                                    <input type="hidden" name="user_id" value="<?= $user->id; ?>">
+                                                                    <input type="hidden" name="source" value="utility">
+                                                                    <input type="hidden" name="facility_id" value="<?= $utility->getId(); ?>">
+
+                                                                    <button class="btn btn-primary pull-right col-sm-3 btn-sm" id="button"
+                                                                            name="submit" type="submit"><i class="fa fa-save"></i> Save
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
                                             <?php $i++; endforeach; ?>
                                             </tbody>
                                         </table>
