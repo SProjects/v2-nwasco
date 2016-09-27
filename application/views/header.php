@@ -59,7 +59,8 @@
                         <?php endif; ?>
                         <?php if (count($indicators) > 0): ?>
                             <?php foreach ($indicators as $indicator): ?>
-                                <li class="<?= ($this->uri->segment(3) === '' .$indicator->getId(). '') ? 'active' : '' ?>">
+                                <li class="<?= ($this->uri->segment(3) === '' .$indicator->getId(). '') ? 'active' : '' ?>"
+                                    title="<?= ($indicator->getKind() == 'UTILITY') ? 'Commercial Utility: '.$indicator->getDescription(): 'Private Scheme: '.$indicator->getDescription(); ?>">
                                     <a href="<?php
                                                 if ($indicator->getKind() == 'UTILITY') {
                                                     echo base_url().'indicator/show_utility/'.$indicator->getId(); ?>
