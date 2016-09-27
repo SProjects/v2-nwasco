@@ -33,7 +33,7 @@
                     foreach ($admin_requests as $request): ?>
                         <tr style="border: 1px dashed grey;">
                             <td><?= $x; ?></td>
-                            <td><?= $request->getUser()->last_name . ' ' . $request->getUser()->first_name; ?></td>
+                            <td><?= $request->getRequesterName(); ?></td>
                             <td><?= $request->getKind(); ?></td>
                             <td><?= $request->getReason(); ?></td>
                             <td><?= $request->getCreatedAt(); ?></td>

@@ -80,6 +80,10 @@ class Request_model extends CI_Model {
         $this->user = $user;
     }
 
+    public function getRequesterName() {
+        return $this->getUser()->last_name.' '.$this->getUser()->first_name;
+    }
+
     public function getIndicator() {
         return $this->indicator;
     }

@@ -18,7 +18,7 @@
                 <tbody>
                     <?php if (sizeof($requests) == 0): ?>
                         <tr>
-                            <td colspan="4">No pending requests</td>
+                            <td colspan="6">No pending requests</td>
                         </tr>
                     <?php else: ?>
                         <?php $x = 1;
@@ -26,7 +26,7 @@
 
                             <tr>
                                 <td><?= $x; ?></td>
-                                <td><?= $request->getUser()->last_name.' '.$request->getUser()->first_name; ?></td>
+                                <td><?= $request->getRequesterName(); ?></td>
                                 <td><?= $request->getKind(); ?></td>
                                 <td><?= $request->getReason(); ?></td>
                                 <td><?= $request->getCreatedAt(); ?></td>
