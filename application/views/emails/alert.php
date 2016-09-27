@@ -17,23 +17,25 @@
             <?php if (count($admin_requests) > 0): ?>
                 <h4>Administrator Level Requests</h4>
 
-                <table width="40%" style="border: 1px solid black;">
+                <table width="50%" style="border: 1px solid black;">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Requested by</th>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>Status</th>
+                        <th style="width: 3%">#</th>
+                        <th style="width: 15%">Requested by</th>
+                        <th style="width: 9%">Type</th>
+                        <th>Reason</th>
+                        <th style="width: 20%">Date/Time</th>
+                        <th style="width: 5%">Status</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php $x = 1;
                     foreach ($admin_requests as $request): ?>
-                        <tr>
+                        <tr style="border: 1px dashed grey;">
                             <td><?= $x; ?></td>
                             <td><?= $request->getUser()->last_name . ' ' . $request->getUser()->first_name; ?></td>
                             <td><?= $request->getKind(); ?></td>
+                            <td><?= $request->getReason(); ?></td>
                             <td><?= $request->getCreatedAt(); ?></td>
                             <td><?= $request->getStatus(); ?></td>
                         </tr>
@@ -45,14 +47,15 @@
             <?php if (count($requests) > 0): ?>
                 <h4>Requests</h4>
 
-                <table width="40%" style="border: 1px solid black;">
+                <table width="50%" style="border: 1px solid black;">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Requested by</th>
-                            <th>Type</th>
-                            <th>Date</th>
-                            <th>Status</th>
+                            <th style="width: 3%">#</th>
+                            <th style="width: 15%">Requested by</th>
+                            <th style="width: 9%">Type</th>
+                            <th>Reason</th>
+                            <th style="width: 20%">Date/Time</th>
+                            <th style="width: 5%">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +64,7 @@
                             <td><?= $x; ?></td>
                             <td><?= $request->getUser()->last_name.' '.$request->getUser()->first_name; ?></td>
                             <td><?= $request->getKind(); ?></td>
+                            <td><?= $request->getReason(); ?></td>
                             <td><?= $request->getCreatedAt(); ?></td>
                             <td><?= $request->getStatus(); ?></td>
                         </tr>
@@ -74,7 +78,7 @@
                 <?php foreach ($utility_instructions as $utility_name => $indicators): ?>
                     <?php if(count($indicators) > 0):?>
                         <h5><?= $utility_name; ?></h5>
-                        <table width="40%" style="border: 1px solid black;">
+                        <table width="50%" style="border: 1px solid black;">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -88,7 +92,7 @@
                                 <?php if ($summary[0]['ALMOST'] > 0 || $summary[0]['OVERDUE'] > 0): ?>
                                     <tr>
                                         <td><?= $x; ?></td>
-                                        <td><?= $indicator_name; ?></td>
+                                        <td style="text-align: center"><?= $indicator_name; ?></td>
                                         <td style="text-align: center"><?= $summary[0]['ALMOST']; ?></td>
                                         <td style="text-align: center"><?= $summary[0]['OVERDUE']; ?></td>
                                     </tr>
@@ -105,7 +109,7 @@
                 <?php foreach ($scheme_instructions as $scheme_name => $indicators): ?>
                     <?php if(count($indicators) > 0):?>
                         <h5><?= $scheme_name; ?></h5>
-                        <table width="40%" style="border: 1px solid black;">
+                        <table width="50%" style="border: 1px solid black;">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -119,7 +123,7 @@
                                 <?php if ($summary[0]['ALMOST'] > 0 || $summary[0]['OVERDUE'] > 0): ?>
                                     <tr>
                                         <td><?= $x; ?></td>
-                                        <td><?= $indicator_name; ?></td>
+                                        <td style="text-align: center"><?= $indicator_name; ?></td>
                                         <td style="text-align: center"><?= $summary[0]['ALMOST']; ?></td>
                                         <td style="text-align: center"><?= $summary[0]['OVERDUE']; ?></td>
                                     </tr>

@@ -9,9 +9,9 @@
                 <tr role="row">
                     <th style="width: 3%;">#</th>
                     <th style="width: 15%;">Requested by</th>
-                    <th style="width: 10%;">Request Type</th>
+                    <th style="width: 10%;">Type</th>
                     <th>Reason</th>
-                    <th style="width: 15%;">Request Date/Time</th>
+                    <th style="width: 15%;">Date/Time</th>
                     <th style="width: 5%;">Actions</th>
                 </tr>
                 </thead>
