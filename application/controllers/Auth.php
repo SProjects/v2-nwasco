@@ -637,7 +637,7 @@ EOF;
                 'id' => 'password',
                 'type' => 'password',
                 'class' => 'form-control',
-                'placeholder' => 'Password',
+                'placeholder' => 'Password, 8 characters or more',
                 'value' => $this->form_validation->set_value('password'),
             );
             $this->data['password_confirm'] = array(
