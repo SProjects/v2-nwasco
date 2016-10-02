@@ -16,7 +16,7 @@
                 <li class="upperspace">
                 </li>
 
-                <!--Commericial Utilities menu-->
+                <!--Commercial Utilities menu-->
                 <li class="<?= ($this->uri->segment(1) === 'dashboard') ? 'active' : '' ?>">
                     <a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-desktop"></i> <span class="nav-label">Home</span></a>
                 </li>
