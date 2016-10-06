@@ -125,13 +125,11 @@
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
                         <?php if (count($utilities) > 0): ?>
                             <?php foreach ($utilities as $utility): ?>
-                                <?php if($utility->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
-                                    <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
-                                        <a href="<?= base_url().'utility_archives/show/'.$utility->getId(); ?>">
-                                            <?= $utility->getName(); ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
+                                <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
+                                    <a href="<?= base_url().'utility_archives/show/'.$utility->getId(); ?>">
+                                        <?= $utility->getName(); ?>
+                                    </a>
+                                </li>
                             <?php endforeach; ?>
                         <?php else: ?>
                             No Utilities
@@ -147,13 +145,11 @@
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
                         <?php if (count($schemes) > 0): ?>
                             <?php foreach ($schemes as $scheme): ?>
-                                <?php if($scheme->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
-                                    <li class="<?= ($this->uri->segment(3) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
-                                        <a href="<?= base_url().'scheme_archives/show/'.$scheme->getId(); ?>">
-                                            <?= $scheme->getName(); ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
+                                <li class="<?= ($this->uri->segment(3) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
+                                    <a href="<?= base_url().'scheme_archives/show/'.$scheme->getId(); ?>">
+                                        <?= $scheme->getName(); ?>
+                                    </a>
+                                </li>
                             <?php endforeach; ?>
                         <?php else: ?>
                             No schemes
