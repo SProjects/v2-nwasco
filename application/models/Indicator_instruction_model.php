@@ -296,7 +296,8 @@ class Indicator_instruction_model extends CI_Model {
         $requests = $request_dao->get(array(
             Request_dao::INSTRUCTION_FIELD => $instruction->getUnionToken(),
             Request_dao::KIND_FIELD => $kind,
-            Request_dao::STATUS_FIELD => $status
+            Request_dao::STATUS_FIELD => $status,
+            Request_dao::DELETED_AT_FIELD => NULL
         ));
         return (count($requests) > 0) ? TRUE : FALSE;
     }

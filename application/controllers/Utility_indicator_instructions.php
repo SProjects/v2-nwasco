@@ -310,7 +310,7 @@ EOF;
         if (sizeof($requests) > 0) {
             $request = $requests[0];
             if($request != NULL)
-                $request->destroy($request);
+                $request->soft_destroy($request);
         }
     }
 }

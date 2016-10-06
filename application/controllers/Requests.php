@@ -155,7 +155,8 @@ EOF;
             $data['heading'] = $kind;
             $data['requests'] = $this->requestdao->get(array(
                 Request_dao::KIND_FIELD => $kind,
-                Request_dao::STATUS_FIELD => 'PENDING'
+                Request_dao::STATUS_FIELD => 'PENDING',
+                Request_dao::DELETED_AT_FIELD => NULL
             ));
 
             $this->load->view('header', $data);
@@ -173,6 +174,34 @@ EOF;
             $this->requestdao->update($request);
 
             redirect('/requests/show/'.$kind, 'refresh');
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function bulk_approve() {
+        if ($this->ion_auth->logged_in()) {
+            $request_ids = $this->input->post('requests');
+            if(sizeof($request_ids) > 0) {
+                foreach ($request_ids as $id) {
+                    $request = $this->requestdao->getById($id);
+                    $request->setStatus('ACCEPTED');
+                    $this->requestdao->update($request);
+                }
+            }
+        } else {
+            redirect('auth/login');
+        }
+    }
+
+    public function bulk_deny() {
+        if ($this->ion_auth->logged_in()) {
+            $request_ids = $this->input->post('requests');
+            if(sizeof($request_ids) > 0) {
+                foreach ($request_ids as $id) {
+                    $this->requestdao->delete($id);
+                }
+            }
         } else {
             redirect('auth/login');
         }

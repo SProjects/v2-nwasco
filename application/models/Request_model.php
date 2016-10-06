@@ -8,11 +8,12 @@ class Request_model extends CI_Model {
     private $instructions;
     private $reason;
     private $created_at;
+    private $deleted_at;
     private $user;
     private $indicator;
 
     public function __construct($id=NULL, $kind=NULL, $status=NULL, $instructions=NULL,
-                                $reason=NULL, $create_at=NULL, $user=NULL, $indicator=NULL) {
+                                $reason=NULL, $create_at=NULL, $user=NULL, $indicator=NULL, $deleted_at=NULL) {
         parent::__construct();
         $this->id = $id;
         $this->kind = $kind;
@@ -22,6 +23,7 @@ class Request_model extends CI_Model {
         $this->created_at = $create_at;
         $this->user = $user;
         $this->indicator = $indicator;
+        $this->deleted_at = $deleted_at;
     }
 
     public function getId() {
@@ -72,6 +74,14 @@ class Request_model extends CI_Model {
         $this->created_at = $created_at;
     }
 
+    public function getDeletedAt() {
+        return $this->deleted_at;
+    }
+
+    public function setDeletedAt($deleted_at) {
+        $this->deleted_at = $deleted_at;
+    }
+
     public function getUser() {
         return $this->user;
     }
@@ -95,6 +105,12 @@ class Request_model extends CI_Model {
     public function destroy($request) {
         $request_dao = new Request_dao();
         return $request_dao->delete($request->getId());
+    }
+
+    public function soft_destroy($request) {
+        $request_dao = new Request_dao();
+        $request->setDeletedAt(date('Y-m-d h:i:sa', time()));
+        return $request_dao->update($request);
     }
 
     public static function getRequestsSummary() {

@@ -13,6 +13,7 @@ class Request_dao extends CI_Model {
     const REASON_FIELD = 'reason';
     const USER_FIELD = 'user_id';
     const INDICATOR_FIELD = 'indicator_id';
+    const DELETED_AT_FIELD = 'deleted_at';
 
     public function __construct() {
         parent::__construct();
@@ -58,6 +59,7 @@ class Request_dao extends CI_Model {
             $request_object->setKind($request[self::KIND_FIELD]);
             $request_object->setStatus($request[self::STATUS_FIELD]);
             $request_object->setCreatedAt($request[self::CREATED_AT_FIELD]);
+            $request_object->setDeletedAt($request[self::DELETED_AT_FIELD]);
             $request_object->setReason($request[self::REASON_FIELD]);
 
             $indicator_id = $request[self::INDICATOR_FIELD];
@@ -92,7 +94,8 @@ class Request_dao extends CI_Model {
             self::INSTRUCTION_FIELD => $request->getInstructions()[0]->getUnionToken(),
             self::REASON_FIELD => $request->getReason(),
             self::USER_FIELD => $request->getUser()->id,
-            self::INDICATOR_FIELD => $request->getIndicator()->getId()
+            self::INDICATOR_FIELD => $request->getIndicator()->getId(),
+            self::DELETED_AT_FIELD => $request->getDeletedAt()
         );
     }
 }
