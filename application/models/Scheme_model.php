@@ -56,7 +56,7 @@ class Scheme_model extends CI_Model {
         return (count($instructions) > 0) ? TRUE : FALSE;
     }
 
-    public static function getIndicatorInstructions($scheme) {
+    public static function getIndicatorInstructions($scheme, $get_archive=FALSE) {
         $indicatordao = new Indicator_dao();
         $indicatorinstructiondao = new Indicator_instruction_dao();
 
@@ -72,12 +72,21 @@ class Scheme_model extends CI_Model {
         }
 
         foreach($indicators as $indicator) {
-            $instruction_objects = $indicatorinstructiondao->get(array(
-                    Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId(),
-                    Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
-                    Indicator_instruction_dao::DELETED_AT_FIELD => NULL
-                )
-            );
+            if ($get_archive) {
+                $instruction_objects = $indicatorinstructiondao->get(array(
+                        Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId(),
+                        Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
+                        Indicator_instruction_dao::DELETED_AT_FIELD.' != ' => NULL
+                    )
+                );
+            } else {
+                $instruction_objects = $indicatorinstructiondao->get(array(
+                        Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId(),
+                        Indicator_instruction_dao::SCHEME_FIELD => $scheme->getId(),
+                        Indicator_instruction_dao::DELETED_AT_FIELD => NULL
+                    )
+                );
+            }
 
             if(count($instruction_objects) > 0) {
                 foreach ($instruction_objects as $instruction_object) {

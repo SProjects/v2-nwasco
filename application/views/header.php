@@ -118,6 +118,50 @@
                 </li>
                 <!--End: User management-->
 
+                <!--Archives: Commercial Utilities-->
+                <li class="<?= ($this->uri->segment(1) === 'utility_archives') ? 'active' : '' ?>">
+                    <a href="#"><i class="fa fa-archive"></i> <span class="nav-label">Archives: Utilities</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" style="height: 0px;">
+                        <?php if (count($utilities) > 0): ?>
+                            <?php foreach ($utilities as $utility): ?>
+                                <?php if($utility->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
+                                    <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
+                                        <a href="<?= base_url().'utility_archives/show/'.$utility->getId(); ?>">
+                                            <?= $utility->getName(); ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            No Utilities
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <!--End: Archive: Commercial Utilities-->
+
+                <!--Archives: Private Schemes-->
+                <li class="<?= ($this->uri->segment(1) === 'scheme_archives') ? 'active' : '' ?>">
+                    <a href="#"><i class="fa fa-archive"></i> <span class="nav-label">Archives: Schemes</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" style="height: 0px;">
+                        <?php if (count($schemes) > 0): ?>
+                            <?php foreach ($schemes as $scheme): ?>
+                                <?php if($scheme->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
+                                    <li class="<?= ($this->uri->segment(3) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
+                                        <a href="<?= base_url().'scheme_archives/show/'.$scheme->getId(); ?>">
+                                            <?= $scheme->getName(); ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            No schemes
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <!--End: Archive: Private Schemes-->
+
                 <li class="upperspace">
                 </li>
             </ul>
