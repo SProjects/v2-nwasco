@@ -224,12 +224,12 @@ class Indicator_instruction_model extends CI_Model {
     }
 
     public function getUtilityInstructionsStatusSummary($utility, $indicator){
-        $instruction_groups = Utility_model::getIndicatorInstructions($utility);
+        $instruction_groups = Utility_model::getIndicatorInstructions($utility, FALSE);
         return $this->getStatusSummary($instruction_groups, $indicator);
     }
 
     public function getSchemeInstructionsStatusSummary($scheme, $indicator){
-        $instruction_groups = Scheme_model::getIndicatorInstructions($scheme);
+        $instruction_groups = Scheme_model::getIndicatorInstructions($scheme, FALSE);
         return $this->getStatusSummary($instruction_groups, $indicator);
     }
 

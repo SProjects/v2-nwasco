@@ -22,7 +22,7 @@ class Emails extends CI_Controller {
         $this->email->set_header('MIME-Version', '1.0; charset=utf-8');
         $this->email->set_header('Content-type', 'text/html');
 
-        $this->email->from('info@nwasco.org', 'National Water Supply and Sanitation Council');
+        $this->email->from('info@nwasco.org.zm', 'National Water Supply and Sanitation Council');
 
         $users = $this->ion_auth->users()->result();
 

@@ -18,12 +18,16 @@ class Email_manager {
         $request_dao = new Request_dao();
 
         if($this->CI->ion_auth->is_admin($user->id)) {
-            return $request_dao->get(array(Request_dao::STATUS_FIELD => $kind));
+            return $request_dao->get(array(
+                Request_dao::STATUS_FIELD => $kind,
+                Request_dao::DELETED_AT_FIELD => NULL
+            ));
         }
 
         return $request_dao->get(array(
             Request_dao::USER_FIELD => $user->id,
-            Request_dao::STATUS_FIELD => $kind
+            Request_dao::STATUS_FIELD => $kind,
+            Request_dao::DELETED_AT_FIELD => NULL
         ));
     }
 
@@ -39,14 +43,12 @@ class Email_manager {
             foreach ($indicators as $indicator) {
                 $summary = $indicator_instruction->getUtilityInstructionsStatusSummary($utility, $indicator);
 
-                if(count($summary) > 0) {
-                    if($summary['OVERDUE'] != 0 && $summary['ALMOST'] != 0) {
-                        $instructions_summary[$utility->getName()][$indicator->getName()] = array();
-                        array_push($instructions_summary[$utility->getName()][$indicator->getName()], array(
-                            'OVERDUE' => $summary['OVERDUE'],
-                            'ALMOST' => $summary['ALMOST']
-                        ));
-                    }
+                if($summary['OVERDUE'] != 0 || $summary['ALMOST'] != 0) {
+                    $instructions_summary[$utility->getName()][$indicator->getName()] = array();
+                    array_push($instructions_summary[$utility->getName()][$indicator->getName()], array(
+                        'OVERDUE' => $summary['OVERDUE'],
+                        'ALMOST' => $summary['ALMOST']
+                    ));
                 }
             }
         }
@@ -65,14 +67,12 @@ class Email_manager {
             foreach ($indicators as $indicator) {
                 $summary = $indicator_instruction->getSchemeInstructionsStatusSummary($scheme, $indicator);
 
-                if(count($summary) > 0) {
-                    if($summary['OVERDUE'] != 0 || $summary['ALMOST'] != 0) {
-                        $instructions_summary[$scheme->getName()][$indicator->getName()] = array();
-                        array_push($instructions_summary[$scheme->getName()][$indicator->getName()],  array(
-                            'OVERDUE' => $summary['OVERDUE'],
-                            'ALMOST' => $summary['ALMOST']
-                        ));
-                    }
+                if($summary['OVERDUE'] != 0 || $summary['ALMOST'] != 0) {
+                    $instructions_summary[$scheme->getName()][$indicator->getName()] = array();
+                    array_push($instructions_summary[$scheme->getName()][$indicator->getName()],  array(
+                        'OVERDUE' => $summary['OVERDUE'],
+                        'ALMOST' => $summary['ALMOST']
+                    ));
                 }
             }
         }

@@ -8,11 +8,11 @@ class Notifications_manager {
         $this->CI->load->library('ion_auth');
     }
 
-    public function getNotification($user) {
+    public function getNotifications($user) {
         $notifications = array();
         $notifications = array_merge($notifications, $this->pendingRequest($user));
-        $notifications = array_merge($notifications, $this->utilityInstructions($user));
-        $notifications = array_merge($notifications, $this->schemeInstructions($user));
+        $notifications = array_merge($notifications, $this->utilityNotifications($user));
+        $notifications = array_merge($notifications, $this->schemeNotifications($user));
         return $notifications;
     }
 
@@ -32,7 +32,7 @@ class Notifications_manager {
         return $notifications;
     }
 
-    private function  utilityInstructions($user) {
+    private function  utilityNotifications($user) {
         $notifications = array();
         $utility_instructions = $this->CI->email_manager->getSummaryUtilityInstructions($user);
 
@@ -56,7 +56,7 @@ class Notifications_manager {
         return $notifications;
     }
 
-    private function  schemeInstructions($user) {
+    private function  schemeNotifications($user) {
         $notifications = array();
         $scheme_instructions = $this->CI->email_manager->getSummarySchemeInstructions($user);
 
