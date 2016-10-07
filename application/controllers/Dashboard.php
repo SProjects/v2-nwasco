@@ -29,6 +29,7 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
+        set_time_limit(0);
         $this->layout->add_custom_meta('meta', array(
             'charset' => 'utf-8'
         ));
