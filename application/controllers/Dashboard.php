@@ -7,7 +7,6 @@ class Dashboard extends CI_Controller {
     public $indicatordao;
 
     public function __construct() {
-        set_time_limit(0);
         parent::__construct();
         $this->load->library('ion_auth');
         $this->load->library('notifications_manager');
@@ -30,6 +29,7 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
+        set_time_limit(0);
         $this->layout->add_custom_meta('meta', array(
             'charset' => 'utf-8'
         ));
