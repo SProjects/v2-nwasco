@@ -236,7 +236,8 @@ class Indicator_instruction_model extends CI_Model {
     public function getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, $status) {
         $indicator_instruction_dao = new Indicator_instruction_dao();
         $instructions = $indicator_instruction_dao->get(array(
-            Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId()
+            Indicator_instruction_dao::INDICATOR_FIELD => $indicator->getId(),
+            Indicator_instruction_dao::DELETED_AT_FIELD => NULL
         ));
 
         $count = 0;

@@ -51,7 +51,7 @@
                                     </li>
                                     <!--End Overdue-->
 
-                                    <!--Almost due-->
+                                    <!--Almost Due-->
                                     <li class="dropdown label-warning">
                                         <a class="dropdown-toggle" data-toggle="dropdown"><?= $total_almost; ?></a>
                                         <ul class="dropdown-menu">
@@ -75,7 +75,7 @@
                                             <?php endif; ?>
                                         </ul>
                                     </li>
-                                    <!--End Almost-->
+                                    <!--End Almost Due-->
 
                                     <!--Active-->
                                     <li class="dropdown label-primary">
