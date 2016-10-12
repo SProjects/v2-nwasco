@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # http://code.google.com/p/sequel-pro/
 #
-# Host: us-cdbr-iron-east-04.cleardb.net (MySQL 5.5.46-log)
-# Database: heroku_9d1f25f74e0ed9a
-# Generation Time: 2016-09-27 02:07:29 +0000
+# Host: 127.0.0.1 (MySQL 5.5.42)
+# Database: nwascov
+# Generation Time: 2016-10-12 13:49:19 +0000
 # ************************************************************
 
 
@@ -104,13 +104,13 @@ LOCK TABLES `indicators` WRITE;
 INSERT INTO `indicators` (`id`, `name`, `description`, `kind`, `days_to_expire`, `have_chart`)
 VALUES
   (1,'Directives','Inspection Directives                                                                ','UTILITY',5,1),
-  (2,'Tariff Conditions','Tariff Conditions                                                                                                ','UTILITY',5,1),
+  (2,'Tariff Conditions','Tariff Conditions                                                                                                                                ','UTILITY',5,1),
   (3,'SRS','Special Regulatory Supervision','UTILITY',NULL,NULL),
   (4,'Projects','WSS Projects','UTILITY',NULL,NULL),
   (5,'RBI','Regulation by Incentives','UTILITY',NULL,NULL),
   (6,'SLAs/ SLGs','Service Level Guarantees and Agreements ','UTILITY',NULL,NULL),
   (12,'Directives','Inspection Directives','SCHEME',NULL,NULL),
-  (22,'OL','Operating License ','SCHEME',30,0),
+  (22,'OL','Operating License ','SCHEME',30,NULL),
   (32,'SLAs/SLGs','Service Level Guarantees and Agreements','SCHEME',NULL,NULL),
   (42,'Hot Spots','Areas of focus','UTILITY',90,NULL);
 
@@ -143,10 +143,11 @@ CREATE TABLE `requests` (
   `kind` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `reason` text,
-  `created_at` datetime DEFAULT NULL,
   `instruction_token` varchar(20) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `indicator_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -212,7 +213,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`)
 VALUES
-  (1,'127.0.0.1','admin','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,'pEzxKZ5IDdQyPf30AkuuM.',1268889823,1474941220,1,'Admin','Admin','ADMIN','0705245356');
+  (1,'127.0.0.1','admin','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,'pEzxKZ5IDdQyPf30AkuuM.',1268889823,1476099329,1,'Admin','Admin','ADMIN','0705245356');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
