@@ -53,12 +53,12 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-switch ($_SERVER['SERVER_NAME']) {
-    case 'nwasco.herokuapp.com':
+switch (getenv('ENVIRONMENT')) {
+    case 'testing':
         define('ENVIRONMENT', 'testing');
         break;
 
-    case 'production.site.com':
+    case 'production':
         define('ENVIRONMENT', 'production');
         break;
 
