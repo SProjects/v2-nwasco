@@ -1,5 +1,5 @@
 <?php
-require APPPATH.'models/Utility_model.php';
+require_once APPPATH.'models/Utility_model.php';
 
 class Utility_dao extends CI_Model {
     const TABLE_NAME = 'utilities';

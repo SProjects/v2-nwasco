@@ -16,25 +16,22 @@
                                 </div>
                                 <ul class="status-numbers">
                                     <?php
-                                        $total_overdue = 0;
-                                        $total_almost = 0;
-                                        $total_active = 0;
-                                        foreach ($utility_indicators as $indicator) {
-                                            $total_overdue += $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'OVERDUE');
-                                            $total_almost += $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'ALMOST');
-                                            $total_active += $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'ACTIVE');
-                                        }
+                                        $totals = Indicator_summary_model::getUtilitySummary($utility);
+                                        $total_overdue = $totals['OVERDUE'];
+                                        $total_almost = $totals['ALMOST'];
+                                        $total_active = $totals['ACTIVE'];
                                     ?>
                                     <!--Overdue-->
                                     <li class="dropdown label-danger">
                                         <a class="dropdown-toggle" data-toggle="dropdown"><?= $total_overdue; ?></a>
                                         <ul class="dropdown-menu">
                                             <div>
-                                                <?php foreach ($utility_indicators as $indicator):
-                                                    $overdue_count = $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'OVERDUE');
-                                                    ?>
-                                                    <span><?= $indicator->getName(); ?></span>
-                                                    <div class="stat-percent font-bold text-danger"><?= $overdue_count; ?></div>
+                                                <?php
+                                                $overdue_summaries = Indicator_summary_model::getSummaryByStatus($utility, 'OVERDUE');
+                                                foreach ($overdue_summaries as $indicator_name => $overdue_value):
+                                                ?>
+                                                    <span><?= $indicator_name; ?>
+                                                    <div class="stat-percent font-bold text-danger"><?= $overdue_value; ?></div>
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
@@ -56,11 +53,11 @@
                                         <a class="dropdown-toggle" data-toggle="dropdown"><?= $total_almost; ?></a>
                                         <ul class="dropdown-menu">
                                             <div>
-                                                <?php foreach ($utility_indicators as $indicator):
-                                                    $almost_count = $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'ALMOST');
-                                                    ?>
-                                                    <span><?= $indicator->getName(); ?></span>
-                                                    <div class="stat-percent font-bold text-warning"><?= $almost_count; ?></div>
+                                                <?php
+                                                $almost_summaries = Indicator_summary_model::getSummaryByStatus($utility, 'ALMOST');
+                                                foreach ($almost_summaries as $indicator_name => $almost_value): ?>
+                                                    <span><?= $indicator_name; ?>
+                                                    <div class="stat-percent font-bold text-warning"><?= $almost_value; ?></div>
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>
@@ -82,11 +79,11 @@
                                         <a class="dropdown-toggle" data-toggle="dropdown"><?= $total_active; ?></a>
                                         <ul class="dropdown-menu">
                                             <div>
-                                                <?php foreach ($utility_indicators as $indicator):
-                                                    $active_count = $indicator_instruction->getNumberOfUtilityIndicatorInstructionsByStatus($indicator, $utility, 'ACTIVE');
-                                                    ?>
-                                                    <span><?= $indicator->getName(); ?></span>
-                                                    <div class="stat-percent font-bold text-primary"><?= $active_count; ?></div>
+                                                <?php
+                                                $active_summaries = Indicator_summary_model::getSummaryByStatus($utility, 'ACTIVE');
+                                                foreach ($active_summaries as $indicator_name => $active_value): ?>
+                                                    <span><?= $indicator_name; ?>
+                                                    <div class="stat-percent font-bold text-primary"><?= $active_value; ?></div>
                                                     <br/>
                                                 <?php endforeach; ?>
                                             </div>

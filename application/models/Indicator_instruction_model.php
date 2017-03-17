@@ -258,7 +258,7 @@ class Indicator_instruction_model extends CI_Model {
         $utility_dao = new Utility_dao();
         $utilities = $utility_dao->get();
         foreach ($utilities as $utility) {
-            $summary = $this->getUtilityInstructionsStatusSummary($utility, $indicator);
+            $summary = Indicator_summary_model::getIndicatorSummary($indicator, $utility);
             array_push($chart_data, array(
                 $utility->getAbbreviation(), $summary['OVERDUE'], $summary['ALMOST'], $summary['ACTIVE']
             ));

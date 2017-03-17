@@ -17,6 +17,7 @@ class Dashboard extends CI_Controller {
 
         $this->loadDaos();
         $this->load->model('request_model');
+        $this->load->model('indicator_summary_model');
         $this->utilitydao = $this->utility_dao;
         $this->schemedao = $this->scheme_dao;
         $this->indicatordao = $this->indicator_dao;
