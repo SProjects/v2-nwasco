@@ -104,9 +104,10 @@ class Indicator_summary_model extends CI_Model {
                         Indicator_summary_dao::INDICATOR_FIELD => $utility_indicator->getId()
                     ));
 
-                    if (sizeof($summary) > 0)
+                    if (sizeof($summary) > 0) {
                         $summary = $summary[0];
                         $overdue_summary[$utility_indicator->getName()] = $summary->getOverdue();
+                    }
                 }
                 return $overdue_summary;
                 break;
@@ -118,9 +119,10 @@ class Indicator_summary_model extends CI_Model {
                         Indicator_summary_dao::INDICATOR_FIELD => $utility_indicator->getId()
                     ));
 
-                    if (sizeof($summary) > 0)
+                    if (sizeof($summary) > 0) {
                         $summary = $summary[0];
                         $almost_summary[$utility_indicator->getName()] = $summary->getAlmost();
+                    }
                 }
                 return $almost_summary;
                 break;
@@ -132,9 +134,10 @@ class Indicator_summary_model extends CI_Model {
                         Indicator_summary_dao::INDICATOR_FIELD => $utility_indicator->getId()
                     ));
 
-                    if (sizeof($summary) > 0)
+                    if (sizeof($summary) > 0) {
                         $summary = $summary[0];
                         $active_summary[$utility_indicator->getName()] = $summary->getActive();
+                    }
                 }
                 return $active_summary;
                 break;

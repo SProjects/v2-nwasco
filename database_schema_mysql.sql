@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
 # Database: nwascov
-# Generation Time: 2016-10-12 13:49:19 +0000
+# Generation Time: 2017-03-17 15:32:10 +0000
 # ************************************************************
 
 
@@ -81,6 +81,64 @@ CREATE TABLE `indicator_properties` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `indicator_properties` WRITE;
+/*!40000 ALTER TABLE `indicator_properties` DISABLE KEYS */;
+
+INSERT INTO `indicator_properties` (`id`, `name`, `description`, `datatype`, `indicator_id`, `token`)
+VALUES
+  (242,'Description','This has the details of the directive','LONG_TEXT',1,'Y6oW0UIfRG'),
+  (252,'Due Date','Date of expiry','DATE',1,'VgXNnCSB3t'),
+  (272,'Condition','Condition issued to the CU','LONG_TEXT',2,'Lcr7P6pH8J'),
+  (292,'Weight','Weight attached to a a tarrif','INTEGER',2,'kdeDTrnLjp'),
+  (302,'Due Date','Date of expiry','DATE',2,'vHcfGmiZkM'),
+  (312,'Remarks','What happened after the directive was issued','LONG_TEXT',1,'xIwfGUtC5a'),
+  (313,'Description','The detailed information of the SRS','LONG_TEXT',3,'mSwa7ZFDHB'),
+  (314,'Due Date','Date of expiry','DATE',3,'rcTo8f9WtH'),
+  (315,'Remarks','The NWASCO comment on the issue in description','LONG_TEXT',3,'0cgD7vPYxW'),
+  (316,'Description','Project detail','LONG_TEXT',4,'h8RWXicq6l'),
+  (317,'Target','Target to be achieved','LONG_TEXT',5,'8tqvbpPWrd'),
+  (318,'Weight','Weight attached to the target','LONG_TEXT',5,'ujJiOX5MsF'),
+  (319,'Due Date','Date of expiry','DATE',5,'KYvb8OUQJI'),
+  (320,'Remarks','NWASCO comments','LONG_TEXT',5,'RtT3QuzEH5'),
+  (321,'Description','Summary of the SLAs/SLGs','LONG_TEXT',6,'3CuV0ear6y'),
+  (322,'Due Date','Date of expiry','DATE',6,'H43pG2LjYz'),
+  (323,'Remarks','NWASCO comment','LONG_TEXT',6,'gfP53ZSRHG'),
+  (324,'Risk Issues','The area of interest or concern','LONG_TEXT',42,'8onxhcwCgH'),
+  (325,'Proposed action to be taken','Proposals from CU to address the issue','LONG_TEXT',42,'Mx5T1Vn9OQ'),
+  (326,'Update','Current situation','LONG_TEXT',42,'RK2VYJZANB'),
+  (327,'Due Date','Date of next quarterly update                                ','DATE',42,'WCMjw5UJae'),
+  (328,'Description','Detail of the licence','LONG_TEXT',43,'v0pehYCZ82'),
+  (329,'Due Date','Date of expiry','DATE',43,'ciImto1UOG'),
+  (330,'Remarks','NWASCO comments','LONG_TEXT',43,'vbcDzjioGm'),
+  (331,'Description','Directive issued to a CU','LONG_TEXT',12,'tynKuZ4Tmo'),
+  (332,'Due Date','Date of expiry','DATE',12,'ieYzvjAksQ'),
+  (333,'Remarks','NWASCO comment','LONG_TEXT',12,'0sIKnHWvz6'),
+  (334,'Description','Licence issued to the CU','LONG_TEXT',22,'0seJvQO91N'),
+  (335,'Due Date','Date of expiry','DATE',22,'eQRq90mFtV'),
+  (336,'Remarks','Comment from NWASCO','LONG_TEXT',22,'FSbJs5L4U0'),
+  (337,'Description','SLGs/SLAs issued to a CU','LONG_TEXT',32,'niQF9JsBL6'),
+  (338,'Due Date','Expiry Date','DATE',32,'Hc1oeu89CZ'),
+  (339,'Remarks','NWASCO remarks','LONG_TEXT',32,'euXy0Wtn71');
+
+/*!40000 ALTER TABLE `indicator_properties` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table indicator_summaries
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `indicator_summaries`;
+
+CREATE TABLE `indicator_summaries` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `overdue` int(11) DEFAULT NULL,
+  `active` int(11) DEFAULT NULL,
+  `almost` int(11) DEFAULT NULL,
+  `indicator_id` int(11) DEFAULT NULL,
+  `utility_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
 # Dump of table indicators
@@ -105,14 +163,15 @@ INSERT INTO `indicators` (`id`, `name`, `description`, `kind`, `days_to_expire`,
 VALUES
   (1,'Directives','Inspection Directives                                                                ','UTILITY',5,1),
   (2,'Tariff Conditions','Tariff Conditions                                                                                                                                ','UTILITY',5,1),
-  (3,'SRS','Special Regulatory Supervision','UTILITY',NULL,NULL),
+  (3,'SRS','Special Regulatory Supervision                                                                ','UTILITY',5,0),
   (4,'Projects','WSS Projects','UTILITY',NULL,NULL),
-  (5,'RBI','Regulation by Incentives','UTILITY',NULL,NULL),
-  (6,'SLAs/ SLGs','Service Level Guarantees and Agreements ','UTILITY',NULL,NULL),
-  (12,'Directives','Inspection Directives','SCHEME',NULL,NULL),
-  (22,'OL','Operating License ','SCHEME',30,NULL),
-  (32,'SLAs/SLGs','Service Level Guarantees and Agreements','SCHEME',NULL,NULL),
-  (42,'Hot Spots','Areas of focus','UTILITY',90,NULL);
+  (5,'RBI','Regulation by Incentives                                ','UTILITY',5,0),
+  (6,'SLAs/ SLGs','Service Level Guarantees and Agreements                                 ','UTILITY',60,0),
+  (12,'Directives','Inspection Directives                                ','SCHEME',5,1),
+  (22,'Operating License       ','Operating License                                                                  ','SCHEME',90,0),
+  (32,'SLAs/SLGs','Service Level Guarantees and Agreements                                ','SCHEME',60,0),
+  (42,'Hot Spots','Areas of focus                                ','UTILITY',90,0),
+  (43,'Operating License       ','Operating License       ','UTILITY',90,0);
 
 /*!40000 ALTER TABLE `indicators` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -213,7 +272,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`)
 VALUES
-  (1,'127.0.0.1','admin','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,'pEzxKZ5IDdQyPf30AkuuM.',1268889823,1476099329,1,'Admin','Admin','ADMIN','0705245356');
+  (1,'127.0.0.1','admin','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,'pEzxKZ5IDdQyPf30AkuuM.',1268889823,1489756210,1,'Admin','Admin','ADMIN','0705245356');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -241,8 +300,7 @@ LOCK TABLES `users_groups` WRITE;
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`)
 VALUES
-  (12,1,1),
-  (22,1,32);
+  (231,1,1);
 
 /*!40000 ALTER TABLE `users_groups` ENABLE KEYS */;
 UNLOCK TABLES;
