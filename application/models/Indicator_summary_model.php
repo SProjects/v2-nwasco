@@ -231,7 +231,7 @@ class Indicator_summary_model extends CI_Model {
 
         $active_total = 0;
         foreach ($summaries as $summary) {
-            $active_total += $summary->getAlmost();
+            $active_total += $summary->getActive();
         }
         $totals_summary['ACTIVE'] = $active_total;
 

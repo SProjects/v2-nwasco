@@ -14,6 +14,7 @@ class Indicator extends CI_Controller{
         $this->schemedao = $this->scheme_dao;
 
         $this->load->model('request_model');
+        $this->load->model('Indicator_summary_model');
         $this->load->library('ion_auth');
 		$this->lang->load('auth');
 

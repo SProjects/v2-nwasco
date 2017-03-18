@@ -12,8 +12,7 @@
 
                     <?php foreach ($utility_objects as $utility): ?>
                         <?php
-                            $indicator_instruction = new Indicator_instruction_model();
-                            $statuses = $indicator_instruction->getUtilityInstructionsStatusSummary($utility, $indicator);
+                            $statuses = Indicator_summary_model::getIndicatorSummary($indicator, $utility);
                             $total_instructions = $statuses['ACTIVE'] + $statuses['ALMOST'] + $statuses['OVERDUE'];
                         ?>
                         <div class="col-lg-3" id="<?= $utility->getId(); ?>">
