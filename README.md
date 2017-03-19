@@ -41,3 +41,9 @@ Use the following login credentials;
 Username: admin@admin.com
 Password: password
 ```
+
+Generating Dashboard Data
+-------------------------
+- Ensure that you have `curl` installed on your computer and is accessible in your terminal.
+- Run this command in your terminal: `curl http://[BASE URL]/v2-nwasco/data/generateSummaryData/`
+- This command can be turned into a cronjob or scheduled task if you are a Windows user.
