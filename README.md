@@ -45,5 +45,7 @@ Password: password
 Generating Dashboard Data
 -------------------------
 - Ensure that you have `curl` installed on your computer and is accessible in your terminal.
-- Run this command in your terminal: `curl http://[BASE URL]/v2-nwasco/data/generateSummaryData/`
-- This command can be turned into a cronjob or scheduled task if you are a Windows user.
+- Start the PHP server.
+- Run this command in your terminal: `curl http://[BASE_URL]/data/generateSummaryData/`
+- Run the command every time you add new data to the system and need the statistics to be reflected on the dashboard OR
+- better still, turn this command into a cronjob on UNIX-based systems or a scheduled task on Windows systems.
