@@ -217,23 +217,17 @@ class Indicator_summary_model extends CI_Model {
 
     private static function classifyByStatus($summaries) {
         $totals_summary = array();
-
         $overdue_total = 0;
+        $almost_total = 0;
+        $active_total = 0;
+
         foreach ($summaries as $summary) {
             $overdue_total += $summary->getOverdue();
-        }
-        $totals_summary['OVERDUE'] = $overdue_total;
-
-        $almost_total = 0;
-        foreach ($summaries as $summary) {
             $almost_total += $summary->getAlmost();
-        }
-        $totals_summary['ALMOST'] = $almost_total;
-
-        $active_total = 0;
-        foreach ($summaries as $summary) {
             $active_total += $summary->getActive();
         }
+        $totals_summary['OVERDUE'] = $overdue_total;
+        $totals_summary['ALMOST'] = $almost_total;
         $totals_summary['ACTIVE'] = $active_total;
 
         return $totals_summary;
