@@ -154,7 +154,7 @@ class Indicator_summary_model extends CI_Model {
         return Indicator_summary_model::classifyByStatus($summaries);
     }
 
-    public static function addBlankSummaryData() {
+    public static function createBlankSummaryData() {
         $indicator_dao = new Indicator_dao();
         $utility_dao = new Utility_dao();
         $indicator_summary_dao = new Indicator_summary_dao();
@@ -171,7 +171,8 @@ class Indicator_summary_model extends CI_Model {
                 ));
 
                 if (sizeof($indicator_summary_object) == 0) {
-                    $indicator_summary_object = new Indicator_summary_model(NULL, 0, 0, 0, $utility_indicator, $utility);
+                    $indicator_summary_object = new Indicator_summary_model(NULL, 0, 0, 0,
+                        $utility_indicator, $utility);
                     $indicator_summary_dao->post($indicator_summary_object);
                 }
             }
