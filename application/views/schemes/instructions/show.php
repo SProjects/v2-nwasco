@@ -15,6 +15,14 @@
                     <div class="">
                         <div>
                             <h2><?= $scheme->getName(); ?></h2>
+                            <h5>Inspector:
+                                <?php $inspectorName = $scheme->getInspectorName();
+                                if ($inspectorName == NULL): ?>
+                                    Unassigned
+                                <?php else:
+                                    echo $inspectorName;
+                                endif; ?>
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -156,7 +164,7 @@
                                                     </td>
                                                     <td>
                                                         <?php $instruction = $instructions[0];
-                                                        if ($this->ion_auth->is_admin()) { ?>
+                                                        if ($this->ion_auth->is_admin()): ?>
                                                             <div class="btn-group">
                                                                 <div class="btn-group">
                                                                     <?php if(!$instruction->isCompleted($instruction)):?>
@@ -170,7 +178,8 @@
                                                                        class="btn btn-xs btn-white" onclick="return confirm('Are you sure?');"><i
                                                                             class="fa fa-archive"></i></a>
                                                             </div>
-                                                        <?php } else { ?>
+                                                        <?php else: ?>
+                                                            <?php if($scheme->getInspectorId() == $this->session->userdata('user_id')): ?>
                                                                 <?php $hasPendingEditRequest = $instruction->hasPendingEditRequest($instruction);
                                                                       if ($hasPendingEditRequest): ?>
                                                                             <span class="label label-info right"><i
@@ -224,7 +233,8 @@
                                                                         <?php endif; ?>
                                                                     </div>
                                                                 <?php endif; ?>
-                                                        <?php } ?>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
                                                     </td>
                                                 </tr>
 

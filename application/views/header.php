@@ -32,13 +32,14 @@
 
                         <?php if (count($utilities) > 0): ?>
                             <?php foreach ($utilities as $utility): ?>
-                                <?php if($utility->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
-                                    <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
-                                        <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
-                                            <?= $utility->getName(); ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
+                                <li class="<?= ($this->uri->segment(3) === '' . $utility->getId() . '') ? 'active' : '' ?>">
+                                    <a href="<?= base_url().'utility/show/'.$utility->getId(); ?>">
+                                        <?= $utility->getName(); ?>
+                                        <?php if($utility->getInspectorId() == $this->session->userdata('user_id')): ?>
+                                            <i class="fa fa-circle pull-right"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </li>
                             <?php endforeach; ?>
                         <?php else: ?>
                             No Utilities
@@ -64,11 +65,11 @@
                                     <a href="<?php
                                                 if ($indicator->getKind() == 'UTILITY') {
                                                     echo base_url().'indicator/show_utility/'.$indicator->getId(); ?>
+                                                    "><?= $indicator->getName(); ?> (CU)
                                                 <?php } elseif ($indicator->getKind() == 'SCHEME') { ?>
                                                     <?php echo base_url().'indicator/show_scheme/'.$indicator->getId(); ?>
+                                                    "><?= $indicator->getName(); ?> (PS)
                                                 <?php } ?>
-                                                "><?= $indicator->getName();
-                                            ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>
@@ -91,13 +92,14 @@
                         <?php endif; ?>
                         <?php if (count($schemes) > 0): ?>
                             <?php foreach ($schemes as $scheme): ?>
-                                <?php if($scheme->getInspectorId() == $this->session->userdata('user_id') || $this->ion_auth->is_admin()): ?>
-                                    <li class="<?= ($this->uri->segment(3) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
-                                        <a href="<?= base_url().'scheme/show/'.$scheme->getId(); ?>">
-                                            <?= $scheme->getName(); ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
+                                <li class="<?= ($this->uri->segment(3) === '' . $scheme->getId() . '') ? 'active' : '' ?>">
+                                    <a href="<?= base_url().'scheme/show/'.$scheme->getId(); ?>">
+                                        <?= $scheme->getName(); ?>
+                                        <?php if($scheme->getInspectorId() == $this->session->userdata('user_id')): ?>
+                                            <i class="fa fa-circle pull-right"></i>
+                                        <?php endif; ?>
+                                    </a>
+                                </li>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <p>No schemes</p>
